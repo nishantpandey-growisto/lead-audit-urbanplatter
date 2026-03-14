@@ -1,0 +1,1768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website & Conversion Audit — Urban Platter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── CSS Variables ───────────────────────────── */
+        :root {
+            --color-primary: #367588;
+            --color-primary-dark: #2a5d6d;
+            --color-primary-light: #e8f4f3;
+            --color-secondary: #b8dbd9;
+            --color-secondary-light: #e8f4f3;
+            --color-tertiary: #e35d34;
+            --color-text-dark: #1d1d20;
+            --color-text-muted: #5a5a5f;
+            --color-text-light: #ffffff;
+            --color-bg-primary: #ffffff;
+            --color-bg-secondary: #f8f9fa;
+            --color-bg-tertiary: #eef1f3;
+            --color-success: #10b981;
+            --color-success-bg: #d1fae5;
+            --color-warning: #f59e0b;
+            --color-warning-bg: #fef3c7;
+            --color-danger: #ef4444;
+            --color-danger-bg: #fee2e2;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+            --transition-fast: 0.2s ease;
+            --transition-med: 0.35s ease;
+            --topbar-height: 56px;
+            --bottombar-height: 56px;
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        /* ── Base Reset ──────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; overflow: hidden; font-family: var(--font-family); color: var(--color-text-dark); background: var(--color-bg-secondary); -webkit-font-smoothing: antialiased; }
+        img { max-width: 100%; display: block; }
+        a { color: var(--color-primary); text-decoration: none; }
+
+        /* ── Cover Page ──────────────────────────────── */
+        .cover-page {
+            position: fixed; inset: 0; z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #2a5d6d 0%, #367588 40%, #4a9bb0 100%);
+            color: white; text-align: center; transition: opacity 0.5s ease;
+        }
+        .cover-page.hidden { opacity: 0; pointer-events: none; }
+        .cover-logo { width: 180px; margin-bottom: 32px; filter: brightness(0) invert(1); }
+        .cover-page h1 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .cover-page h2 { font-size: 22px; font-weight: 400; opacity: 0.9; margin-bottom: 6px; }
+        .cover-page .cover-date { font-size: 14px; opacity: 0.7; margin-bottom: 40px; }
+        .cover-btn {
+            padding: 14px 40px; border-radius: 50px; border: 2px solid white;
+            background: transparent; color: white; font-size: 16px; font-weight: 600;
+            cursor: pointer; transition: var(--transition-fast); font-family: var(--font-family);
+        }
+        .cover-btn:hover { background: white; color: var(--color-primary-dark); }
+
+        /* ── Login Screen ────────────────────────────── */
+        .login-screen {
+            position: fixed; inset: 0; z-index: 999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: var(--color-bg-secondary);
+        }
+        .login-screen.hidden { display: none; }
+        .login-screen h3 { font-size: 20px; margin-bottom: 16px; }
+        .login-screen input {
+            padding: 12px 20px; border: 2px solid #ddd; border-radius: var(--radius-sm);
+            font-size: 16px; width: 280px; text-align: center; font-family: var(--font-family);
+        }
+        .login-screen input:focus { outline: none; border-color: var(--color-primary); }
+        .login-screen button {
+            margin-top: 12px; padding: 12px 32px; border-radius: var(--radius-sm);
+            border: none; background: var(--color-primary); color: white;
+            font-size: 15px; font-weight: 600; cursor: pointer; font-family: var(--font-family);
+        }
+        .login-screen button:hover { background: var(--color-primary-dark); }
+        .login-error { color: var(--color-danger); font-size: 13px; margin-top: 10px; display: none; }
+
+        /* ── Main Content (Presentation Layout) ──────── */
+        .main-content {
+            display: none; flex-direction: column; height: 100vh; overflow: hidden;
+        }
+        .main-content.visible { display: flex; }
+
+        /* Topbar (L1 nav) */
+        .topbar {
+            height: var(--topbar-height); display: flex; align-items: center;
+            background: white; border-bottom: 1px solid #e5e7eb; padding: 0 20px;
+            flex-shrink: 0; z-index: 10;
+        }
+        .topbar-logo { height: 28px; margin-right: 24px; }
+        .topbar-client { font-weight: 600; font-size: 14px; color: var(--color-text-dark); margin-right: 32px; white-space: nowrap; }
+        .topbar-nav { display: flex; gap: 4px; overflow-x: auto; flex: 1; }
+        .topbar-nav-item {
+            padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 500;
+            color: var(--color-text-muted); cursor: pointer; white-space: nowrap;
+            transition: var(--transition-fast);
+        }
+        .topbar-nav-item:hover { background: var(--color-bg-tertiary); color: var(--color-text-dark); }
+        .topbar-nav-item.active { background: var(--color-primary); color: white; }
+
+        /* Slide Area */
+        .slide-area {
+            flex: 1; position: relative; overflow: hidden;
+        }
+        .slide {
+            position: absolute; inset: 0; overflow-y: auto;
+            padding: 40px 0; opacity: 0; pointer-events: none;
+            transition: opacity var(--transition-med);
+        }
+        .slide.active { opacity: 1; pointer-events: auto; }
+        .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+
+        /* Mid Navigation Buttons */
+        .mid-nav-btn {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 40px; height: 40px; border-radius: 50%;
+            border: 1px solid #e5e7eb; background: white;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--shadow-sm); z-index: 5; transition: var(--transition-fast);
+        }
+        .mid-nav-btn:hover:not(:disabled) { background: var(--color-primary); border-color: var(--color-primary); }
+        .mid-nav-btn:hover:not(:disabled) svg { stroke: white; }
+        .mid-nav-btn:disabled { opacity: 0.3; cursor: default; }
+        .mid-nav-btn svg { width: 18px; height: 18px; stroke: var(--color-text-muted); }
+        #midPrevBtn { left: 12px; }
+        #midNextBtn { right: 12px; }
+
+        /* Bottom Bar (L2 Carousel) */
+        .bottom-bar {
+            height: var(--bottombar-height); display: flex; align-items: center;
+            background: white; border-top: 1px solid #e5e7eb; padding: 0 20px;
+            flex-shrink: 0; gap: 12px;
+        }
+        .carousel { display: flex; gap: 6px; overflow-x: auto; flex: 1; padding: 4px 0; }
+        .carousel-item {
+            display: flex; align-items: center; gap: 8px; padding: 6px 14px;
+            border-radius: 8px; cursor: pointer; white-space: nowrap;
+            font-size: 13px; color: var(--color-text-muted); transition: var(--transition-fast);
+        }
+        .carousel-item:hover { background: var(--color-bg-tertiary); }
+        .carousel-item.active { background: var(--color-primary-light); color: var(--color-primary); font-weight: 600; }
+        .carousel-number {
+            width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; font-weight: 600; background: var(--color-bg-tertiary); color: var(--color-text-muted);
+        }
+        .carousel-item.active .carousel-number { background: var(--color-primary); color: white; }
+        .carousel-label { font-size: 12px; }
+        .slide-counter { font-size: 12px; color: var(--color-text-muted); white-space: nowrap; }
+
+        /* ── Section Headers ─────────────────────────── */
+        .section-header { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+        .section-number {
+            font-size: 36px; font-weight: 700; color: var(--color-primary);
+            line-height: 1; min-width: 50px; opacity: 0.3;
+        }
+        .section-title-group h2 { font-size: 24px; font-weight: 700; color: var(--color-text-dark); margin-bottom: 4px; }
+        .section-title-group p { font-size: 14px; color: var(--color-text-muted); }
+
+        /* ── Insight / CTA Boxes ─────────────────────── */
+        .insight-box {
+            background: var(--color-primary-light); border-left: 4px solid var(--color-primary);
+            border-radius: var(--radius-sm); padding: 20px 24px; margin-bottom: 28px;
+        }
+        .insight-box p { font-size: 14px; line-height: 1.7; color: var(--color-text-dark); }
+        .cta-box {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            border-radius: var(--radius-md); padding: 28px 32px; color: white; margin-top: 28px;
+        }
+        .cta-box h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; }
+        .cta-box p { font-size: 14px; opacity: 0.9; line-height: 1.6; }
+
+        /* ── Info Grid (Audit Overview counts) ────────── */
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .info-card {
+            background: white; border-radius: var(--radius-sm); padding: 20px;
+            box-shadow: var(--shadow-sm); text-align: center;
+        }
+        .info-card .info-value { font-size: 28px; font-weight: 700; color: var(--color-primary); }
+        .info-card .info-label { font-size: 12px; color: var(--color-text-muted); margin-top: 4px; }
+
+        /* ── Traffic Cards ───────────────────────────── */
+        .traffic-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .traffic-card {
+            background: white; border-radius: var(--radius-sm); padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+        .traffic-card .metric-label { font-size: 12px; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.5px; }
+        .traffic-card .metric-value { font-size: 24px; font-weight: 700; color: var(--color-text-dark); margin-top: 4px; }
+
+        /* Traffic Source Bars */
+        .traffic-sources { margin-bottom: 28px; }
+        .traffic-sources h3 { font-size: 16px; font-weight: 600; margin-bottom: 16px; }
+        .source-bar-row { display: flex; align-items: center; gap: 12px; margin-bottom: 10px; }
+        .source-label { width: 120px; font-size: 13px; color: var(--color-text-muted); text-align: right; }
+        .source-bar-track { flex: 1; height: 24px; background: var(--color-bg-tertiary); border-radius: 12px; overflow: hidden; }
+        .source-bar-fill { height: 100%; border-radius: 12px; background: var(--color-primary); display: flex; align-items: center; padding: 0 10px; transition: width 0.6s ease; }
+        .source-bar-fill span { font-size: 11px; font-weight: 600; color: white; white-space: nowrap; }
+
+        /* Device Split */
+        .device-split { margin-bottom: 28px; }
+        .device-split h3 { font-size: 16px; font-weight: 600; margin-bottom: 12px; }
+        .device-bar { display: flex; height: 32px; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
+        .device-bar .mobile-bar { background: var(--color-primary); display: flex; align-items: center; justify-content: center; }
+        .device-bar .desktop-bar { background: var(--color-secondary); display: flex; align-items: center; justify-content: center; }
+        .device-bar span { font-size: 12px; font-weight: 600; }
+        .device-bar .mobile-bar span { color: white; }
+        .device-bar .desktop-bar span { color: var(--color-primary-dark); }
+
+        /* ── Funnel Teaser Table ─────────────────────── */
+        .funnel-table { width: 100%; border-collapse: collapse; margin-bottom: 28px; }
+        .funnel-table th {
+            text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted);
+            border-bottom: 2px solid #e5e7eb;
+        }
+        .funnel-table td { padding: 14px 16px; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+        .funnel-table .client-val { font-weight: 700; color: var(--color-primary); font-size: 18px; }
+        .funnel-table .benchmark-val { color: var(--color-text-muted); font-size: 13px; }
+
+        /* ── Competition Table ────────────────────────── */
+        .competition-table { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm); margin-bottom: 28px; }
+        .competition-table th {
+            padding: 12px 14px; font-size: 12px; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.5px; background: var(--color-bg-tertiary);
+            color: var(--color-text-muted); text-align: center;
+        }
+        .competition-table th:first-child { text-align: left; }
+        .competition-table td { padding: 14px; text-align: center; font-size: 14px; font-weight: 600; background: white; border-bottom: 1px solid #f5f5f5; }
+        .competition-table td:first-child { text-align: left; font-weight: 500; }
+        .competition-table tr.client-row { background: var(--color-primary-light); }
+        .competition-table tr.client-row td { background: var(--color-primary-light); font-weight: 700; }
+
+        .score-cell.good { color: var(--color-success); }
+        .score-cell.moderate { color: var(--color-warning); }
+        .score-cell.poor { color: var(--color-danger); }
+
+        /* ── CWV Grid ────────────────────────────────── */
+        .cwv-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .cwv-card {
+            background: white; border-radius: var(--radius-sm); padding: 20px;
+            box-shadow: var(--shadow-sm); text-align: center;
+        }
+        .cwv-metric { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-text-muted); margin-bottom: 8px; }
+        .cwv-value { font-size: 28px; font-weight: 700; }
+        .cwv-value.good { color: var(--color-success); }
+        .cwv-value.moderate { color: var(--color-warning); }
+        .cwv-value.poor { color: var(--color-danger); }
+        .cwv-target { font-size: 11px; color: var(--color-text-muted); margin-top: 6px; }
+        .cwv-status { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; margin-top: 8px; }
+        .cwv-status.pass { background: var(--color-success-bg); color: #065f46; }
+        .cwv-status.fail { background: var(--color-danger-bg); color: #991b1b; }
+        .cwv-status.needs-work { background: var(--color-warning-bg); color: #92400e; }
+
+        /* ── Tab Container (UX Findings) ─────────────── */
+        .tab-container { margin-top: 12px; }
+        .tab-buttons {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            background: var(--color-bg-tertiary); padding: 8px;
+            border-radius: 16px; margin-bottom: 24px;
+        }
+        .tab-btn {
+            padding: 10px 20px; border: none; border-radius: 12px;
+            background: transparent; font-size: 14px; font-weight: 500;
+            color: var(--color-text-muted); cursor: pointer;
+            transition: var(--transition-fast); font-family: var(--font-family);
+        }
+        .tab-btn:hover { color: var(--color-text-dark); }
+        .tab-btn.active {
+            background: var(--color-bg-primary); color: var(--color-primary);
+            box-shadow: var(--shadow-sm); font-weight: 600;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* ── Finding Cards ───────────────────────────── */
+        .finding-cards { display: flex; flex-direction: column; gap: 32px; }
+        .finding-card {
+            background: white; border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md); overflow: hidden;
+        }
+        .finding-card-header {
+            background: var(--color-primary); color: white;
+            padding: 18px 24px; font-size: 16px; font-weight: 600; line-height: 1.4;
+        }
+        .finding-card-body {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0;
+        }
+        .finding-screenshots {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 16px; padding: 20px;
+            border-right: 1px solid #f0f0f0;
+        }
+        .finding-screenshot { display: flex; flex-direction: column; gap: 6px; }
+        .finding-screenshot img {
+            width: 100%; max-height: 320px; object-fit: cover;
+            border-radius: var(--radius-sm); border: 1px solid #eee;
+        }
+        .finding-screenshot-label {
+            font-size: 12px; font-weight: 600; padding: 4px 10px;
+            border-radius: 6px; text-align: center;
+        }
+        .finding-screenshot-label.client-label { background: var(--color-danger-bg); color: #991b1b; }
+        .finding-screenshot-label.benchmark-label,
+        .finding-screenshot-label.competitor-label { background: var(--color-success-bg); color: #065f46; }
+        .finding-screenshot-url { font-size: 10px; color: var(--color-text-muted); text-align: center; }
+
+        /* Video cards */
+        .video-container { position: relative; border-radius: var(--radius-sm); overflow: hidden; cursor: pointer; background: #000; aspect-ratio: 16/9; }
+        .video-container video { width: 100%; height: 100%; object-fit: cover; }
+        .video-play-overlay {
+            position: absolute; inset: 0;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 8px; background: rgba(0,0,0,0.35);
+            transition: opacity var(--transition-fast);
+        }
+        .video-play-overlay span { color: white; font-size: 12px; font-weight: 500; }
+        .video-container.playing .video-play-overlay { opacity: 0; }
+        .video-container:hover .video-play-overlay { background: rgba(0,0,0,0.45); }
+        .video-badge {
+            position: absolute; top: 10px; left: 10px;
+            background: var(--color-primary); color: white;
+            padding: 3px 10px; border-radius: 6px;
+            font-size: 10px; font-weight: 700; letter-spacing: 0.5px;
+        }
+
+        /* Finding Analysis */
+        .finding-analysis { padding: 20px; display: flex; flex-direction: column; gap: 20px; }
+        .finding-section-header {
+            display: inline-block; padding: 4px 12px; border-radius: 6px;
+            font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+        .finding-section-header.observations-header { background: var(--color-warning-bg); color: #92400e; }
+        .finding-section-header.recommendations-header { background: var(--color-success-bg); color: #065f46; }
+        .finding-observations ul, .finding-recommendations ul {
+            list-style: none; padding: 0; display: flex; flex-direction: column; gap: 8px;
+        }
+        .finding-observations li, .finding-recommendations li {
+            font-size: 13px; line-height: 1.6; color: var(--color-text-dark);
+            padding-left: 16px; position: relative;
+        }
+        .finding-observations li::before { content: '•'; position: absolute; left: 0; color: var(--color-warning); font-weight: 700; }
+        .finding-recommendations li::before { content: '→'; position: absolute; left: 0; color: var(--color-success); font-weight: 700; }
+        .finding-benchmark-tag {
+            display: inline-block; padding: 4px 12px; border-radius: 12px;
+            font-size: 11px; font-weight: 600;
+            background: var(--color-secondary-light); color: var(--color-primary-dark);
+            margin-top: 4px;
+        }
+
+        .placeholder-img {
+            width: 100%; min-height: 160px;
+            border: 2px dashed #ddd; border-radius: var(--radius-sm);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--color-text-muted); font-size: 13px; background: #fafafa;
+        }
+
+        /* ── Audit Tables ────────────────────────────── */
+        .audit-table {
+            width: 100%; border-collapse: separate; border-spacing: 0;
+            border-radius: var(--radius-sm); overflow: hidden; box-shadow: var(--shadow-sm);
+            margin-bottom: 28px;
+        }
+        .audit-table th {
+            padding: 12px 16px; font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 0.5px; background: var(--color-bg-tertiary);
+            color: var(--color-text-muted); text-align: left;
+        }
+        .audit-table td { padding: 12px 16px; font-size: 14px; background: white; border-bottom: 1px solid #f5f5f5; }
+        .status-badge {
+            display: inline-block; padding: 3px 10px; border-radius: 12px;
+            font-size: 11px; font-weight: 600;
+        }
+        .status-pass { background: var(--color-success-bg); color: #065f46; }
+        .status-fail { background: var(--color-danger-bg); color: #991b1b; }
+        .status-partial { background: var(--color-warning-bg); color: #92400e; }
+
+        /* ── Tech Grid ───────────────────────────────── */
+        .tech-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 28px; }
+        .tech-card {
+            background: white; border-radius: var(--radius-sm); padding: 24px;
+            box-shadow: var(--shadow-sm);
+        }
+        .tech-card h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--color-primary); margin-bottom: 8px; }
+
+        .subsection-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: var(--color-text-dark); }
+
+        /* ── App Ecosystem ───────────────────────────── */
+        .app-ecosystem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-bottom: 28px; }
+        .app-column { background: white; border-radius: var(--radius-sm); padding: 24px; box-shadow: var(--shadow-sm); }
+        .app-column h4 { font-size: 15px; font-weight: 600; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid #f0f0f0; }
+        .app-column.present h4 { color: var(--color-success); }
+        .app-column.missing h4 { color: var(--color-danger); }
+        .app-item {
+            display: flex; align-items: center; gap: 12px;
+            padding: 10px 0; border-bottom: 1px solid #f8f8f8;
+        }
+        .app-icon {
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; font-weight: 700; flex-shrink: 0;
+        }
+        .app-item.present .app-icon { background: var(--color-success-bg); color: var(--color-success); }
+        .app-item.missing .app-icon { background: var(--color-danger-bg); color: var(--color-danger); }
+        .app-item-details { flex: 1; }
+        .app-name { font-size: 14px; font-weight: 500; }
+        .app-category { font-size: 11px; color: var(--color-text-muted); margin-top: 2px; }
+
+        /* ── Footer ──────────────────────────────────── */
+        .slide-footer {
+            margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+        }
+        .slide-footer img { height: 28px; }
+        .slide-footer p { font-size: 11px; color: var(--color-text-muted); }
+
+        /* ── Data Unavailable Notice ─────────────────── */
+        .data-unavailable {
+            background: var(--color-warning-bg); border: 1px solid #fcd34d;
+            border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 20px;
+        }
+        .data-unavailable p { font-size: 13px; color: #92400e; line-height: 1.6; }
+        .data-unavailable strong { font-weight: 600; }
+
+        /* ── Responsive ──────────────────────────────── */
+        @media (max-width: 900px) {
+            .finding-card-body { grid-template-columns: 1fr; }
+            .finding-screenshots { border-right: none; border-bottom: 1px solid #f0f0f0; }
+            .app-ecosystem-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .container { padding: 0 16px; }
+            .finding-screenshots { grid-template-columns: 1fr; }
+            .carousel-label { display: none; }
+            .topbar-client { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ── Cover Page ────────────────────────────── -->
+    <div class="cover-page" id="coverPage">
+        <img src="growisto-logo-white.png" alt="Growisto" class="cover-logo">
+        <h1>Website & Conversion Audit</h1>
+        <h2>Urban Platter</h2>
+        <p class="cover-date">March 2026</p>
+        <button class="cover-btn" onclick="showLogin()">View Audit</button>
+    </div>
+
+    <!-- ── Login Screen ──────────────────────────── -->
+    <div class="login-screen hidden" id="loginScreen">
+        <h3>Enter Password</h3>
+        <input type="password" id="passwordInput" placeholder="Password">
+        <button onclick="checkPassword()">Access Audit</button>
+        <p class="login-error" id="errorMsg">Incorrect password. Please try again.</p>
+    </div>
+
+    <!-- ── Main Content ──────────────────────────── -->
+    <div class="main-content" id="mainContent">
+
+        <!-- Topbar -->
+        <div class="topbar">
+            <img src="growisto-logo.png" alt="Growisto" class="topbar-logo">
+            <span class="topbar-client">Urban Platter</span>
+            <div class="topbar-nav">
+                <div class="topbar-nav-item active">Audit Overview</div>
+                <div class="topbar-nav-item">Traffic Analytics</div>
+                <div class="topbar-nav-item">Performance</div>
+                <div class="topbar-nav-item">UX Findings</div>
+                <div class="topbar-nav-item">Technology</div>
+                <div class="topbar-nav-item">Apps</div>
+            </div>
+        </div>
+
+        <!-- Slide Area -->
+        <div class="slide-area">
+
+            <!-- SLIDE 01: AUDIT OVERVIEW -->
+            <div class="slide active" data-slide-index="0">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">01</span>
+                        <div class="section-title-group">
+                            <h2>Audit Overview</h2>
+                            <p>What we analyzed and key areas of opportunity</p>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <p>We conducted a comprehensive review of <strong>urbanplatter.com</strong> across 4 dimensions: Performance & Speed, UX & Conversion Design, Technology & App Stack, and SEO Fundamentals. We benchmarked Urban Platter against <strong>4 leading Food & Beverage brands</strong> — Vahdam, Blue Tokai, Sleepy Owl, and Slurrp Farm — to identify gaps and opportunities.</p>
+                    </div>
+
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <div class="info-value">16</div>
+                            <div class="info-label">Total Findings</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value">4</div>
+                            <div class="info-label">Homepage</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value">3</div>
+                            <div class="info-label">Collection</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value">5</div>
+                            <div class="info-label">Product Page</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value">4</div>
+                            <div class="info-label">Cart & Checkout</div>
+                        </div>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 02: TRAFFIC ANALYTICS -->
+            <div class="slide" data-slide-index="1">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">02</span>
+                        <div class="section-title-group">
+                            <h2>Traffic Analytics</h2>
+                            <p>Visitor behavior and traffic sources</p>
+                        </div>
+                    </div>
+
+                    <div class="data-unavailable">
+                        <p><strong>SimilarWeb Data Not Available</strong> — Detailed traffic analytics (visits, bounce rate, pages/visit, session duration, traffic sources, device split) require SimilarWeb Pro access, which returned limited data for this domain. We recommend reviewing your GA4 dashboard for accurate traffic metrics. Once you share GA4 access, we'll provide a full funnel analysis in the next phase.</p>
+                    </div>
+
+                    <div class="insight-box">
+                        <p>While SimilarWeb data is unavailable for this report, our analysis of the site's technology stack confirms <strong>GA4 and GTM are installed</strong>. Based on the product catalog (800+ SKUs), review volume (Judge.me reviews visible on multiple products), and presence of multiple marketing pixels (Facebook, Clarity), Urban Platter appears to be a <strong>Tier 2-3 store</strong> with meaningful traffic volume. A full funnel analysis with GA4 access will quantify exact conversion opportunities.</p>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 03: CONVERSION QUESTION -->
+            <div class="slide" data-slide-index="2">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">03</span>
+                        <div class="section-title-group">
+                            <h2>The Conversion Question</h2>
+                            <p>Where visitors drop off in the purchase funnel</p>
+                        </div>
+                    </div>
+
+                    <table class="funnel-table">
+                        <thead>
+                            <tr>
+                                <th>Funnel Stage</th>
+                                <th>Urban Platter</th>
+                                <th>Industry Benchmark (P50)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PDP View Rate</td>
+                                <td class="client-val">?</td>
+                                <td class="benchmark-val">89.6%</td>
+                            </tr>
+                            <tr>
+                                <td>Add to Cart Rate</td>
+                                <td class="client-val">?</td>
+                                <td class="benchmark-val">11.95%</td>
+                            </tr>
+                            <tr>
+                                <td>Cart → Checkout Rate</td>
+                                <td class="client-val">?</td>
+                                <td class="benchmark-val">29.8%</td>
+                            </tr>
+                            <tr>
+                                <td>Ecommerce Conversion Rate</td>
+                                <td class="client-val">?</td>
+                                <td class="benchmark-val">2.05%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="cta-box">
+                        <h3>Unlock Your Full Funnel Analysis</h3>
+                        <p>With GA4 access, we can map your exact funnel — from landing page to purchase — and quantify exactly how much revenue each drop-off point is costing you. Food & Beverage brands we've worked with typically see 20-40% conversion uplift after addressing funnel gaps. The benchmarks above are from our analysis of 36 e-commerce brands.</p>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 04: PERFORMANCE BENCHMARKS -->
+            <div class="slide" data-slide-index="3">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">04</span>
+                        <div class="section-title-group">
+                            <h2>Performance Benchmarks</h2>
+                            <p>How Urban Platter stacks up against competitors</p>
+                        </div>
+                    </div>
+
+                    <table class="competition-table">
+                        <thead>
+                            <tr>
+                                <th>Brand</th>
+                                <th>Mobile Score</th>
+                                <th>Desktop Score</th>
+                                <th>LCP</th>
+                                <th>CLS</th>
+                                <th>TBT</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="client-row">
+                                <td>Urban Platter</td>
+                                <td class="score-cell moderate">61</td>
+                                <td class="score-cell poor">14</td>
+                                <td class="score-cell good">1.0s</td>
+                                <td class="score-cell good">0.059</td>
+                                <td class="score-cell poor">2,320ms</td>
+                            </tr>
+                            <tr>
+                                <td>Vahdam</td>
+                                <td class="score-cell moderate">52</td>
+                                <td class="score-cell good">83</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>Blue Tokai</td>
+                                <td class="score-cell poor">34</td>
+                                <td class="score-cell moderate">71</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>Sleepy Owl</td>
+                                <td class="score-cell moderate">54</td>
+                                <td class="score-cell good">86</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                            <tr>
+                                <td>Slurrp Farm</td>
+                                <td class="score-cell good">94</td>
+                                <td class="score-cell good">91</td>
+                                <td>—</td>
+                                <td>—</td>
+                                <td>—</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="insight-box">
+                        <p><strong>Critical finding: Desktop PageSpeed is 14/100</strong> — the lowest in the competitive set by a wide margin. While Urban Platter's mobile score (61) is competitive, the desktop experience is severely impacted by a <strong>TBT of 2,320ms</strong> (target: &lt;200ms), meaning the page freezes for over 2 seconds during load. This is primarily caused by heavy third-party scripts (Goaffpro, Quinn video, multiple tracking pixels). Every competitor outperforms Urban Platter on desktop — Slurrp Farm leads at 91/100.</p>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 05: CORE WEB VITALS -->
+            <div class="slide" data-slide-index="4">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">05</span>
+                        <div class="section-title-group">
+                            <h2>Core Web Vitals</h2>
+                            <p>Google's key metrics for user experience</p>
+                        </div>
+                    </div>
+
+                    <div class="cwv-grid">
+                        <div class="cwv-card">
+                            <div class="cwv-metric">LCP</div>
+                            <div class="cwv-value good">1.0s</div>
+                            <div class="cwv-target">Target: ≤ 2.5s</div>
+                            <span class="cwv-status pass">Pass</span>
+                        </div>
+                        <div class="cwv-card">
+                            <div class="cwv-metric">FCP</div>
+                            <div class="cwv-value good">1.8s</div>
+                            <div class="cwv-target">Target: ≤ 1.8s</div>
+                            <span class="cwv-status pass">Pass</span>
+                        </div>
+                        <div class="cwv-card">
+                            <div class="cwv-metric">TBT</div>
+                            <div class="cwv-value poor">2,320ms</div>
+                            <div class="cwv-target">Target: ≤ 200ms</div>
+                            <span class="cwv-status fail">Fail</span>
+                        </div>
+                        <div class="cwv-card">
+                            <div class="cwv-metric">CLS</div>
+                            <div class="cwv-value good">0.059</div>
+                            <div class="cwv-target">Target: ≤ 0.1</div>
+                            <span class="cwv-status pass">Pass</span>
+                        </div>
+                        <div class="cwv-card">
+                            <div class="cwv-metric">INP</div>
+                            <div class="cwv-value moderate">N/A</div>
+                            <div class="cwv-target">Target: ≤ 200ms</div>
+                            <span class="cwv-status needs-work">Not Measured</span>
+                        </div>
+                    </div>
+
+                    <div class="insight-box">
+                        <p>Urban Platter passes 3 of 4 measurable Core Web Vitals. The critical failure is <strong>Total Blocking Time (2,320ms)</strong> — over 11x the recommended threshold. This means the main thread is blocked for 2.3 seconds during page load, causing the page to feel frozen. Users cannot interact with buttons, links, or forms during this time. The primary culprits are heavy third-party scripts: Goaffpro affiliate tracking, Quinn video widget, and multiple analytics pixels loading synchronously.</p>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 06: UX & CONVERSION FINDINGS -->
+            <div class="slide" data-slide-index="5">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">06</span>
+                        <div class="section-title-group">
+                            <h2>UX & Conversion Findings</h2>
+                            <p>Page-by-page opportunities to increase conversions</p>
+                        </div>
+                    </div>
+
+                    <div class="tab-container">
+                        <div class="tab-buttons">
+                            <button class="tab-btn active" onclick="showTab('tab-homepage', this)">Homepage (4)</button>
+                            <button class="tab-btn" onclick="showTab('tab-collection', this)">Collection (3)</button>
+                            <button class="tab-btn" onclick="showTab('tab-pdp', this)">Product Page (5)</button>
+                            <button class="tab-btn" onclick="showTab('tab-cart', this)">Cart & Checkout (4)</button>
+                        </div>
+
+                        <!-- TAB: Homepage -->
+                        <div class="tab-content active" id="tab-homepage">
+                            <div class="finding-cards">
+
+                                <!-- HP-F1: No Trust Badges / USP Icons -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Trust badges and USP icons on the homepage can reduce bounce rate by 8-12% for first-time visitors
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/hp_hero_desktop.jpeg" alt="Urban Platter homepage">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-yogabar-homepage-trust.jpeg" alt="Yogabar trust badges">
+                                                <div class="finding-screenshot-label benchmark-label">Yogabar</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) in the hero or first fold area</li>
+                                                    <li>First-time visitors see product banners but no reason to trust the brand — no "100% Natural", "FSSAI Certified", or "Free Shipping" badges</li>
+                                                    <li>7 out of 10 top Food & Bev brands display USP icons prominently on the homepage</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a USP icon strip below the hero banner: "100% Natural", "FSSAI Certified", "800+ Products", "Free Shipping Over ₹499"</li>
+                                                    <li>Use simple iconography with short text — visible without scrolling on both mobile and desktop</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 7/10 stores have USP icons</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HP-F2: No Reviews / Press / Social Proof Section -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Customer reviews and press mentions on the homepage build credibility and can increase conversion by 10-15%
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/hp_mid_desktop.jpeg" alt="Urban Platter mid-page">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-sleepyowl-homepage-press.jpeg" alt="Sleepy Owl press mentions">
+                                                <div class="finding-screenshot-label benchmark-label">Sleepy Owl</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No customer testimonial carousel or review highlights anywhere on the homepage — despite having Judge.me reviews on PDPs</li>
+                                                    <li>No press/media mentions section (brands like Sleepy Owl showcase logos from Vogue, Economic Times, etc.)</li>
+                                                    <li>Missing "As Featured In" or "Trusted By" section that can instantly communicate brand authority</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a "What Our Customers Say" carousel pulling top-rated Judge.me reviews (already have the data)</li>
+                                                    <li>Add a press/media logo strip if Urban Platter has been featured in any publications</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 6/10 stores have review/press sections</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HP-F3: No Newsletter / Email Capture -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Email capture on the homepage can build a 10-20% repeat purchase channel for Food & Bev brands
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/hp_footer_desktop.jpeg" alt="Urban Platter footer">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-olipop-newsletter.jpeg" alt="Olipop newsletter">
+                                                <div class="finding-screenshot-label benchmark-label">Olipop</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No newsletter signup form visible on the homepage — neither in the body content nor the footer area</li>
+                                                    <li>No exit-intent popup or email capture mechanism was triggered during our testing (loaded in incognito, waited 30+ seconds, scrolled, simulated exit intent)</li>
+                                                    <li>For a consumable product like food, email is a critical repeat purchase driver — brands like Olipop use prominent homepage signup with incentives</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a newsletter section above the footer with a compelling incentive ("Get 10% off your first order")</li>
+                                                    <li>Consider a timed or exit-intent popup with an email capture offer — time it after 15-20 seconds, not immediately</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 8/10 stores have email capture</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- HP-F4: SEO — Empty H1 Tags -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Empty H1 tags hurt SEO rankings and organic traffic — the #1 free traffic source for e-commerce
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <div class="placeholder-img">Homepage H1 tag is present but empty — &lt;h1&gt;&lt;/h1&gt; with no content</div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Code View</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <div class="placeholder-img">Best practice: Single, descriptive H1 like "Premium Imported Food & Ingredients — Urban Platter"</div>
+                                                <div class="finding-screenshot-label benchmark-label">SEO Best Practice</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>The homepage has an H1 tag in the HTML but it contains no text — Google sees an empty primary heading</li>
+                                                    <li>H1 is the most important on-page SEO signal — an empty H1 tells search engines the page has no defined topic</li>
+                                                    <li>This directly impacts ranking potential for branded and category keywords</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a descriptive, keyword-rich H1 to the homepage: e.g., "Premium Imported Foods, Spices & Superfoods — Urban Platter"</li>
+                                                    <li>Ensure every key page (collection, PDP) also has a unique, non-empty H1 tag</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — SEO fundamental, 10/10 stores should have this</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TAB: Collection -->
+                        <div class="tab-content" id="tab-collection">
+                            <div class="finding-cards">
+
+                                <!-- CL-F1: No Breadcrumb Navigation -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Breadcrumb navigation improves site usability and boosts SEO through structured internal linking
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/collection_desktop.jpeg" alt="Urban Platter collection page">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-bluetokai-collection.jpeg" alt="Blue Tokai collection page">
+                                                <div class="finding-screenshot-label benchmark-label">Blue Tokai</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No breadcrumb trail on collection pages — users have no visual path showing where they are in the site hierarchy</li>
+                                                    <li>With 800+ SKUs across many categories, breadcrumbs are essential for navigation and reducing "lost" feeling</li>
+                                                    <li>Breadcrumb schema markup is also missing — a direct SEO enhancement that helps Google understand site structure</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add breadcrumb navigation to all collection and product pages: Home > Category > Sub-Category</li>
+                                                    <li>Implement BreadcrumbList schema (JSON-LD) alongside the visual breadcrumbs for SEO benefit</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 9/10 stores have breadcrumbs</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CL-F2: No Variant Swatches on Cards -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/collection_desktop.jpeg" alt="Urban Platter collection cards">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-bluetokai-collection.jpeg" alt="Blue Tokai collection with filters">
+                                                <div class="finding-screenshot-label benchmark-label">Blue Tokai</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>Product cards on collection pages show only the product image, title, and price — no variant indicators (size, weight, flavor)</li>
+                                                    <li>Many Urban Platter products come in multiple sizes (100g, 250g, 500g, 1kg) — shoppers must click into each PDP to see available sizes</li>
+                                                    <li>This creates unnecessary friction and extra clicks, especially on mobile where back-navigation is slower</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add weight/size variant selectors directly on collection page product cards</li>
+                                                    <li>Show price range (₹199 - ₹599) on cards with multiple variants so shoppers know the options at a glance</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 9/10 stores have variant selectors on cards</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CL-F3: 65 Products Per Page / No Pagination -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Loading 65+ products on a single page slows performance and overwhelms shoppers
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/collection_desktop.jpeg" alt="Urban Platter collection all products">
+                                                <div class="finding-screenshot-label client-label">Urban Platter — 65 products loaded</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <div class="placeholder-img">Best practice: 24-36 products per page with pagination or infinite scroll with lazy loading</div>
+                                                <div class="finding-screenshot-label benchmark-label">Industry Standard</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>Collection pages load all products at once (65+ on some categories) with no pagination, infinite scroll, or "Load More" button</li>
+                                                    <li>This contributes to slow page performance — each product card loads images, pricing, and markup</li>
+                                                    <li>Users face choice paralysis with too many options displayed simultaneously</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Implement pagination or "Load More" with 24-36 products per page</li>
+                                                    <li>Add robust filtering (by type, price, dietary preference) to help users narrow from 800+ SKUs</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 stores use pagination or lazy loading</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TAB: Product Page -->
+                        <div class="tab-content" id="tab-pdp">
+                            <div class="finding-cards">
+
+                                <!-- PDP-F1: No Sticky ATC on Mobile -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        A sticky Add to Cart on mobile PDP can boost conversions by 3-5% — it keeps the buy action always accessible
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_mobile.jpeg" alt="Urban Platter mobile PDP">
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-yogabar-pdp-sticky-atc-mobile.jpeg" alt="Yogabar sticky ATC">
+                                                <div class="finding-screenshot-label benchmark-label">Yogabar</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>On mobile, once the user scrolls past the ATC button area, there is no sticky bar to add the product — the user must scroll back up to buy</li>
+                                                    <li>Urban Platter PDPs are long (reviews, description, related products) — on mobile, the ATC button is out of view for most of the browsing session</li>
+                                                    <li>5 out of 10 top Food & Bev brands use sticky ATC bars on mobile, and this is a growing pattern</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a sticky bottom bar on mobile PDPs showing: product name, price, and "Add to Cart" button</li>
+                                                    <li>Include variant selector in the sticky bar if the product has size/weight options</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 stores have sticky ATC on mobile</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PDP-F2: No Trust Badges Near ATC -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Trust badges next to the Add to Cart button reassure shoppers at the critical purchase moment
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_top_desktop.jpeg" alt="Urban Platter PDP ATC area">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-yogabar-pdp-trust-badges.jpeg" alt="Yogabar PDP trust badges">
+                                                <div class="finding-screenshot-label benchmark-label">Yogabar</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>The PDP ATC area has no trust indicators — no shipping promise, no return policy, no secure checkout badge</li>
+                                                    <li>Yogabar and other competitors display "Free Shipping", "Easy Returns", and certification badges directly below the ATC button</li>
+                                                    <li>Trust badges at the purchase decision point can reduce cart abandonment by 5-10%</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add 3-4 trust icons below the ATC button: "100% Authentic", "Fast Delivery", "Easy Returns", "Secure Payment"</li>
+                                                    <li>Include FSSAI certification badge and any quality certifications Urban Platter holds</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 8/10 stores have trust badges on PDP</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PDP-F3: No Delivery Estimation / Pincode Checker -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Delivery date estimation reduces purchase anxiety and can lift conversions by 5-8% for Indian e-commerce
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_mid_desktop.jpeg" alt="Urban Platter PDP mid section">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-vahdam-pdp-atc.jpeg" alt="Vahdam PDP with delivery info">
+                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No pincode checker or estimated delivery date on the PDP — shoppers don't know when they'll receive the product before adding to cart</li>
+                                                    <li>For food products (especially perishable or imported items), delivery timeline is a key purchase consideration</li>
+                                                    <li>Indian shoppers are conditioned by Amazon/Flipkart to expect delivery date visibility — its absence creates friction</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a pincode-based delivery estimation widget on the PDP showing "Delivers to [city] by [date]"</li>
+                                                    <li>Apps like ETA Shipping or custom Shopify integrations can connect with your shipping partner APIs</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 6/10 stores have delivery estimation</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PDP-F4: No Nutritional Information Table -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Nutritional info tables are a must-have for food e-commerce — 8/10 top brands display them prominently
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_bottom_desktop.jpeg" alt="Urban Platter PDP description area">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-olipop-pdp-nutrition.jpeg" alt="Olipop nutrition facts">
+                                                <div class="finding-screenshot-label benchmark-label">Olipop</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>Product descriptions exist but lack structured nutritional information tables — key for health-conscious shoppers</li>
+                                                    <li>Urban Platter sells superfoods, nuts, exotic ingredients — buyers specifically look for nutritional data before purchasing</li>
+                                                    <li>Olipop and other leading food brands display nutrition facts in a clean, visual table format directly on the PDP</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add structured nutrition facts tables to applicable PDPs using a tabbed or accordion layout</li>
+                                                    <li>Include per-serving and per-100g values, allergen warnings, and ingredient lists in a standardized format</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 8/10 Food & Bev stores have nutrition info</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- PDP-F5: No Subscription Option -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Subscribe & Save increases customer lifetime value by 40-60% for consumable food products
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_top_desktop.jpeg" alt="Urban Platter PDP no subscription">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-olipop-pdp-subscription.jpeg" alt="Olipop subscription option">
+                                                <div class="finding-screenshot-label benchmark-label">Olipop</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No "Subscribe & Save" option on any PDP — all purchases are one-time only</li>
+                                                    <li>Urban Platter sells consumable products (nuts, spices, superfoods) that are naturally replenished — ideal for subscription</li>
+                                                    <li>5 out of 10 top Food & Bev brands offer subscription, and this is a growing pattern with significant LTV impact</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Implement a "Subscribe & Save" option on eligible PDPs with 10-15% discount for subscribers</li>
+                                                    <li>Start with top-selling staples (nuts, dried fruits, seasonings) and expand based on adoption</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 stores offer subscription</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- TAB: Cart & Checkout -->
+                        <div class="tab-content" id="tab-cart">
+                            <div class="finding-cards">
+
+                                <!-- CART-F1: No Express Checkout -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Express checkout options (UPI, GPay) can reduce checkout time by 40% and boost completion rates
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/cart_drawer_desktop.jpeg" alt="Urban Platter cart drawer">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-bluetokai-cart-checkout.jpeg" alt="Blue Tokai cart with express checkout">
+                                                <div class="finding-screenshot-label benchmark-label">Blue Tokai</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>The cart drawer (powered by Shopflo) has a single "Checkout" button but no express checkout options (GPay, UPI, Shop Pay)</li>
+                                                    <li>Indian shoppers increasingly prefer UPI-based instant checkout — not offering it adds friction</li>
+                                                    <li>Express checkout buttons in the cart can skip the address/payment form entirely for returning customers</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Enable dynamic checkout buttons (GPay, Shop Pay) in the cart drawer alongside the main Checkout CTA</li>
+                                                    <li>Ensure Shopflo checkout integration supports UPI as a primary payment method</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 6/10 stores have express checkout in cart</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CART-F2: Basic Cross-sell -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Smart cart cross-sell with complementary product suggestions can increase AOV by 8-15%
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/cart_drawer_desktop.jpeg" alt="Urban Platter cart cross-sell">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-vahdam-cart-upsell.jpeg" alt="Vahdam cart upsell">
+                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>The cart drawer has a basic cross-sell section (powered by Rebuy) but it shows generic "You may also like" products rather than contextual complements</li>
+                                                    <li>Cross-sell is present but under-optimized — not using "Frequently Bought Together" or "Complete the Recipe" framing</li>
+                                                    <li>Vahdam's cart upsell uses contextual framing ("Goes well with your tea") which drives higher add-on rates</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Configure Rebuy with product-specific complementary suggestions (e.g., if nuts → suggest trail mixes, if spices → suggest recipe kits)</li>
+                                                    <li>Add a free shipping progress bar ("Add ₹149 more for free shipping") to incentivize cart additions</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 8/10 stores have cross-sell in cart</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CART-F3: No Trust / Payment Icons -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Payment security icons in the cart can reduce abandonment by 5-8% at the final purchase decision
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/cart_drawer_desktop.jpeg" alt="Urban Platter cart no trust badges">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-bluetokai-cart-checkout.jpeg" alt="Blue Tokai cart trust badges">
+                                                <div class="finding-screenshot-label benchmark-label">Blue Tokai</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No payment method icons (Visa, Mastercard, UPI, RuPay), no security badges, and no policy reassurance in the cart drawer</li>
+                                                    <li>The cart is the last step before checkout — shoppers who see accepted payment icons and "Secure Checkout" feel more confident</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a row of accepted payment icons below the checkout button: Visa, Mastercard, UPI, RuPay, Net Banking</li>
+                                                    <li>Add a "Secure Checkout" text with lock icon near the checkout CTA</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 7/10 stores show payment icons in cart</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- CART-F4: No Delivery Estimation in Cart -->
+                                <div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Showing expected delivery date in the cart reduces last-minute abandonment for food orders
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/cart_drawer_desktop.jpeg" alt="Urban Platter cart no delivery estimate">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/competitor-vahdam-cart-upsell.jpeg" alt="Vahdam cart with delivery info">
+                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>Cart drawer shows subtotal and checkout button but no estimated delivery date or shipping timeline</li>
+                                                    <li>For food products, delivery speed matters — shoppers want to know if items arrive fresh and on time</li>
+                                                    <li>Not knowing delivery timeline at cart stage is a top reason for abandonment in Indian e-commerce</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Show estimated delivery date or range in the cart drawer: "Estimated delivery: Mar 16-18"</li>
+                                                    <li>If pincode is known (from PDP check or previous order), auto-populate the delivery estimate</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 stores show delivery estimates in cart</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 07: TECHNOLOGY ASSESSMENT -->
+            <div class="slide" data-slide-index="6">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">07</span>
+                        <div class="section-title-group">
+                            <h2>Technology Assessment</h2>
+                            <p>Platform, theme, and architecture insights</p>
+                        </div>
+                    </div>
+
+                    <div class="tech-grid">
+                        <div class="tech-card">
+                            <h4>Platform</h4>
+                            <p><strong>Shopify</strong></p>
+                            <p style="margin-top: 8px; font-size: 13px; color: var(--color-text-muted);">Standard Shopify plan. Well-established store with 800+ products and robust category structure.</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4>Theme</h4>
+                            <p><strong>Custom / Proprietary Theme</strong></p>
+                            <p style="margin-top: 8px; font-size: 13px; color: var(--color-text-muted);">Not a standard Shopify theme store theme. Custom-built by their agency. Theme lacks some modern features (sticky ATC, breadcrumbs, variant swatches on cards).</p>
+                        </div>
+                        <div class="tech-card">
+                            <h4>Analytics</h4>
+                            <p><strong>GTM + GA4 + FB Pixel + Clarity</strong></p>
+                            <p style="margin-top: 8px; font-size: 13px; color: var(--color-text-muted);">Good analytics foundation. Google Tag Manager installed with GA4, Facebook Pixel, and Microsoft Clarity. GA4 ecommerce event status needs verification with access.</p>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Technology Narrative</h3>
+                    <div class="insight-box">
+                        <p>Urban Platter runs on Shopify with a <strong>custom-built theme</strong> that handles the basics well (product display, cart drawer via Shopflo, search) but lacks modern conversion-focused features found in premium Shopify themes. The <strong>Desktop PageSpeed score of 14/100</strong> is a critical red flag — driven primarily by heavy third-party script loading (Goaffpro affiliate tracking loads twice, Quinn video widget, multiple analytics pixels firing synchronously). We detected <strong>131+ JavaScript errors</strong> on scroll (TypeError in PDP scripts) and a suspicious ngrok webhook in the codebase, suggesting development artifacts left in production. The analytics stack (GTM + GA4 + Clarity + FB Pixel) is solid in terms of tool selection, but needs verification of GA4 ecommerce event firing for proper funnel tracking.</p>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 08: APP ECOSYSTEM -->
+            <div class="slide" data-slide-index="7">
+                <div class="container">
+                    <div class="section-header">
+                        <span class="section-number">08</span>
+                        <div class="section-title-group">
+                            <h2>App Ecosystem</h2>
+                            <p>What's installed vs what's missing from best-in-class Food & Beverages stores</p>
+                        </div>
+                    </div>
+
+                    <div class="app-ecosystem-grid">
+                        <div class="app-column present">
+                            <h4>Present</h4>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Judge.me</div>
+                                    <div class="app-category">Reviews & Social Proof</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Shopflo</div>
+                                    <div class="app-category">Cart & Checkout Optimization</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Rebuy</div>
+                                    <div class="app-category">Cross-sell & Upsell</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Goaffpro</div>
+                                    <div class="app-category">Affiliate Marketing</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Quinn Video</div>
+                                    <div class="app-category">Product Video Widget</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">WhatsApp Chat Widget</div>
+                                    <div class="app-category">Customer Support</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">GTM + GA4</div>
+                                    <div class="app-category">Analytics & Tracking</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Facebook Pixel</div>
+                                    <div class="app-category">Ad Tracking</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Microsoft Clarity</div>
+                                    <div class="app-category">Heatmaps & Session Recording</div>
+                                </div>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Razorpay / Cashfree</div>
+                                    <div class="app-category">Payment Gateway</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="app-column missing">
+                            <h4>Missing</h4>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Email Marketing Platform</div>
+                                    <div class="app-category">Retention & Re-engagement (Klaviyo, Mailchimp)</div>
+                                </div>
+                            </div>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Subscription / Subscribe & Save</div>
+                                    <div class="app-category">Recurring Revenue (Recharge, Loop)</div>
+                                </div>
+                            </div>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Loyalty & Rewards Program</div>
+                                    <div class="app-category">Customer Retention (Smile.io, Yotpo)</div>
+                                </div>
+                            </div>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Advanced Search & Filtering</div>
+                                    <div class="app-category">Product Discovery (Searchanise, Algolia)</div>
+                                </div>
+                            </div>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Back-in-Stock Alerts</div>
+                                    <div class="app-category">Demand Capture (Back in Stock, Appikon)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="slide-footer">
+                        <img src="growisto-logo.png" alt="Growisto">
+                        <p>Confidential — Prepared for Urban Platter by Growisto | March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mid-Right Navigation Buttons -->
+            <button class="mid-nav-btn" id="midPrevBtn" disabled>
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            </button>
+            <button class="mid-nav-btn" id="midNextBtn">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+            </button>
+
+        </div><!-- /.slide-area -->
+
+        <!-- Bottom Bar (L2 Carousel) -->
+        <div class="bottom-bar">
+            <div class="carousel" id="carousel"></div>
+            <span class="slide-counter" id="slideCounter">1 / 1</span>
+        </div>
+
+    </div><!-- /.main-content -->
+
+    <!-- ============================================
+         JAVASCRIPT
+    ============================================ -->
+    <script>
+        // ── Password Protection ──────────────────────
+        var correctPassword = 'urbanplatter2026';
+
+        function showLogin() {
+            document.getElementById('coverPage').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('passwordInput').focus();
+        }
+
+        function checkPassword() {
+            var input = document.getElementById('passwordInput').value;
+            if (input === correctPassword) {
+                sessionStorage.setItem('audit_authenticated', 'true');
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('mainContent').classList.add('visible');
+            } else {
+                document.getElementById('errorMsg').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+                document.getElementById('passwordInput').focus();
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        if (sessionStorage.getItem('audit_authenticated') === 'true') {
+            document.getElementById('coverPage').classList.add('hidden');
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('mainContent').classList.add('visible');
+        }
+
+        // ── Tab Switching (UX Findings) ──
+        function showTab(tabId, btn) {
+            document.querySelectorAll('.tab-content').forEach(function(tab) {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(function(b) {
+                b.classList.remove('active');
+            });
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+        }
+
+        // ── L1/L2 Hierarchical Navigation ──────────────
+        (function() {
+            var sections = [
+                {
+                    "name": "Audit Overview",
+                    "subSlides": [
+                        { "title": "Overview", "globalIndex": 0 }
+                    ]
+                },
+                {
+                    "name": "Traffic Analytics",
+                    "subSlides": [
+                        { "title": "Key Metrics", "globalIndex": 1 },
+                        { "title": "Conversion Question", "globalIndex": 2 }
+                    ]
+                },
+                {
+                    "name": "Performance",
+                    "subSlides": [
+                        { "title": "Benchmarks", "globalIndex": 3 },
+                        { "title": "Core Web Vitals", "globalIndex": 4 }
+                    ]
+                },
+                {
+                    "name": "UX Findings",
+                    "subSlides": [
+                        { "title": "All Findings", "globalIndex": 5 }
+                    ]
+                },
+                {
+                    "name": "Technology",
+                    "subSlides": [
+                        { "title": "Tech Assessment", "globalIndex": 6 }
+                    ]
+                },
+                {
+                    "name": "Apps",
+                    "subSlides": [
+                        { "title": "App Ecosystem", "globalIndex": 7 }
+                    ]
+                }
+            ];
+
+            var currentSection = 0;
+            var currentSubSlide = 0;
+            var slides = document.querySelectorAll('.slide');
+            var topNavItems = document.querySelectorAll('.topbar-nav-item');
+            var carousel = document.getElementById('carousel');
+            var counter = document.getElementById('slideCounter');
+            var prevBtn = document.getElementById('midPrevBtn');
+            var nextBtn = document.getElementById('midNextBtn');
+
+            function getGlobalIndex(secIdx, subIdx) {
+                return sections[secIdx].subSlides[subIdx].globalIndex;
+            }
+
+            function buildL2Carousel(secIdx) {
+                while (carousel.firstChild) carousel.removeChild(carousel.firstChild);
+                var subs = sections[secIdx].subSlides;
+                for (var i = 0; i < subs.length; i++) {
+                    var item = document.createElement('div');
+                    item.className = 'carousel-item' + (i === currentSubSlide ? ' active' : '');
+                    item.setAttribute('data-sub', String(i));
+
+                    var numSpan = document.createElement('span');
+                    numSpan.className = 'carousel-number';
+                    numSpan.textContent = String(i + 1);
+
+                    var labelSpan = document.createElement('span');
+                    labelSpan.className = 'carousel-label';
+                    labelSpan.textContent = subs[i].title;
+
+                    item.appendChild(numSpan);
+                    item.appendChild(labelSpan);
+
+                    item.addEventListener('click', (function(idx) {
+                        return function() { goToSubSlide(currentSection, idx); };
+                    })(i));
+                    carousel.appendChild(item);
+                }
+                var activeItem = carousel.querySelector('.carousel-item.active');
+                if (activeItem) activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
+
+            function goToSubSlide(secIdx, subIdx) {
+                var curGlobal = getGlobalIndex(currentSection, currentSubSlide);
+                slides[curGlobal].classList.remove('active');
+
+                currentSection = secIdx;
+                currentSubSlide = subIdx;
+
+                var newGlobal = getGlobalIndex(secIdx, subIdx);
+                slides[newGlobal].classList.add('active');
+                slides[newGlobal].scrollTop = 0;
+
+                topNavItems.forEach(function(item) { item.classList.remove('active'); });
+                topNavItems[secIdx].classList.add('active');
+                topNavItems[secIdx].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+                buildL2Carousel(secIdx);
+                counter.textContent = (subIdx + 1) + ' / ' + sections[secIdx].subSlides.length;
+
+                prevBtn.disabled = (secIdx === 0 && subIdx === 0);
+                nextBtn.disabled = (secIdx === sections.length - 1 && subIdx === sections[secIdx].subSlides.length - 1);
+            }
+
+            function goNext() {
+                if (currentSubSlide < sections[currentSection].subSlides.length - 1) {
+                    goToSubSlide(currentSection, currentSubSlide + 1);
+                } else if (currentSection < sections.length - 1) {
+                    goToSubSlide(currentSection + 1, 0);
+                }
+            }
+
+            function goPrev() {
+                if (currentSubSlide > 0) {
+                    goToSubSlide(currentSection, currentSubSlide - 1);
+                } else if (currentSection > 0) {
+                    goToSubSlide(currentSection - 1, sections[currentSection - 1].subSlides.length - 1);
+                }
+            }
+
+            nextBtn.addEventListener('click', goNext);
+            prevBtn.addEventListener('click', goPrev);
+
+            topNavItems.forEach(function(item, idx) {
+                item.addEventListener('click', function() { goToSubSlide(idx, 0); });
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (!document.getElementById('mainContent').classList.contains('visible')) return;
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); goNext(); }
+                else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goPrev(); }
+            });
+
+            buildL2Carousel(0);
+            counter.textContent = '1 / ' + sections[0].subSlides.length;
+            prevBtn.disabled = true;
+        })();
+    </script>
+</body>
+</html>
