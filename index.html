@@ -315,6 +315,20 @@
         .finding-screenshot-label.competitor-label { background: var(--color-success-bg); color: #065f46; }
         .finding-screenshot-url { font-size: 10px; color: var(--color-text-muted); text-align: center; }
 
+        /* Stacked layout for desktop screenshot cards — bigger images for screen sharing */
+        .finding-card-stacked .finding-card-body {
+            grid-template-columns: 1fr;
+        }
+        .finding-card-stacked .finding-screenshots {
+            grid-template-columns: 1fr;
+            border-right: none;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .finding-card-stacked .finding-screenshot img {
+            max-height: none;
+            object-fit: contain;
+        }
+
         /* Video cards */
         .video-container { position: relative; border-radius: var(--radius-sm); overflow: hidden; cursor: pointer; background: #000; aspect-ratio: 16/9; }
         .video-container video { width: 100%; height: 100%; object-fit: cover; }
@@ -768,7 +782,7 @@
                             <div class="finding-cards">
 
                                 <!-- HP-F1: No Trust Badges / USP Icons -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Trust badges and USP icons on the homepage can reduce bounce rate by 8-12% for first-time visitors
                                     </div>
@@ -805,7 +819,7 @@
                                 </div>
 
                                 <!-- HP-F2: No Reviews / Press / Social Proof Section -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Customer reviews and press mentions on the homepage build credibility and can increase conversion by 10-15%
                                     </div>
@@ -842,7 +856,7 @@
                                 </div>
 
                                 <!-- HP-F3: No Newsletter / Email Capture -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Email capture on the homepage can build a 10-20% repeat purchase channel for Food & Bev brands
                                     </div>
@@ -879,7 +893,7 @@
                                 </div>
 
                                 <!-- HP-F4: SEO — Empty H1 Tags -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Empty H1 tags hurt SEO rankings and organic traffic — the #1 free traffic source for e-commerce
                                     </div>
@@ -923,7 +937,7 @@
                             <div class="finding-cards">
 
                                 <!-- CL-F1: No Breadcrumb Navigation -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Breadcrumb navigation improves site usability and boosts SEO through structured internal linking
                                     </div>
@@ -960,7 +974,7 @@
                                 </div>
 
                                 <!-- CL-F2: No Variant Swatches on Cards -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates
                                     </div>
@@ -997,7 +1011,7 @@
                                 </div>
 
                                 <!-- CL-F3: 65 Products Per Page / No Pagination -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Loading 65+ products on a single page slows performance and overwhelms shoppers
                                     </div>
@@ -1078,7 +1092,7 @@
                                 </div>
 
                                 <!-- PDP-F2: No Trust Badges Near ATC -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Trust badges next to the Add to Cart button reassure shoppers at the critical purchase moment
                                     </div>
@@ -1115,7 +1129,7 @@
                                 </div>
 
                                 <!-- PDP-F3: No Delivery Estimation / Pincode Checker -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Delivery date estimation reduces purchase anxiety and can lift conversions by 5-8% for Indian e-commerce
                                     </div>
@@ -1152,7 +1166,7 @@
                                 </div>
 
                                 <!-- PDP-F4: No Nutritional Information Table -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Nutritional info tables are a must-have for food e-commerce — 8/10 top brands display them prominently
                                     </div>
@@ -1189,7 +1203,7 @@
                                 </div>
 
                                 <!-- PDP-F5: No Subscription Option -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Subscribe & Save increases customer lifetime value by 40-60% for consumable food products
                                     </div>
@@ -1233,7 +1247,7 @@
                             <div class="finding-cards">
 
                                 <!-- CART-F1: No Express Checkout -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Express checkout options (UPI, GPay) can reduce checkout time by 40% and boost completion rates
                                     </div>
@@ -1270,7 +1284,7 @@
                                 </div>
 
                                 <!-- CART-F2: Basic Cross-sell -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Smart cart cross-sell with complementary product suggestions can increase AOV by 8-15%
                                     </div>
@@ -1307,7 +1321,7 @@
                                 </div>
 
                                 <!-- CART-F3: No Trust / Payment Icons -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Payment security icons in the cart can reduce abandonment by 5-8% at the final purchase decision
                                     </div>
@@ -1343,7 +1357,7 @@
                                 </div>
 
                                 <!-- CART-F4: No Delivery Estimation in Cart -->
-                                <div class="finding-card">
+                                <div class="finding-card finding-card-stacked">
                                     <div class="finding-card-header">
                                         Showing expected delivery date in the cart reduces last-minute abandonment for food orders
                                     </div>
