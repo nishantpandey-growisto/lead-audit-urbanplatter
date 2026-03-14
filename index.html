@@ -118,7 +118,7 @@
             transition: opacity var(--transition-med);
         }
         .slide.active { opacity: 1; pointer-events: auto; }
-        .container { max-width: 960px; margin: 0 auto; padding: 0 32px; }
+        .container { max-width: 1500px; margin: 0 auto; padding: 0 32px; }
 
         /* Mid Navigation Buttons */
         .mid-nav-btn {
@@ -316,17 +316,23 @@
         .finding-screenshot-url { font-size: 10px; color: var(--color-text-muted); text-align: center; }
 
         /* Stacked layout for desktop screenshot cards — bigger images for screen sharing */
+        .finding-card-stacked {
+            max-width: 1460px;
+        }
         .finding-card-stacked .finding-card-body {
-            grid-template-columns: 1fr;
+            grid-template-columns: 1.15fr 1fr;
+            min-height: 760px;
         }
         .finding-card-stacked .finding-screenshots {
             grid-template-columns: 1fr;
-            border-right: none;
-            border-bottom: 1px solid #f0f0f0;
+            gap: 12px;
+            padding: 20px;
+            align-content: start;
         }
         .finding-card-stacked .finding-screenshot img {
-            max-height: none;
-            object-fit: contain;
+            max-height: 340px;
+            object-fit: cover;
+            object-position: top;
         }
 
         /* Video cards */
@@ -450,6 +456,7 @@
         /* ── Responsive ──────────────────────────────── */
         @media (max-width: 900px) {
             .finding-card-body { grid-template-columns: 1fr; }
+            .finding-card-stacked .finding-card-body { grid-template-columns: 1fr; min-height: auto; }
             .finding-screenshots { border-right: none; border-bottom: 1px solid #f0f0f0; }
             .app-ecosystem-grid { grid-template-columns: 1fr; }
         }
