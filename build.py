@@ -2,7 +2,7 @@
 """Build script: Populates lead_audit_spa_template.html for Urban Platter.
 
 Re-evaluated: March 16, 2026 — fresh mobile-first UX evaluation at 375×812,
-fresh Lighthouse PageSpeed data, 3-dimension finding selection algorithm.
+fresh PSI PageSpeed data (pagespeed.web.dev, Slow 4G throttling), 3-dimension finding selection algorithm.
 """
 
 import re, os
@@ -63,38 +63,38 @@ replacements = {
     "{{INDUSTRY_CVR_P75}}": "2.99%",
     "{{INDUSTRY_CVR_P50_RAW}}": "2.05",
 
-    # Section 03: Performance & Speed (Lighthouse lab data — March 16, 2026)
-    "{{PS_CLIENT_MOBILE_SCORE}}": "62",
-    "{{PS_CLIENT_MOBILE_CLASS}}": "moderate",
-    "{{PS_CLIENT_MOBILE_VERDICT}}": "Moderate — Urban Platter's mobile PageSpeed of 62 is the lowest in this competitive set. While LCP (0.6s) and FCP (0.2s) are excellent, the site is dragged down by a massive Total Blocking Time of 1,890ms — the main thread is frozen for nearly 2 seconds during load. Desktop is worse at 44 with a CLS of 0.352. Compared to Vahdam (94) and Sleepy Owl (75), there's significant room for improvement.",
+    # Section 03: Performance & Speed (PSI lab data via pagespeed.web.dev — March 16, 2026)
+    "{{PS_CLIENT_MOBILE_SCORE}}": "27",
+    "{{PS_CLIENT_MOBILE_CLASS}}": "poor",
+    "{{PS_CLIENT_MOBILE_VERDICT}}": "Poor — Urban Platter scores 27 on Google PageSpeed Insights (mobile, Slow 4G throttling). Lab LCP is 18.6s and TBT is 3,910ms — the page takes nearly 19 seconds to render its largest element and the main thread is frozen for almost 4 seconds. Desktop fares slightly better at 36 but remains in the red zone. However, CrUX field data tells a more nuanced story: real-user LCP is 2.1s and FCP is 1.7s — Google's CDN and caching help actual visitors. The critical CrUX failure is INP at 704ms (threshold: 200ms) — the site feels unresponsive to taps and clicks.",
 
-    # Core Web Vitals (Lighthouse lab data)
-    "{{PS_CLIENT_LCP}}": "0.6s",
-    "{{PS_CLIENT_LCP_CLASS}}": "good",
-    "{{PS_CLIENT_LCP_STATUS}}": "pass",
-    "{{PS_CLIENT_LCP_LABEL}}": "Pass",
-    "{{PS_CLIENT_FCP}}": "0.2s",
-    "{{PS_CLIENT_FCP_CLASS}}": "good",
-    "{{PS_CLIENT_FCP_STATUS}}": "pass",
-    "{{PS_CLIENT_FCP_LABEL}}": "Pass",
-    "{{PS_CLIENT_TBT}}": "1,890ms",
+    # Core Web Vitals (PSI lab data + CrUX field data)
+    "{{PS_CLIENT_LCP}}": "18.6s",
+    "{{PS_CLIENT_LCP_CLASS}}": "poor",
+    "{{PS_CLIENT_LCP_STATUS}}": "fail",
+    "{{PS_CLIENT_LCP_LABEL}}": "Fail (lab) · 2.1s field",
+    "{{PS_CLIENT_FCP}}": "4.1s",
+    "{{PS_CLIENT_FCP_CLASS}}": "poor",
+    "{{PS_CLIENT_FCP_STATUS}}": "fail",
+    "{{PS_CLIENT_FCP_LABEL}}": "Fail (lab) · 1.7s field",
+    "{{PS_CLIENT_TBT}}": "3,910ms",
     "{{PS_CLIENT_TBT_CLASS}}": "poor",
     "{{PS_CLIENT_TBT_STATUS}}": "fail",
     "{{PS_CLIENT_TBT_LABEL}}": "Fail",
-    "{{PS_CLIENT_CLS}}": "0.082",
+    "{{PS_CLIENT_CLS}}": "0.001",
     "{{PS_CLIENT_CLS_CLASS}}": "good",
     "{{PS_CLIENT_CLS_STATUS}}": "pass",
     "{{PS_CLIENT_CLS_LABEL}}": "Pass",
-    "{{PS_CLIENT_INP}}": "—",
-    "{{PS_CLIENT_INP_CLASS}}": "moderate",
-    "{{PS_CLIENT_INP_STATUS}}": "unknown",
-    "{{PS_CLIENT_INP_LABEL}}": "Lab N/A",
+    "{{PS_CLIENT_INP}}": "704ms",
+    "{{PS_CLIENT_INP_CLASS}}": "poor",
+    "{{PS_CLIENT_INP_STATUS}}": "fail",
+    "{{PS_CLIENT_INP_LABEL}}": "Fail (CrUX field)",
 
-    "{{CWV_SUMMARY_CLASS}}": "moderate",
-    "{{CWV_PASS_ICON}}": "⚠",
-    "{{CWV_PASS_COUNT}}": "3",
+    "{{CWV_SUMMARY_CLASS}}": "poor",
+    "{{CWV_PASS_ICON}}": "✗",
+    "{{CWV_PASS_COUNT}}": "1",
 
-    "{{PS_COMBINED_NARRATIVE}}": "Urban Platter's performance is a mixed picture. The good news: LCP (0.6s) and FCP (0.2s) are both excellent — the page renders visual content quickly. CLS (0.082) is within the good threshold on mobile, meaning layout stability is acceptable. However, the critical weakness is Total Blocking Time at 1,890ms — the main thread is frozen for nearly 2 seconds while 13+ third-party scripts execute. This means users tapping buttons during page load get no response. Speed Index (10.5s) and Time to Interactive (35.8s) are both extremely poor. Desktop is worse overall at 44, primarily due to CLS of 0.352 (layout elements shifting during load). By comparison, Vahdam scores 94 on mobile with 0ms TBT — their headless architecture eliminates main-thread blocking entirely. Blue Tokai (70) and Sleepy Owl (75) also outperform Urban Platter. The path to improvement is clear: defer or remove non-critical third-party scripts (GoAffPro, InstaVid, PushOwl) and code-split the remaining bundles.",
+    "{{PS_COMBINED_NARRATIVE}}": "Urban Platter's mobile performance is critically poor under Google's Slow 4G lab conditions: PSI score 27, LCP 18.6s, FCP 4.1s, TBT 3,910ms. However, real-world field data (CrUX) is significantly better — actual users see LCP 2.1s (good) and FCP 1.7s (good), thanks to CDN caching and repeat visits. The critical CrUX failure is <strong>INP at 704ms</strong> (threshold: 200ms) — meaning the site feels sluggish and unresponsive to taps and clicks. This is the worst INP in the competitive set. CLS is excellent at 0.001 (lab) / 0.02 (field). Desktop lab score is 36 with LCP 6.9s and TBT 1,410ms. The competition faces similar lab challenges: Vahdam scores 38, Sleepy Owl 34, Blue Tokai 12. But Blue Tokai and Sleepy Owl both pass CrUX CWV assessment while Urban Platter fails — the gap is in INP. The path to improvement: defer or remove non-critical third-party scripts (GoAffPro double-loads, InstaVid loads but doesn't render, PushOwl) to reduce main-thread blocking and improve INP.",
 
     # Section 05: Technology Assessment
     "{{TECH_HEALTH_CLASS}}": "warning",
@@ -125,7 +125,7 @@ replacements = {
     "{{TECH_CDN_STATUS}}": "warning",
     "{{TECH_CDN_STATUS_LABEL}}": "Needs Optimization",
     "{{CDN_PROVIDER}}": "Shopify CDN (Cloudflare)",
-    "{{CDN_IMAGE_NOTE}}": "Images: Mix of WebP and JPEG — good LCP (0.6s) but heavy JS bundles causing 1,890ms TBT",
+    "{{CDN_IMAGE_NOTE}}": "Images: Mix of WebP and JPEG — CrUX field LCP is 2.1s (good) but lab LCP is 18.6s under Slow 4G. Heavy JS bundles cause 3,910ms TBT",
     "{{CDN_COMPRESSION_NOTE}}": "Compression: Brotli/Gzip enabled but 13 third-party scripts not deferred or code-split",
     "{{CDN_CACHING_NOTE}}": "Browser caching: Standard Shopify headers — GoAffPro, InstaVid, PushOwl scripts blocking main thread",
     "{{TECH_SECURITY_STATUS}}": "good",
@@ -134,12 +134,12 @@ replacements = {
     "{{SECURITY_HTTPS_NOTE}}": "HTTPS: All pages secured",
     "{{SECURITY_PCI_NOTE}}": "PCI DSS: Compliant (via Shopify)",
     "{{SECURITY_COOKIE_NOTE}}": "Cookie consent: Not found — consider adding for compliance",
-    "{{TECH_NARRATIVE}}": "Urban Platter runs on Shopify with a custom fork of the Rebuy Enterprise theme (\"New Rebuy <> Enterprise\"). The platform is solid — auto-scaling, PCI-compliant, 99.99% uptime — but the custom theme has issues. Notably, the sticky ATC panel exists in the DOM but is permanently set to <code>visibility: hidden</code> — a broken feature that should be active on mobile. The checkout uses Shopflo, which overrides native Shopify checkout. During testing, we detected active JavaScript errors from Shopflo (<code>DialogContent requires a DialogTitle</code>) and failed fetch requests to an ngrok endpoint — these indicate integration instability. Other JS errors: <code>$ is not defined</code> (jQuery not loaded), GoAffPro double-loading, and missing modal elements. Payment stack via Razorpay covers all major Indian methods (UPI, Cards, Netbanking, Wallets, COD) but BNPL is missing. The core performance issue is 13 third-party scripts (GoAffPro, InstaVid, PushOwl, Shopflo, WATI, CartBot, Logbase) causing a Total Blocking Time of 1,890ms on mobile.",
+    "{{TECH_NARRATIVE}}": "Urban Platter runs on Shopify with a custom fork of the Rebuy Enterprise theme (\"New Rebuy <> Enterprise\"). The platform is solid — auto-scaling, PCI-compliant, 99.99% uptime — but the custom theme has issues. Notably, the sticky ATC panel exists in the DOM but is permanently set to <code>visibility: hidden</code> — a broken feature that should be active on mobile. The checkout uses Shopflo, which overrides native Shopify checkout. During testing, we detected active JavaScript errors from Shopflo (<code>DialogContent requires a DialogTitle</code>) and failed fetch requests to an ngrok endpoint — these indicate integration instability. Other JS errors: <code>$ is not defined</code> (jQuery not loaded), GoAffPro double-loading, and missing modal elements. Payment stack via Razorpay covers all major Indian methods (UPI, Cards, Netbanking, Wallets, COD) but BNPL is missing. The core performance issue is 13 third-party scripts causing a PSI lab TBT of 3,910ms on mobile and a CrUX INP of 704ms — the worst interactivity score in the competitive set.",
 
     # Section 06: App Ecosystem
     "{{APPS_MISSING_COUNT}}": "5",
     "{{APPS_BENCHMARK_CONTEXT}}": "Top Food & Bev stores in our benchmark average 8–12 purpose-built apps — Urban Platter has 13 apps but is missing critical revenue-driving categories and has performance overhead from non-essential scripts",
-    "{{APP_STACK_NARRATIVE}}": "Urban Platter has 13 apps covering reviews (Judge.me), checkout (Shopflo), email (Brevo), WhatsApp (WATI), push notifications (PushOwl), affiliate marketing (GoAffPro), cart recovery (CartBot), analytics (GTM, GA4, Clarity, Facebook Pixel, Logbase), and video (InstaVid). The analytics stack is comprehensive — a strong foundation for data-driven optimization. However, critical revenue-driving categories are missing. No subscription app despite selling highly replenishable products (spices, superfoods, snacks). No loyalty/rewards program to drive repeat purchases. No delivery estimation app (pincode checker). Additionally, the 13 scripts contribute to a TBT of 1,890ms — GoAffPro loads twice (double-load error in console), InstaVid loads but fails to render, and PushOwl adds another blocking script. A script audit and prioritization could improve both performance and conversion simultaneously.",
+    "{{APP_STACK_NARRATIVE}}": "Urban Platter has 13 apps covering reviews (Judge.me), checkout (Shopflo), email (Brevo), WhatsApp (WATI), push notifications (PushOwl), affiliate marketing (GoAffPro), cart recovery (CartBot), analytics (GTM, GA4, Clarity, Facebook Pixel, Logbase), and video (InstaVid). The analytics stack is comprehensive — a strong foundation for data-driven optimization. However, critical revenue-driving categories are missing. No subscription app despite selling highly replenishable products (spices, superfoods, snacks). No loyalty/rewards program to drive repeat purchases. No delivery estimation app (pincode checker). Additionally, the 13 scripts contribute to a PSI lab TBT of 3,910ms and a CrUX INP of 704ms — GoAffPro loads twice (double-load error in console), InstaVid loads but fails to render, and PushOwl adds another blocking script. A script audit and prioritization could improve both performance and INP simultaneously.",
 
     # JS nav
     "{{UX_FINDING_1_SHORT_TITLE}}": "UX & Conversion Findings",
@@ -148,38 +148,38 @@ replacements = {
 for key, val in replacements.items():
     html = html.replace(key, val)
 
-# ── Competition table rows (3 competitors — fresh Lighthouse data March 16, 2026) ──
+# ── Competition table rows (3 competitors — PSI data via pagespeed.web.dev, March 16, 2026) ──
 comp_rows = """<tr class="client-row">
                                 <td>Urban Platter</td>
-                                <td class="score-cell-moderate">62</td>
-                                <td class="score-cell-poor">44</td>
-                                <td class="score-cell-good">0.6s</td>
-                                <td class="score-cell-good">0.082</td>
-                                <td class="score-cell-poor">1,890ms</td>
+                                <td class="score-cell-poor">27</td>
+                                <td class="score-cell-poor">36</td>
+                                <td class="score-cell-poor">18.6s</td>
+                                <td class="score-cell-good">0.001</td>
+                                <td class="score-cell-poor">3,910ms</td>
                             </tr>
                             <tr>
                                 <td>Vahdam</td>
-                                <td class="score-cell-good">94</td>
-                                <td class="score-cell-good">90</td>
-                                <td class="score-cell-good">2.2s</td>
-                                <td class="score-cell-moderate">0.119</td>
-                                <td class="score-cell-good">0ms</td>
+                                <td class="score-cell-poor">38</td>
+                                <td class="score-cell-moderate">64</td>
+                                <td class="score-cell-poor">7.7s</td>
+                                <td class="score-cell-good">0.089</td>
+                                <td class="score-cell-poor">1,190ms</td>
                             </tr>
                             <tr>
                                 <td>Blue Tokai</td>
-                                <td class="score-cell-good">70</td>
-                                <td class="score-cell-moderate">66</td>
-                                <td class="score-cell-moderate">2.9s</td>
-                                <td class="score-cell-poor">0.400</td>
-                                <td class="score-cell-good">10ms</td>
+                                <td class="score-cell-poor">12</td>
+                                <td class="score-cell-poor">39</td>
+                                <td class="score-cell-poor">18.3s</td>
+                                <td class="score-cell-poor">0.485</td>
+                                <td class="score-cell-poor">1,070ms</td>
                             </tr>
                             <tr>
                                 <td>Sleepy Owl</td>
-                                <td class="score-cell-good">75</td>
-                                <td class="score-cell-moderate">59</td>
-                                <td class="score-cell-good">1.4s</td>
-                                <td class="score-cell-poor">0.603</td>
-                                <td class="score-cell-good">10ms</td>
+                                <td class="score-cell-poor">34</td>
+                                <td class="score-cell-moderate">58</td>
+                                <td class="score-cell-poor">9.0s</td>
+                                <td class="score-cell-good">0</td>
+                                <td class="score-cell-poor">6,970ms</td>
                             </tr>"""
 html = html.replace("{{PS_COMPETITION_TABLE_ROWS}}", comp_rows)
 
