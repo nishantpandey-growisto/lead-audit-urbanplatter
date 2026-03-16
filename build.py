@@ -186,15 +186,16 @@ html = html.replace("{{PS_COMPETITION_TABLE_ROWS}}", comp_rows)
 
 # ── Finding cards ─────────────────────────────────────────
 
-def card(header, client_img, client_label, bench_img, bench_label, observations, recommendations, benchmark_tag):
+def card(header, client_img, client_label, bench_img, bench_label, observations, recommendations, benchmark_tag, layout="desktop"):
     obs_li = "\n".join(f"                                                    <li>{o}</li>" for o in observations)
     rec_li = "\n".join(f"                                                    <li>{r}</li>" for r in recommendations)
+    ss_class = "finding-screenshots desktop-screenshots" if layout == "desktop" else "finding-screenshots"
     return f"""<div class="finding-card">
                                     <div class="finding-card-header">
                                         {header}
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="{ss_class}">
                                             <div class="finding-screenshot">
                                                 <img src="{client_img}" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">{client_label}</div>
@@ -351,6 +352,7 @@ pdp_cards = "\n\n".join([
             "Include variant selector in the sticky bar if the product has size/weight options",
         ],
         "Standard — 9/10 stores have sticky ATC on mobile",
+        layout="mobile",
     ),
     card(
         "Trust badges on the product page reduce purchase anxiety and can lift conversions by 5–8%",

@@ -864,13 +864,11 @@
         .tab-sidebar {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 0;
             width: 120px;
             min-width: 120px;
-            padding: 10px 6px;
-            background: var(--color-bg-tertiary);
-            border-radius: 16px 0 0 16px;
-            border-right: 1px solid #e5e7eb;
+            padding: 0;
+            background: transparent;
             flex-shrink: 0;
             position: sticky;
             top: calc(var(--topbar-height) + 16px);
@@ -878,31 +876,36 @@
             z-index: 5;
         }
         .tab-btn {
-            padding: 16px 12px;
+            padding: 14px 14px;
             min-height: 60px;
             display: flex;
             align-items: center;
-            background: transparent;
-            border: none;
-            border-radius: 10px;
+            background: #f8f9fa;
+            border: 1px solid #e5e7eb;
+            border-bottom: none;
+            border-radius: 0;
             font-family: var(--font-family);
-            font-size: 13px;
+            font-size: 12.5px;
             font-weight: 500;
             cursor: pointer;
             transition: all var(--transition-fast);
             color: var(--color-text-muted);
             text-align: left;
-            white-space: nowrap;
+            white-space: normal;
+            line-height: 1.3;
+        }
+        .tab-btn:last-child {
+            border-bottom: 1px solid #e5e7eb;
         }
         .tab-btn.active {
-            background: var(--color-bg-primary);
-            color: var(--color-primary);
-            box-shadow: var(--shadow-sm);
+            background: var(--color-primary);
+            color: #ffffff;
+            border-color: var(--color-primary);
             font-weight: 600;
         }
         .tab-btn:hover:not(.active) {
+            background: #eef1f3;
             color: var(--color-text-dark);
-            background: rgba(255,255,255,0.5);
         }
         .tab-main {
             flex: 1;
@@ -1561,13 +1564,11 @@
                 width: 100%;
                 min-width: auto;
                 position: static;
-                border-radius: 16px 16px 0 0;
-                border-right: none;
-                border-bottom: 1px solid #e5e7eb;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
             }
-            .tab-btn { white-space: nowrap; text-align: center; padding: 10px 16px; font-size: 13px; min-height: auto; }
+            .tab-btn { white-space: nowrap; text-align: center; padding: 10px 16px; font-size: 12px; min-height: auto; border-bottom: 1px solid #e5e7eb; }
+            .tab-btn:last-child { border-bottom: 1px solid #e5e7eb; }
         }
         @media (max-width: 480px) {
             .container { padding: 0 16px; }
@@ -2010,7 +2011,7 @@
                                         Trust badges and USP icons on the homepage can reduce bounce rate by 8–12% for first-time visitors
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_f1_no_trust_badges.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2046,7 +2047,7 @@
                                         Customer reviews and press mentions on the homepage build credibility and can increase conversion by 10–15%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_f2_no_reviews_press.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2082,7 +2083,7 @@
                                         Email capture on the homepage can build a 10–20% repeat purchase channel for Food & Bev brands
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_f3_no_newsletter.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2118,7 +2119,7 @@
                                         Empty H1 tags hurt SEO rankings and organic traffic — the #1 free traffic source for e-commerce
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_f4_benchmark_seo.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Code View</div>
@@ -2162,7 +2163,7 @@
                                         Breadcrumb navigation improves site usability and boosts SEO through structured internal linking
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/col_f1_no_breadcrumbs.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2198,7 +2199,7 @@
                                         Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/col_f2_no_swatches.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2234,7 +2235,7 @@
                                         Infinite scroll or load-more buttons keep users browsing — pagination creates friction and drop-offs
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/col_f3_no_pagination.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2312,7 +2313,7 @@
                                         Trust badges on the product page reduce purchase anxiety and can lift conversions by 5–8%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f2_no_trust_badges.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2348,7 +2349,7 @@
                                         Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f3_no_delivery_estimate.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2384,7 +2385,7 @@
                                         Structured nutritional information tables increase buyer confidence and reduce returns for food products
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f4_no_nutrition_table.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2420,7 +2421,7 @@
                                         Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f5_no_subscription.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2462,7 +2463,7 @@
                                         Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f1_checkout_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2498,7 +2499,7 @@
                                         Cart cross-sell recommendations can increase AOV by 10–15% with minimal implementation effort
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f2_crosssell_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2534,7 +2535,7 @@
                                         Trust badges and security indicators at checkout reduce cart abandonment by 8–12%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f3_trust_checkout.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
@@ -2570,7 +2571,7 @@
                                         Showing expected delivery date in cart reduces abandonment by setting clear delivery expectations
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots">
+                                        <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f4_no_delivery_in_cart.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
