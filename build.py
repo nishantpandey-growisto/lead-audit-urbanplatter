@@ -228,7 +228,7 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
 hp_cards = "\n\n".join([
     card(
         "A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline",
-        "screenshots/hp_announcement_bar.jpeg", "Urban Platter",
+        "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
         "screenshots/bench_hp_announcement_offer.jpeg", "Chomps",
         [
             "The announcement bar reads \"Elevate Your Everyday Pantry\" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor",
@@ -244,7 +244,7 @@ hp_cards = "\n\n".join([
     ),
     card(
         "Trust badges and USP icons on the homepage can reduce bounce rate by 8–12% for first-time visitors",
-        "screenshots/hp_announcement_bar.jpeg", "Urban Platter",
+        "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
         "screenshots/hp_f1_benchmark_trust.jpeg", "Yogabar",
         [
             "Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) as a standalone USP strip in the first fold",
@@ -265,7 +265,7 @@ hp_cards = "\n\n".join([
 col_cards = "\n\n".join([
     card(
         "Dietary filters help health-conscious shoppers find products 3x faster — Urban Platter's filter drawer has none",
-        "screenshots/col_filter_drawer.jpeg", "Urban Platter",
+        "screenshots/col_mobile_filter_drawer.jpeg", "Urban Platter — Mobile",
         "screenshots/bench_col_dietary_filters.jpeg", "Athletic Brewing",
         [
             "The filter drawer offers only generic options: Sort by, Price, Product type, Brand, Country, Availability — no dietary or health filters",
@@ -281,7 +281,7 @@ col_cards = "\n\n".join([
     ),
     card(
         "Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates by 5–8%",
-        "screenshots/col_no_swatches.jpeg", "Urban Platter",
+        "screenshots/col_mobile_grid.jpeg", "Urban Platter — Mobile",
         "screenshots/col_f2_benchmark_swatches.jpeg", "Yogabar",
         [
             "Collection page product cards show \"Choose options\" text for multi-variant products but no visual swatches for size/weight",
@@ -302,13 +302,13 @@ col_cards = "\n\n".join([
 pdp_cards = "\n\n".join([
     card(
         "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
-        "screenshots/pdp_mobile.jpeg", "Urban Platter — Mobile PDP",
-        "screenshots/competitor-yogabar-pdp-sticky-atc-mobile.jpeg", "Yogabar",
+        "screenshots/pdp_mobile_specs.jpeg", "Urban Platter — Mobile PDP (scrolled)",
+        "screenshots/bench_pdp_sticky_atc_olipop.jpeg", "Olipop — Mobile Sticky ATC",
         [
             "Urban Platter's theme includes a <code>&lt;sticky-atc-panel&gt;</code> element — but it has CSS class <code>invisible</code> and <code>visibility: hidden</code>, making it permanently non-functional",
             "On mobile, scrolling past the ATC button means users completely lose access to the primary conversion action — they must scroll back up to add to cart",
             "This is a broken feature, not a missing one — the sticky ATC was built but never activated or has a CSS/JS bug preventing it from appearing",
-            "9 out of 10 top Food & Bev stores have a working sticky ATC on mobile PDPs",
+            "9 out of 10 top Food & Bev stores have a working sticky ATC on mobile PDPs — Olipop shows a persistent bottom bar with price + ATC that stays visible through the entire scroll",
         ],
         [
             "Fix the sticky ATC panel: investigate why the <code>sticky-atc-panel--out</code> class keeps the <code>invisible</code> state — likely a CSS transition or JS scroll-listener bug",
@@ -319,7 +319,7 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Structured nutritional information tables increase buyer confidence and reduce returns for food products",
-        "screenshots/pdp_specs_no_nutrition.jpeg", "Urban Platter",
+        "screenshots/pdp_mobile_specs.jpeg", "Urban Platter — Mobile",
         "screenshots/pdp_f4_benchmark_nutrition.jpeg", "Olipop",
         [
             "Product descriptions mention nutrients (\"rich in selenium\", \"loaded with magnesium and zinc\") but provide no structured nutritional facts table",
@@ -335,7 +335,7 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue",
-        "screenshots/pdp_atc_area.jpeg", "Urban Platter",
+        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile",
         "screenshots/pdp_f5_benchmark_subscription.jpeg", "Olipop",
         [
             "No subscribe-and-save option despite selling highly replenishable products — spices, superfoods, nuts, snacks, and pantry staples",
@@ -351,7 +351,7 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations",
-        "screenshots/pdp_atc_area.jpeg", "Urban Platter",
+        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile",
         "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam",
         [
             "No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart",
@@ -375,7 +375,7 @@ pdp_cards = "\n\n".join([
 cart_cards = "\n\n".join([
     card(
         "Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%",
-        "screenshots/cart_checkout_area.jpeg", "Urban Platter",
+        "screenshots/cart_mobile_checkout.jpeg", "Urban Platter — Mobile",
         "screenshots/cart_f1_benchmark_express.jpeg", "Blue Tokai",
         [
             "The cart page Order Summary shows only a single \"Checkout\" button that routes through Shopflo — no express checkout buttons (GPay, Shop Pay, PhonePe) visible",
@@ -391,7 +391,7 @@ cart_cards = "\n\n".join([
     ),
     card(
         "Bundle and combo offers can increase average order value by 10–20% — Urban Platter has cross-sell but no bundles",
-        "screenshots/cart_checkout_area.jpeg", "Urban Platter",
+        "screenshots/cart_mobile_checkout.jpeg", "Urban Platter — Mobile",
         "screenshots/bench_cart_bundle.jpeg", "Chomps",
         [
             "The cart page has a \"You may also like\" cross-sell section — which is good — but no structured bundle or combo deals",
