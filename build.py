@@ -30,9 +30,9 @@ replacements = {
     "{{FINDING_COUNT_TOTAL}}": "10",
     "{{COMPETITOR_COUNT}}": "3",
     "{{APPS_PRESENT_COUNT}}": "13",
-    "{{FINDING_COUNT_HOMEPAGE}}": "2",
+    "{{FINDING_COUNT_HOMEPAGE}}": "1",
     "{{FINDING_COUNT_COLLECTION}}": "2",
-    "{{FINDING_COUNT_PDP}}": "4",
+    "{{FINDING_COUNT_PDP}}": "5",
     "{{FINDING_COUNT_CART}}": "2",
 
     # Section 02 — Traffic & Conversion Context
@@ -223,41 +223,24 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
                                 </div>"""
 
 # ═══════════════════════════════════════════════════════════
-# HOMEPAGE (2 cards) — Announcement bar (#6, 2.70), USP icon strip (#5, 2.70)
+# HOMEPAGE (1 card) — Announcement bar (#11, 2.70)
 # ═══════════════════════════════════════════════════════════
-hp_cards = "\n\n".join([
-    card(
-        "A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline",
-        "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
-        "screenshots/bench_hp_announcement_offer.jpeg", "Chomps",
-        [
-            "The announcement bar reads \"Elevate Your Everyday Pantry\" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor",
-            "No shipping offer, discount code, or urgency element in the bar — first-time visitors get no immediate incentive to stay and shop",
-            "8 out of 10 top Food & Bev stores use the announcement bar for a concrete offer: free shipping threshold, first-order discount, or limited-time deal",
-            "Chomps uses \"FREE SHIPPING on orders $50+ | Subscribe & Save 15%\" — immediately communicates value and drives higher AOV",
-        ],
-        [
-            "Replace the tagline with a conversion-focused message: \"Free Shipping Over ₹499 | Use code WELCOME10 for 10% Off Your First Order\"",
-            "Add a secondary rotating message about delivery speed or trust: \"Trusted by 30 Lakh+ Customers | Fresh Delivery in 3–5 Days\"",
-        ],
-        "Standard — 8/10 stores use offer-driven announcement bars",
-    ),
-    card(
-        "Trust badges and USP icons on the homepage can reduce bounce rate by 8–12% for first-time visitors",
-        "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
-        "screenshots/hp_f1_benchmark_trust.jpeg", "Yogabar",
-        [
-            "Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) as a standalone USP strip in the first fold",
-            "First-time visitors see product banners but no concise reason to trust the brand — no \"100% Natural\", \"FSSAI Certified\", or \"Free Shipping\" badge strip",
-            "7 out of 10 top Food & Bev brands display a dedicated USP icon strip prominently on the homepage — Yogabar shows \"100% Clean\", \"No Preservatives\", \"High Protein\" with icons",
-        ],
-        [
-            "Add a horizontal USP icon strip below the hero banner: \"100% Natural\", \"FSSAI Certified\", \"1,700+ Products\", \"Free Shipping Over ₹499\"",
-            "Use simple icons with short text — scannable in under 2 seconds. Place immediately below the hero carousel for maximum visibility",
-        ],
-        "Growing — 7/10 stores have USP icons",
-    ),
-])
+hp_cards = card(
+    "A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline",
+    "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
+    "screenshots/bench_hp_announcement_offer.jpeg", "Chomps",
+    [
+        "The announcement bar reads \"Elevate Your Everyday Pantry\" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor",
+        "No shipping offer, discount code, or urgency element in the bar — first-time visitors get no immediate incentive to stay and shop",
+        "8 out of 10 top Food & Bev stores use the announcement bar for a concrete offer: free shipping threshold, first-order discount, or limited-time deal",
+        "Chomps uses \"FREE SHIPPING on orders $50+ | Subscribe & Save 15%\" — immediately communicates value and drives higher AOV",
+    ],
+    [
+        "Replace the tagline with a conversion-focused message: \"Free Shipping Over ₹499 | Use code WELCOME10 for 10% Off Your First Order\"",
+        "Add a secondary rotating message about delivery speed or trust: \"Trusted by 30 Lakh+ Customers | Fresh Delivery in 3–5 Days\"",
+    ],
+    "Standard — 8/10 stores use offer-driven announcement bars",
+)
 
 # ═══════════════════════════════════════════════════════════
 # COLLECTION (2 cards) — Dietary filters (#15, 2.40), Variant swatches (#3, 3.00)
@@ -297,9 +280,25 @@ col_cards = "\n\n".join([
 ])
 
 # ═══════════════════════════════════════════════════════════
-# PDP (4 cards) — Sticky ATC broken (UX), Nutritional info (#4, 2.70), Subscription (#10, 2.65), Delivery estimation (#16, 2.40)
+# PDP (5 cards) — Trust badges (#1, 3.00), Sticky ATC broken (UX), Nutritional info (#2, 2.70), Subscription (#3, 2.65), Delivery estimation (#15, 2.40)
 # ═══════════════════════════════════════════════════════════
 pdp_cards = "\n\n".join([
+    card(
+        "Trust badges and certifications near the ATC button increase purchase confidence by 15–20% — Urban Platter has none",
+        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile PDP",
+        "screenshots/bench_pdp_trust_badges_chomps.jpeg", "Chomps — Mobile PDP",
+        [
+            "The ATC area shows only a quantity selector and \"Add to cart\" button — no FSSAI certification badge, no quality claims, no trust indicators anywhere near the purchase action",
+            "For a premium food brand selling imported and specialty ingredients, trust badges (FSSAI Certified, 100% Natural, No Preservatives, Imported) are critical at the point of purchase",
+            "Buyers of premium superfoods and specialty ingredients need reassurance about quality and authenticity — especially when paying ₹500-2,000+ per item",
+            "9 out of 10 top Food & Bev stores display benefit badges near the ATC button — Chomps shows \"10-12g Protein\", \"0g Sugar\", \"Keto Friendly\", \"Low-Carb\" with clear icons directly below ATC",
+        ],
+        [
+            "Add 4-6 benefit/trust badges directly below or above the ATC button: \"FSSAI Certified\", \"100% Natural\", \"No Preservatives\", \"Premium Imported\" with small icons",
+            "Use a horizontal badge strip that's visible without scrolling past the ATC — this is the last thing shoppers see before deciding to buy",
+        ],
+        "Standard — 9/10 stores have trust badges near ATC",
+    ),
     card(
         "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
         "screenshots/pdp_mobile_specs.jpeg", "Urban Platter — Mobile PDP (scrolled)",
