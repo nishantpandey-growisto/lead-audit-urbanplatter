@@ -189,6 +189,16 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
     obs_li = "\n".join(f"                                                    <li>{o}</li>" for o in observations)
     rec_li = "\n".join(f"                                                    <li>{r}</li>" for r in recommendations)
     ss_class = "finding-screenshots desktop-screenshots" if layout == "desktop" else "finding-screenshots"
+    # Support "missing" client screenshots — show placeholder instead of image
+    if client_img is None:
+        client_html = f'''<div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">{client_label}</div>'''
+    else:
+        client_html = f'''<img src="{client_img}" alt="Urban Platter">
+                                                <div class="finding-screenshot-label client-label">{client_label}</div>'''
     return f"""<div class="finding-card">
                                     <div class="finding-card-header">
                                         {header}
@@ -196,8 +206,7 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
                                     <div class="finding-card-body">
                                         <div class="{ss_class}">
                                             <div class="finding-screenshot">
-                                                <img src="{client_img}" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">{client_label}</div>
+                                                {client_html}
                                             </div>
                                             <div class="finding-screenshot">
                                                 <img src="{bench_img}" alt="{bench_label}">
@@ -318,8 +327,8 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
-        "screenshots/pdp_mobile_specs.jpeg", "Urban Platter — Mobile PDP (scrolled)",
-        "screenshots/bench_pdp_sticky_atc_olipop.jpeg", "Olipop — Mobile Sticky ATC",
+        None, "Urban Platter — Not Present",
+        "screenshots/bench_pdp_sticky_atc_olipop.jpeg", "Olipop — Mobile PDP (full first fold + sticky ATC)",
         [
             "Urban Platter's theme includes a <code>&lt;sticky-atc-panel&gt;</code> element — but it has CSS class <code>invisible</code> and <code>visibility: hidden</code>, making it permanently non-functional",
             "On mobile, scrolling past the ATC button means users completely lose access to the primary conversion action — they must scroll back up to add to cart",
@@ -335,7 +344,7 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Structured nutritional information tables increase buyer confidence and reduce returns for food products",
-        "screenshots/pdp_mobile_specs.jpeg", "Urban Platter — Mobile",
+        None, "Urban Platter — Not Present",
         "screenshots/pdp_f4_benchmark_nutrition.jpeg", "Olipop",
         [
             "Product descriptions mention nutrients (\"rich in selenium\", \"loaded with magnesium and zinc\") but provide no structured nutritional facts table",
@@ -351,8 +360,8 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue",
-        "screenshots/pdp_f4_client_no_subscribe.jpeg", "Urban Platter — Mobile",
-        "screenshots/pdp_f5_benchmark_subscription.jpeg", "Olipop",
+        None, "Urban Platter — Not Present",
+        "screenshots/bench_pdp_subscription_olipop.jpeg", "Olipop",
         [
             "No subscribe-and-save option despite selling highly replenishable products — spices, superfoods, nuts, snacks, and pantry staples",
             "The ATC area shows only a one-time purchase flow: quantity selector + Add to Cart button — no toggle for \"Subscribe & Save\" or frequency selector",
@@ -367,8 +376,8 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations",
-        "screenshots/pdp_f5_client_no_delivery.jpeg", "Urban Platter — Mobile",
-        "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam",
+        None, "Urban Platter — Not Present",
+        "screenshots/bench_pdp_delivery_vahdam.jpeg", "Vahdam",
         [
             "No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart",
             "Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce — especially for food products where freshness matters",
@@ -383,8 +392,8 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "A 'Buy Now' button alongside 'Add to Cart' creates an express purchase path that lifts impulse conversions by 5–10%",
-        "screenshots/pdp_f6_client_no_buynow.jpeg", "Urban Platter — Mobile PDP",
-        "screenshots/bench_pdp_buynow.jpeg", "Nutriorg — Mobile PDP",
+        None, "Urban Platter — Not Present",
+        "screenshots/bench_pdp_buynow.jpeg", "Best Practice — Buy Now + Add to Cart",
         [
             "The PDP shows only an \"Add to cart\" button — no \"Buy Now\", \"Buy It Now\", or dynamic checkout button for instant purchase",
             "Shoppers who have already decided (returning customers, impulse buyers) are forced through the full cart flow instead of a direct checkout shortcut",
@@ -399,12 +408,12 @@ pdp_cards = "\n\n".join([
     ),
     card(
         "Stock availability indicators near the ATC button create urgency and reduce purchase hesitation — Urban Platter shows none",
-        "screenshots/pdp_f7_client_no_stock.jpeg", "Urban Platter — Mobile PDP",
-        "screenshots/bench_pdp_stock_indicator.jpeg", "Vahdam — Mobile PDP",
+        None, "Urban Platter — Not Present",
+        "screenshots/bench_pdp_stock_indicator.jpeg", "Best Practice — Stock/Urgency Indicator",
         [
             "No stock status indicator anywhere on the PDP — no \"In Stock\", \"Only X left\", \"Low Stock\", or availability badge near the ATC button",
             "For premium superfoods and specialty imports with limited supply, stock indicators create authentic urgency — \"Only 12 left in stock\" motivates faster purchase decisions",
-            "Vahdam shows \"446 units sold in the last 24 hours\" with visual demand indicators — combining social proof with urgency near the ATC button",
+            "Gymshark shows a \"SELLING FAST\" badge prominently above the product title — a clear stock-based urgency indicator that signals scarcity without relying on exact numbers",
             "Without any stock signal, there's no sense of scarcity or urgency — shoppers feel they can \"come back later\" and often don't",
         ],
         [
@@ -456,7 +465,7 @@ cart_cards = "\n\n".join([
     card(
         "Showing expected delivery dates in the cart reduces abandonment by 15–20% — Urban Platter's cart shows no delivery timeline",
         "screenshots/cart_f3_client_no_delivery_date.jpeg", "Urban Platter — Mobile Cart",
-        "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam — Delivery Estimation",
+        "screenshots/bench_pdp_delivery_vahdam.jpeg", "Vahdam — Delivery Estimation",
         [
             "Neither the /cart page nor the Shopflo cart drawer shows an expected delivery date — the cart has subtotal, free shipping bar, and checkout button but zero delivery timeline information",
             "For perishable and specialty food products, delivery date visibility is critical — customers need to know when items arrive to plan meals, events, or gifting",

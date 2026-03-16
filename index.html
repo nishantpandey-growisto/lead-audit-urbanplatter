@@ -975,9 +975,31 @@
             width: 100%;
             border-radius: 8px;
             border: 1px solid #e5e7eb;
-            object-fit: cover;
-            max-height: 320px;
-            background: #f0f0f0;
+            object-fit: contain;
+            max-height: 480px;
+            background: #f8f8f8;
+        }
+        .finding-screenshot-missing {
+            width: 100%;
+            min-height: 200px;
+            border-radius: 8px;
+            border: 2px dashed #d1d5db;
+            background: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .finding-screenshot-missing .missing-icon {
+            font-size: 36px;
+            color: var(--color-danger);
+            font-weight: 700;
+        }
+        .finding-screenshot-missing .missing-text {
+            font-size: 14px;
+            color: var(--color-text-muted);
+            font-weight: 500;
         }
         .finding-screenshot-label {
             text-align: center;
@@ -2280,12 +2302,15 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_mobile_specs.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile PDP (scrolled)</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/bench_pdp_sticky_atc_olipop.jpeg" alt="Olipop — Mobile Sticky ATC">
-                                                <div class="finding-screenshot-label benchmark-label">Olipop — Mobile Sticky ATC</div>
+                                                <img src="screenshots/bench_pdp_sticky_atc_olipop.jpeg" alt="Olipop — Mobile PDP (full first fold + sticky ATC)">
+                                                <div class="finding-screenshot-label benchmark-label">Olipop — Mobile PDP (full first fold + sticky ATC)</div>
                                             </div>
                                         </div>
                                         <div class="finding-analysis">
@@ -2317,8 +2342,11 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_mobile_specs.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f4_benchmark_nutrition.jpeg" alt="Olipop">
@@ -2354,11 +2382,14 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f4_client_no_subscribe.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f5_benchmark_subscription.jpeg" alt="Olipop">
+                                                <img src="screenshots/bench_pdp_subscription_olipop.jpeg" alt="Olipop">
                                                 <div class="finding-screenshot-label benchmark-label">Olipop</div>
                                             </div>
                                         </div>
@@ -2391,11 +2422,14 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f5_client_no_delivery.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f3_benchmark_delivery.jpeg" alt="Vahdam">
+                                                <img src="screenshots/bench_pdp_delivery_vahdam.jpeg" alt="Vahdam">
                                                 <div class="finding-screenshot-label benchmark-label">Vahdam</div>
                                             </div>
                                         </div>
@@ -2428,12 +2462,15 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f6_client_no_buynow.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile PDP</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/bench_pdp_buynow.jpeg" alt="Nutriorg — Mobile PDP">
-                                                <div class="finding-screenshot-label benchmark-label">Nutriorg — Mobile PDP</div>
+                                                <img src="screenshots/bench_pdp_buynow.jpeg" alt="Best Practice — Buy Now + Add to Cart">
+                                                <div class="finding-screenshot-label benchmark-label">Best Practice — Buy Now + Add to Cart</div>
                                             </div>
                                         </div>
                                         <div class="finding-analysis">
@@ -2465,12 +2502,15 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f7_client_no_stock.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter — Mobile PDP</div>
+                                                <div class="finding-screenshot-missing">
+                                                    <div class="missing-icon">✗</div>
+                                                    <div class="missing-text">Feature not present</div>
+                                                </div>
+                                                <div class="finding-screenshot-label client-label">Urban Platter — Not Present</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/bench_pdp_stock_indicator.jpeg" alt="Vahdam — Mobile PDP">
-                                                <div class="finding-screenshot-label benchmark-label">Vahdam — Mobile PDP</div>
+                                                <img src="screenshots/bench_pdp_stock_indicator.jpeg" alt="Best Practice — Stock/Urgency Indicator">
+                                                <div class="finding-screenshot-label benchmark-label">Best Practice — Stock/Urgency Indicator</div>
                                             </div>
                                         </div>
                                         <div class="finding-analysis">
@@ -2479,7 +2519,7 @@
                                                 <ul>
                                                     <li>No stock status indicator anywhere on the PDP — no "In Stock", "Only X left", "Low Stock", or availability badge near the ATC button</li>
                                                     <li>For premium superfoods and specialty imports with limited supply, stock indicators create authentic urgency — "Only 12 left in stock" motivates faster purchase decisions</li>
-                                                    <li>Vahdam shows "446 units sold in the last 24 hours" with visual demand indicators — combining social proof with urgency near the ATC button</li>
+                                                    <li>Gymshark shows a "SELLING FAST" badge prominently above the product title — a clear stock-based urgency indicator that signals scarcity without relying on exact numbers</li>
                                                     <li>Without any stock signal, there's no sense of scarcity or urgency — shoppers feel they can "come back later" and often don't</li>
                                                 </ul>
                                             </div>
@@ -2586,7 +2626,7 @@
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile Cart</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f3_benchmark_delivery.jpeg" alt="Vahdam — Delivery Estimation">
+                                                <img src="screenshots/bench_pdp_delivery_vahdam.jpeg" alt="Vahdam — Delivery Estimation">
                                                 <div class="finding-screenshot-label benchmark-label">Vahdam — Delivery Estimation</div>
                                             </div>
                                         </div>
