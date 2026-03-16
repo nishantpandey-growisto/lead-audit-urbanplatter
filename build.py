@@ -24,16 +24,16 @@ replacements = {
     "{{INDUSTRY_CATEGORY_SHORT}}": "food",
 
     # Section 01 — Audit Overview
-    "{{SEVERITY_CRITICAL_COUNT}}": "3",
-    "{{SEVERITY_IMPORTANT_COUNT}}": "5",
-    "{{SEVERITY_OPPORTUNITY_COUNT}}": "2",
-    "{{FINDING_COUNT_TOTAL}}": "10",
+    "{{SEVERITY_CRITICAL_COUNT}}": "4",
+    "{{SEVERITY_IMPORTANT_COUNT}}": "7",
+    "{{SEVERITY_OPPORTUNITY_COUNT}}": "3",
+    "{{FINDING_COUNT_TOTAL}}": "14",
     "{{COMPETITOR_COUNT}}": "3",
     "{{APPS_PRESENT_COUNT}}": "13",
-    "{{FINDING_COUNT_HOMEPAGE}}": "1",
+    "{{FINDING_COUNT_HOMEPAGE}}": "2",
     "{{FINDING_COUNT_COLLECTION}}": "2",
-    "{{FINDING_COUNT_PDP}}": "5",
-    "{{FINDING_COUNT_CART}}": "2",
+    "{{FINDING_COUNT_PDP}}": "7",
+    "{{FINDING_COUNT_CART}}": "3",
 
     # Section 02 — Traffic & Conversion Context
     "{{PROXY_TIER_NAME}}": "Tier 3: Scale",
@@ -223,24 +223,41 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
                                 </div>"""
 
 # ═══════════════════════════════════════════════════════════
-# HOMEPAGE (1 card) — Announcement bar (#11, 2.70)
+# HOMEPAGE (2 cards) — Announcement bar (#11, 2.70), Hero CTA (#8, 2.70)
 # ═══════════════════════════════════════════════════════════
-hp_cards = card(
+hp_hero_card = card(
+    "A conversion-focused homepage hero with a clear CTA can increase engagement by 20–30% — Urban Platter's hero is purely decorative",
+    "screenshots/hp_f2_client_hero_no_cta.jpeg", "Urban Platter — Mobile",
+    "screenshots/bench_hp_hero_cta_chomps.jpeg", "Chomps — Mobile",
+    [
+        "The homepage hero is a 7-slide image carousel — each slide is a full-bleed product image that links to a collection page, but NONE have a visible CTA button (\"Shop Now\", \"Explore\", \"Get X% Off\")",
+        "The hero slides are purely decorative — users must tap the entire image to navigate, with no visual affordance indicating it's actionable or where it leads",
+        "Best-practice F&B heroes combine a value proposition headline + benefit copy + prominent CTA button — Chomps uses \"FEEL FULL FOR FULLER DAYS\" + \"SHOP NOW\" button",
+        "The hero is the highest-visibility real estate on mobile — without a focused CTA, it's wasted on passive browsing rather than driving conversions",
+    ],
+    [
+        "Redesign hero slides with a text overlay: headline (benefit-focused), subheadline (specific offer or USP), and a high-contrast CTA button (\"Shop Now\", \"Explore Range\")",
+        "Add a specific first-time-visitor offer in at least one hero slide: \"New Here? Get 10% Off Your First Order\" with a direct CTA to the collection",
+    ],
+    "Standard — hero CTAs are present on 8/10 top F&B stores",
+)
+
+hp_cards = "\n\n".join([hp_hero_card, card(
     "A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline",
     "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
     "screenshots/bench_hp_announcement_offer.jpeg", "Chomps",
     [
         "The announcement bar reads \"Elevate Your Everyday Pantry\" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor",
         "No shipping offer, discount code, or urgency element in the bar — first-time visitors get no immediate incentive to stay and shop",
-        "8 out of 10 top Food & Bev stores use the announcement bar for a concrete offer: free shipping threshold, first-order discount, or limited-time deal",
+        "9 out of 10 top Food & Bev stores use the announcement bar for a concrete offer: free shipping threshold, first-order discount, or limited-time deal",
         "Chomps uses \"FREE SHIPPING on orders $50+ | Subscribe & Save 15%\" — immediately communicates value and drives higher AOV",
     ],
     [
         "Replace the tagline with a conversion-focused message: \"Free Shipping Over ₹499 | Use code WELCOME10 for 10% Off Your First Order\"",
         "Add a secondary rotating message about delivery speed or trust: \"Trusted by 30 Lakh+ Customers | Fresh Delivery in 3–5 Days\"",
     ],
-    "Standard — 8/10 stores use offer-driven announcement bars",
-)
+    "Standard — 9/10 stores use offer-driven announcement bars",
+)])
 
 # ═══════════════════════════════════════════════════════════
 # COLLECTION (2 cards) — Dietary filters (#15, 2.40), Variant swatches (#3, 3.00)
@@ -254,13 +271,13 @@ col_cards = "\n\n".join([
             "The filter drawer offers only generic options: Sort by, Price, Product type, Brand, Country, Availability — no dietary or health filters",
             "Urban Platter sells superfoods, organic products, vegan items, and gluten-free options — but shoppers can't filter by these attributes",
             "Health-conscious buyers — Urban Platter's core segment — actively look for dietary filters (Vegan, Gluten-Free, Organic, No Preservatives, Keto)",
-            "6 out of 10 top Food & Bev stores offer dietary-specific filters — Athletic Brewing filters by calories, flavor, and dietary attributes",
+            "5 out of 10 top Food & Bev stores offer dietary-specific filters — Athletic Brewing filters by calories, flavor, and dietary attributes",
         ],
         [
             "Add dietary attribute filters: Vegan, Gluten-Free, Organic, No Preservatives, Keto-Friendly, Sugar-Free — tag products with Shopify metafields",
             "Add a \"Diet\" or \"Dietary Preference\" filter group at the top of the filter drawer — this is the #1 filter used by health-conscious Food & Bev shoppers",
         ],
-        "Growing — 6/10 stores have dietary filters",
+        "Growing — 5/10 stores have dietary/collection filters",
     ),
     card(
         "Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates by 5–8%",
@@ -269,35 +286,35 @@ col_cards = "\n\n".join([
         [
             "Collection page product cards show \"Choose options\" text for multi-variant products but no visual swatches for size/weight",
             "For a food brand with multiple pack sizes (100g, 250g, 500g, 1kg), visual weight indicators on cards save clicks and reduce friction",
-            "9 out of 10 top Food & Bev stores show flavor/variant selectors directly on product cards — users can pick a size without leaving the grid",
+            "9 out of 10 top Food & Bev stores show variant selectors on the PDP — but showing them directly on collection cards is a growing pattern that saves clicks and reduces friction",
         ],
         [
             "Add weight/size variant pills directly on collection page product cards — e.g., \"250g | 500g | 1kg\" as clickable badges",
             "Show the corresponding price for each variant on hover or selection — helps users compare without extra clicks into the PDP",
         ],
-        "Standard — 9/10 stores have variant selectors on cards",
+        "Growing — Variant selectors on collection cards reduce friction for multi-SKU stores",
     ),
 ])
 
 # ═══════════════════════════════════════════════════════════
-# PDP (5 cards) — Trust badges (#1, 3.00), Sticky ATC broken (UX), Nutritional info (#2, 2.70), Subscription (#3, 2.65), Delivery estimation (#15, 2.40)
+# PDP (7 cards) — Trust badges (#1, 3.00), Sticky ATC broken (UX), Nutritional info (#2, 2.70), Subscription (#3, 2.65), Delivery estimation (#15, 2.40), Buy Now (#17, 2.65), Stock indicators (#16, 2.40)
 # ═══════════════════════════════════════════════════════════
 pdp_cards = "\n\n".join([
     card(
         "Trust badges and certifications near the ATC button increase purchase confidence by 15–20% — Urban Platter has none",
-        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile PDP",
+        "screenshots/pdp_f1_client_no_badges.jpeg", "Urban Platter — Mobile PDP",
         "screenshots/bench_pdp_trust_badges_chomps.jpeg", "Chomps — Mobile PDP",
         [
             "The ATC area shows only a quantity selector and \"Add to cart\" button — no FSSAI certification badge, no quality claims, no trust indicators anywhere near the purchase action",
             "For a premium food brand selling imported and specialty ingredients, trust badges (FSSAI Certified, 100% Natural, No Preservatives, Imported) are critical at the point of purchase",
             "Buyers of premium superfoods and specialty ingredients need reassurance about quality and authenticity — especially when paying ₹500-2,000+ per item",
-            "9 out of 10 top Food & Bev stores display benefit badges near the ATC button — Chomps shows \"10-12g Protein\", \"0g Sugar\", \"Keto Friendly\", \"Low-Carb\" with clear icons directly below ATC",
+            "7 out of 10 top Food & Bev stores display benefit/USP badges near the ATC button — Chomps shows \"10-12g Protein\", \"0g Sugar\", \"Keto Friendly\", \"Low-Carb\" with clear icons directly below ATC",
         ],
         [
             "Add 4-6 benefit/trust badges directly below or above the ATC button: \"FSSAI Certified\", \"100% Natural\", \"No Preservatives\", \"Premium Imported\" with small icons",
             "Use a horizontal badge strip that's visible without scrolling past the ATC — this is the last thing shoppers see before deciding to buy",
         ],
-        "Standard — 9/10 stores have trust badges near ATC",
+        "Growing — 7/10 stores have USP/trust badges near ATC",
     ),
     card(
         "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
@@ -307,13 +324,13 @@ pdp_cards = "\n\n".join([
             "Urban Platter's theme includes a <code>&lt;sticky-atc-panel&gt;</code> element — but it has CSS class <code>invisible</code> and <code>visibility: hidden</code>, making it permanently non-functional",
             "On mobile, scrolling past the ATC button means users completely lose access to the primary conversion action — they must scroll back up to add to cart",
             "This is a broken feature, not a missing one — the sticky ATC was built but never activated or has a CSS/JS bug preventing it from appearing",
-            "9 out of 10 top Food & Bev stores have a working sticky ATC on mobile PDPs — Olipop shows a persistent bottom bar with price + ATC that stays visible through the entire scroll",
+            "5 out of 10 top Food & Bev stores have a working sticky ATC on mobile PDPs — Olipop shows a persistent bottom bar with price + ATC that stays visible through the entire scroll",
         ],
         [
             "Fix the sticky ATC panel: investigate why the <code>sticky-atc-panel--out</code> class keeps the <code>invisible</code> state — likely a CSS transition or JS scroll-listener bug",
             "The panel already has the right HTML structure (product image, name, price, ATC button) — it just needs the visibility toggle fixed",
         ],
-        "Standard — 9/10 stores have sticky ATC on mobile",
+        "Growing — 5/10 stores have sticky ATC on mobile",
         layout="mobile",
     ),
     card(
@@ -324,50 +341,82 @@ pdp_cards = "\n\n".join([
             "Product descriptions mention nutrients (\"rich in selenium\", \"loaded with magnesium and zinc\") but provide no structured nutritional facts table",
             "The specification section shows Net Weight, Dimensions, Shelf Life, Origin, SKU, Packaging, Brand, Ingredients — but no calories, macros, or daily value percentages",
             "Health-conscious buyers — a large Urban Platter segment — actively look for structured nutrition tables before purchasing premium-priced superfoods",
-            "8 out of 10 top Food & Bev stores display a structured nutrition facts panel directly on the PDP",
+            "Only 3 out of 10 top Food & Bev stores display a structured nutrition facts panel on the PDP — but for a premium superfood brand like Urban Platter, this is critical for buyer confidence and differentiation",
         ],
         [
             "Add a structured nutritional information table to all food product PDPs: calories, protein, fat, carbs, fiber per serving with %DV",
             "Include allergen declarations and dietary badges (vegan, gluten-free, no preservatives) — these are trust-building signals for health-conscious buyers",
         ],
-        "Standard for Food & Bev — 8/10 stores have nutrition tables",
+        "Differentiator — 3/10 stores, but critical for premium superfood positioning",
     ),
     card(
         "Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue",
-        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile",
+        "screenshots/pdp_f4_client_no_subscribe.jpeg", "Urban Platter — Mobile",
         "screenshots/pdp_f5_benchmark_subscription.jpeg", "Olipop",
         [
             "No subscribe-and-save option despite selling highly replenishable products — spices, superfoods, nuts, snacks, and pantry staples",
             "The ATC area shows only a one-time purchase flow: quantity selector + Add to Cart button — no toggle for \"Subscribe & Save\" or frequency selector",
             "Urban Platter's product categories are natural fits for auto-replenish: customers buy Brazil nuts, olive oil, and spice mixes on a regular cycle",
-            "5 out of 10 top Food & Bev stores offer subscription options with 10–15% discount incentives — Olipop shows a prominent Subscribe toggle with 15% savings",
+            "5 out of 10 top Food & Bev stores offer subscription options — but only 1 out of 5 India stores (Blue Tokai) has it, making this a major differentiation opportunity in the Indian market",
         ],
         [
             "Implement a subscribe-and-save option on eligible PDPs with a 10–15% discount incentive — start with top-selling replenishable SKUs",
             "Use apps like Recharge or Loop Subscriptions — offer frequency options (every 2 weeks, monthly, bi-monthly) based on product consumption rate",
         ],
-        "Growing — 5/10 stores offer subscription on consumables",
+        "Growing — 5/10 global, only 1/5 India stores offer subscription",
     ),
     card(
         "Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations",
-        "screenshots/pdp_mobile_atc_area.jpeg", "Urban Platter — Mobile",
+        "screenshots/pdp_f5_client_no_delivery.jpeg", "Urban Platter — Mobile",
         "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam",
         [
             "No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart",
             "Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce — especially for food products where freshness matters",
             "The PDP shows shelf life (270 days) in specifications but nothing about delivery timeline — the information gap is exactly at the purchase decision point",
-            "5 out of 10 India Food & Bev stores have a pincode-based delivery checker — Vahdam shows \"Expected delivery\" with date range directly below the ATC button",
+            "3 out of 5 India Food & Bev stores have a pincode-based delivery checker — Vahdam shows \"Expected delivery\" with date range directly below the ATC button",
         ],
         [
             "Add a pincode-based delivery estimator directly below the ATC button: \"Enter pincode to check delivery date\"",
             "Show estimated delivery date range (e.g., \"Delivers by Mar 20–22\") and serviceability status — use Shiprocket or similar APIs for real-time data",
         ],
-        "Growing — 5/10 India stores have pincode delivery check",
+        "Growing — 3/5 India stores have pincode delivery check",
+    ),
+    card(
+        "A 'Buy Now' button alongside 'Add to Cart' creates an express purchase path that lifts impulse conversions by 5–10%",
+        "screenshots/pdp_f6_client_no_buynow.jpeg", "Urban Platter — Mobile PDP",
+        "screenshots/bench_pdp_buynow.jpeg", "Nutriorg — Mobile PDP",
+        [
+            "The PDP shows only an \"Add to cart\" button — no \"Buy Now\", \"Buy It Now\", or dynamic checkout button for instant purchase",
+            "Shoppers who have already decided (returning customers, impulse buyers) are forced through the full cart flow instead of a direct checkout shortcut",
+            "This is a default Shopify feature that can be enabled in theme settings — it requires zero custom development",
+            "Nutriorg shows both \"Add to cart\" (outlined) and \"Buy It Now\" (filled, prominent) — giving users two clear purchase paths",
+        ],
+        [
+            "Enable the Shopify dynamic checkout button (\"Buy It Now\") in theme settings — this surfaces Shop Pay, GPay, or standard checkout as a one-tap option",
+            "Place it directly below the ATC button with distinct visual styling to differentiate the two actions clearly",
+        ],
+        "Growing — Shopify default feature, easy to enable with zero dev cost",
+    ),
+    card(
+        "Stock availability indicators near the ATC button create urgency and reduce purchase hesitation — Urban Platter shows none",
+        "screenshots/pdp_f7_client_no_stock.jpeg", "Urban Platter — Mobile PDP",
+        "screenshots/bench_pdp_stock_indicator.jpeg", "Vahdam — Mobile PDP",
+        [
+            "No stock status indicator anywhere on the PDP — no \"In Stock\", \"Only X left\", \"Low Stock\", or availability badge near the ATC button",
+            "For premium superfoods and specialty imports with limited supply, stock indicators create authentic urgency — \"Only 12 left in stock\" motivates faster purchase decisions",
+            "Vahdam shows \"446 units sold in the last 24 hours\" with visual demand indicators — combining social proof with urgency near the ATC button",
+            "Without any stock signal, there's no sense of scarcity or urgency — shoppers feel they can \"come back later\" and often don't",
+        ],
+        [
+            "Add a stock indicator near the ATC button: show \"In Stock\" for available items and \"Only X left\" when inventory drops below a threshold (e.g., 20 units)",
+            "Consider adding a \"X sold in last 24 hours\" counter for popular products — combines urgency with social proof (apps like Hurrify or custom Liquid code)",
+        ],
+        "Growing — stock/demand indicators are increasingly standard in premium F&B",
     ),
 ])
 
 # ═══════════════════════════════════════════════════════════
-# CART (2 cards) — Express checkout (#13, 2.65), Bundle/combo (#11, 2.65)
+# CART (3 cards) — Express checkout (#13, 2.65), Bundle/combo (#11, 2.65), Delivery date in cart (#15 related, 2.40)
 # Note: Cart drawer DOES exist (Shopflo overlay) — removed as finding.
 #       Trust badges at checkout EXIST in Shopflo drawer — removed as finding.
 # ═══════════════════════════════════════════════════════════
@@ -380,17 +429,17 @@ cart_cards = "\n\n".join([
             "The cart page Order Summary shows only a single \"Checkout\" button that routes through Shopflo — no express checkout buttons (GPay, Shop Pay, PhonePe) visible",
             "Express checkout reduces the process from 4+ steps to 1–2 taps — critical for mobile users who make up 80–90% of Indian e-commerce traffic",
             "While Shopflo supports UPI/GPay on the backend, the cart page doesn't surface these as one-tap express options — users must enter the full checkout flow first",
-            "8 out of 10 top Food & Bev stores show express payment buttons directly on the cart — Blue Tokai displays Shop Pay + GPay alongside the standard checkout",
+            "Express checkout buttons on the cart page are a growing industry trend — Blue Tokai displays Shop Pay + GPay alongside the standard checkout, reducing steps for returning users",
         ],
         [
             "Enable Shopify's dynamic checkout buttons (Shop Pay, Google Pay) directly on the cart page alongside the existing Shopflo checkout",
             "For the Indian market, surface UPI express payment as a prominent one-tap option — reducing checkout steps from 4 to 1 for returning users",
         ],
-        "Growing — 8/10 stores have express checkout buttons visible",
+        "Growing industry trend — express checkout reduces cart-to-purchase friction",
     ),
     card(
         "Bundle and combo offers can increase average order value by 10–20% — Urban Platter has cross-sell but no bundles",
-        "screenshots/cart_mobile_checkout.jpeg", "Urban Platter — Mobile",
+        "screenshots/cart_f2_client_crosssell_area.jpeg", "Urban Platter — Mobile",
         "screenshots/bench_cart_bundle.jpeg", "Chomps",
         [
             "The cart page has a \"You may also like\" cross-sell section — which is good — but no structured bundle or combo deals",
@@ -403,6 +452,22 @@ cart_cards = "\n\n".join([
             "Surface bundle suggestions contextually in cart: if a user has olive oil, suggest the \"Mediterranean Cooking Kit\" that includes it plus complementary items",
         ],
         "Growing — 5/10 stores offer bundle/combo deals",
+    ),
+    card(
+        "Showing expected delivery dates in the cart reduces abandonment by 15–20% — Urban Platter's cart shows no delivery timeline",
+        "screenshots/cart_f3_client_no_delivery_date.jpeg", "Urban Platter — Mobile Cart",
+        "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam — Delivery Estimation",
+        [
+            "Neither the /cart page nor the Shopflo cart drawer shows an expected delivery date — the cart has subtotal, free shipping bar, and checkout button but zero delivery timeline information",
+            "For perishable and specialty food products, delivery date visibility is critical — customers need to know when items arrive to plan meals, events, or gifting",
+            "The free shipping progress bar exists (good) but delivery date is the #1 information gap at the cart stage — it's a top-3 reason for cart abandonment in Indian e-commerce",
+            "Vahdam shows \"Expected delivery\" with a specific date range directly on the PDP — extending this to the cart reinforces commitment at the final decision point",
+        ],
+        [
+            "Add an \"Estimated delivery: [date range]\" line item in the cart order summary — use Shiprocket or logistics partner APIs for real-time calculation",
+            "Show delivery date per item if different products have different timelines (e.g., imported items vs domestic stock)",
+        ],
+        "Growing — delivery date in cart reduces abandonment for food/perishable brands",
     ),
 ])
 
@@ -572,6 +637,9 @@ html = html.replace("{{APPS_MISSING_HTML}}", apps_missing)
 # ── Strip remaining template comments ─────────────────────
 html = re.sub(r'<!--\s*POPULATE:.*?-->', '', html, flags=re.DOTALL)
 html = re.sub(r'<!--\s*VIDEO FINDING CARD PATTERN.*?-->', '', html, flags=re.DOTALL)
+# Strip single-line JS comments containing unreplaced template variables
+# (Do NOT use re.DOTALL — it would eat CSS/HTML between unrelated /* */ blocks)
+html = re.sub(r'/\*[^\n]*\{\{[A-Z_]+\}\}[^\n]*\*/', '', html)
 
 # ── Verify no template variables remain ───────────────────
 remaining = re.findall(r'\{\{[A-Z_]+\}\}', html)
