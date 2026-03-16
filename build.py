@@ -185,10 +185,9 @@ html = html.replace("{{PS_COMPETITION_TABLE_ROWS}}", comp_rows)
 
 # ── Finding cards ─────────────────────────────────────────
 
-def card(header, client_img, client_label, bench_img, bench_label, observations, recommendations, benchmark_tag, layout="desktop"):
+def card(header, client_img, client_label, bench_img, bench_label, observations, recommendations, benchmark_tag):
     obs_li = "\n".join(f"                                                    <li>{o}</li>" for o in observations)
     rec_li = "\n".join(f"                                                    <li>{r}</li>" for r in recommendations)
-    ss_class = "finding-screenshots desktop-screenshots" if layout == "desktop" else "finding-screenshots"
     # Support "missing" client screenshots — show placeholder instead of image
     if client_img is None:
         client_html = f'''<div class="finding-screenshot-missing">
@@ -204,7 +203,7 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
                                         {header}
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="{ss_class}">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 {client_html}
                                             </div>
@@ -340,7 +339,6 @@ pdp_cards = "\n\n".join([
             "The panel already has the right HTML structure (product image, name, price, ATC button) — it just needs the visibility toggle fixed",
         ],
         "Growing — 5/10 stores have sticky ATC on mobile",
-        layout="mobile",
     ),
     card(
         "Structured nutritional information tables increase buyer confidence and reduce returns for food products",

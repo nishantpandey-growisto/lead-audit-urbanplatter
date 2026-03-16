@@ -950,7 +950,7 @@
         }
         .finding-card-body {
             display: grid;
-            grid-template-columns: 350fr 320fr; /* Wireframe ratio: screenshots 52% | analysis 48% */
+            grid-template-columns: 1.4fr 1fr; /* Screenshots 58% | analysis 42% — wider for side-by-side mobile screenshots */
             gap: 0;
             min-height: 420px; /* Wireframe: card height 420px */
         }
@@ -962,10 +962,7 @@
             border-right: 1px solid #e5e7eb;
             align-content: start;
         }
-        /* Desktop screenshots: stack vertically (wide 350×170 landscape images) */
-        .finding-screenshots.desktop-screenshots {
-            grid-template-columns: 1fr;
-        }
+        /* All cards use side-by-side layout (mobile screenshots) — no desktop stacking variant */
         .finding-screenshot {
             display: flex;
             flex-direction: column;
@@ -976,12 +973,12 @@
             border-radius: 8px;
             border: 1px solid #e5e7eb;
             object-fit: contain;
-            max-height: 480px;
+            max-height: 520px;
             background: #f8f8f8;
         }
         .finding-screenshot-missing {
             width: 100%;
-            min-height: 200px;
+            min-height: 280px;
             border-radius: 8px;
             border: 2px dashed #d1d5db;
             background: #f9fafb;
@@ -2102,7 +2099,7 @@
                                         A conversion-focused homepage hero with a clear CTA can increase engagement by 20–30% — Urban Platter's hero is purely decorative
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_f2_client_hero_no_cta.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2139,7 +2136,7 @@
                                         A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/hp_mobile_firstfold.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2184,7 +2181,7 @@
                                         Dietary filters help health-conscious shoppers find products 3x faster — Urban Platter's filter drawer has none
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/col_mobile_filter_drawer.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2221,7 +2218,7 @@
                                         Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates by 5–8%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/col_mobile_grid.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2263,7 +2260,7 @@
                                         Trust badges and certifications near the ATC button increase purchase confidence by 15–20% — Urban Platter has none
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/pdp_f1_client_no_badges.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile PDP</div>
@@ -2340,7 +2337,7 @@
                                         Structured nutritional information tables increase buyer confidence and reduce returns for food products
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <div class="finding-screenshot-missing">
                                                     <div class="missing-icon">✗</div>
@@ -2380,7 +2377,7 @@
                                         Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <div class="finding-screenshot-missing">
                                                     <div class="missing-icon">✗</div>
@@ -2420,7 +2417,7 @@
                                         Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <div class="finding-screenshot-missing">
                                                     <div class="missing-icon">✗</div>
@@ -2460,7 +2457,7 @@
                                         A 'Buy Now' button alongside 'Add to Cart' creates an express purchase path that lifts impulse conversions by 5–10%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <div class="finding-screenshot-missing">
                                                     <div class="missing-icon">✗</div>
@@ -2500,7 +2497,7 @@
                                         Stock availability indicators near the ATC button create urgency and reduce purchase hesitation — Urban Platter shows none
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <div class="finding-screenshot-missing">
                                                     <div class="missing-icon">✗</div>
@@ -2546,7 +2543,7 @@
                                         Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_mobile_checkout.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2583,7 +2580,7 @@
                                         Bundle and combo offers can increase average order value by 10–20% — Urban Platter has cross-sell but no bundles
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f2_client_crosssell_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile</div>
@@ -2620,7 +2617,7 @@
                                         Showing expected delivery dates in the cart reduces abandonment by 15–20% — Urban Platter's cart shows no delivery timeline
                                     </div>
                                     <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
+                                        <div class="finding-screenshots">
                                             <div class="finding-screenshot">
                                                 <img src="screenshots/cart_f3_client_no_delivery_date.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter — Mobile Cart</div>
