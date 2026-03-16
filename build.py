@@ -25,14 +25,14 @@ replacements = {
 
     # Section 01 — Audit Overview
     "{{SEVERITY_CRITICAL_COUNT}}": "4",
-    "{{SEVERITY_IMPORTANT_COUNT}}": "7",
+    "{{SEVERITY_IMPORTANT_COUNT}}": "6",
     "{{SEVERITY_OPPORTUNITY_COUNT}}": "3",
-    "{{FINDING_COUNT_TOTAL}}": "14",
+    "{{FINDING_COUNT_TOTAL}}": "13",
     "{{COMPETITOR_COUNT}}": "3",
     "{{APPS_PRESENT_COUNT}}": "13",
     "{{FINDING_COUNT_HOMEPAGE}}": "2",
     "{{FINDING_COUNT_COLLECTION}}": "2",
-    "{{FINDING_COUNT_PDP}}": "7",
+    "{{FINDING_COUNT_PDP}}": "6",
     "{{FINDING_COUNT_CART}}": "3",
 
     # Section 02 — Traffic & Conversion Context
@@ -253,7 +253,7 @@ hp_hero_card = card(
 hp_cards = "\n\n".join([hp_hero_card, card(
     "A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline",
     "screenshots/hp_mobile_firstfold.jpeg", "Urban Platter — Mobile",
-    "screenshots/bench_hp_announcement_offer.jpeg", "Chomps",
+    "screenshots/bench_hp_announcement_mobile_chomps.jpeg", "Chomps — Mobile",
     [
         "The announcement bar reads \"Elevate Your Everyday Pantry\" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor",
         "No shipping offer, discount code, or urgency element in the bar — first-time visitors get no immediate incentive to stay and shop",
@@ -274,7 +274,7 @@ col_cards = "\n\n".join([
     card(
         "Dietary filters help health-conscious shoppers find products 3x faster — Urban Platter's filter drawer has none",
         "screenshots/col_mobile_filter_drawer.jpeg", "Urban Platter — Mobile",
-        "screenshots/bench_col_dietary_filters.jpeg", "Athletic Brewing",
+        "screenshots/bench_col_filters_mobile_athletic.jpeg", "Athletic Brewing — Mobile",
         [
             "The filter drawer offers only generic options: Sort by, Price, Product type, Brand, Country, Availability — no dietary or health filters",
             "Urban Platter sells superfoods, organic products, vegan items, and gluten-free options — but shoppers can't filter by these attributes",
@@ -290,7 +290,7 @@ col_cards = "\n\n".join([
     card(
         "Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates by 5–8%",
         "screenshots/col_mobile_grid.jpeg", "Urban Platter — Mobile",
-        "screenshots/col_f2_benchmark_swatches.jpeg", "Yogabar",
+        "screenshots/bench_col_swatches_mobile_yogabar.jpeg", "Yogabar — Mobile",
         [
             "Collection page product cards show \"Choose options\" text for multi-variant products but no visual swatches for size/weight",
             "For a food brand with multiple pack sizes (100g, 250g, 500g, 1kg), visual weight indicators on cards save clicks and reduce friction",
@@ -305,25 +305,9 @@ col_cards = "\n\n".join([
 ])
 
 # ═══════════════════════════════════════════════════════════
-# PDP (7 cards) — Trust badges (#1, 3.00), Sticky ATC broken (UX), Nutritional info (#2, 2.70), Subscription (#3, 2.65), Delivery estimation (#15, 2.40), Buy Now (#17, 2.65), Stock indicators (#16, 2.40)
+# PDP (6 cards) — Sticky ATC broken (UX), Nutritional info (#2, 2.70), Subscription (#3, 2.65), Delivery estimation (#15, 2.40), Buy Now (#17, 2.65), Stock indicators (#16, 2.40)
 # ═══════════════════════════════════════════════════════════
 pdp_cards = "\n\n".join([
-    card(
-        "Trust badges and certifications near the ATC button increase purchase confidence by 15–20% — Urban Platter has none",
-        "screenshots/pdp_f1_client_no_badges.jpeg", "Urban Platter — Mobile PDP",
-        "screenshots/bench_pdp_trust_badges_chomps.jpeg", "Chomps — Mobile PDP",
-        [
-            "The ATC area shows only a quantity selector and \"Add to cart\" button — no FSSAI certification badge, no quality claims, no trust indicators anywhere near the purchase action",
-            "For a premium food brand selling imported and specialty ingredients, trust badges (FSSAI Certified, 100% Natural, No Preservatives, Imported) are critical at the point of purchase",
-            "Buyers of premium superfoods and specialty ingredients need reassurance about quality and authenticity — especially when paying ₹500-2,000+ per item",
-            "7 out of 10 top Food & Bev stores display benefit/USP badges near the ATC button — Chomps shows \"10-12g Protein\", \"0g Sugar\", \"Keto Friendly\", \"Low-Carb\" with clear icons directly below ATC",
-        ],
-        [
-            "Add 4-6 benefit/trust badges directly below or above the ATC button: \"FSSAI Certified\", \"100% Natural\", \"No Preservatives\", \"Premium Imported\" with small icons",
-            "Use a horizontal badge strip that's visible without scrolling past the ATC — this is the last thing shoppers see before deciding to buy",
-        ],
-        "Growing — 7/10 stores have USP/trust badges near ATC",
-    ),
     card(
         "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
         None, "Urban Platter — Not Present",
@@ -343,12 +327,12 @@ pdp_cards = "\n\n".join([
     card(
         "Structured nutritional information tables increase buyer confidence and reduce returns for food products",
         None, "Urban Platter — Not Present",
-        "screenshots/pdp_f4_benchmark_nutrition.jpeg", "Olipop",
+        "screenshots/bench_pdp_nutrition_mobile.jpeg", "Athletic Brewing — Mobile",
         [
             "Product descriptions mention nutrients (\"rich in selenium\", \"loaded with magnesium and zinc\") but provide no structured nutritional facts table",
             "The specification section shows Net Weight, Dimensions, Shelf Life, Origin, SKU, Packaging, Brand, Ingredients — but no calories, macros, or daily value percentages",
             "Health-conscious buyers — a large Urban Platter segment — actively look for structured nutrition tables before purchasing premium-priced superfoods",
-            "Only 3 out of 10 top Food & Bev stores display a structured nutrition facts panel on the PDP — but for a premium superfood brand like Urban Platter, this is critical for buyer confidence and differentiation",
+            "Only 3 out of 10 top Food & Bev stores display a structured nutrition facts panel on the PDP — Athletic Brewing shows calories, carbs, protein, and fat per serving in a clean mobile layout. For a premium superfood brand like Urban Platter, this is critical for buyer confidence",
         ],
         [
             "Add a structured nutritional information table to all food product PDPs: calories, protein, fat, carbs, fiber per serving with %DV",
@@ -431,12 +415,12 @@ cart_cards = "\n\n".join([
     card(
         "Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%",
         "screenshots/cart_mobile_checkout.jpeg", "Urban Platter — Mobile",
-        "screenshots/cart_f1_benchmark_express.jpeg", "Blue Tokai",
+        "screenshots/bench_cart_express_mobile_bluetokai.jpeg", "Blue Tokai — Mobile",
         [
             "The cart page Order Summary shows only a single \"Checkout\" button that routes through Shopflo — no express checkout buttons (GPay, Shop Pay, PhonePe) visible",
             "Express checkout reduces the process from 4+ steps to 1–2 taps — critical for mobile users who make up 80–90% of Indian e-commerce traffic",
             "While Shopflo supports UPI/GPay on the backend, the cart page doesn't surface these as one-tap express options — users must enter the full checkout flow first",
-            "Express checkout buttons on the cart page are a growing industry trend — Blue Tokai displays Shop Pay + GPay alongside the standard checkout, reducing steps for returning users",
+            "Blue Tokai surfaces \"Add to Cart\", \"Subscribe & Save\", and \"Buy Now\" with Razorpay express options (GPay, UPI) directly on the PDP — giving users 3 distinct purchase paths with express payment at every stage",
         ],
         [
             "Enable Shopify's dynamic checkout buttons (Shop Pay, Google Pay) directly on the cart page alongside the existing Shopflo checkout",
@@ -447,7 +431,7 @@ cart_cards = "\n\n".join([
     card(
         "Bundle and combo offers can increase average order value by 10–20% — Urban Platter has cross-sell but no bundles",
         "screenshots/cart_f2_client_crosssell_area.jpeg", "Urban Platter — Mobile",
-        "screenshots/bench_cart_bundle.jpeg", "Chomps",
+        "screenshots/bench_cart_bundle_mobile_chomps.jpeg", "Chomps — Mobile Cart",
         [
             "The cart page has a \"You may also like\" cross-sell section — which is good — but no structured bundle or combo deals",
             "For a pantry brand with 1,736 SKUs, bundles are a natural fit: \"Baking Essentials Kit\", \"Healthy Snacking Combo\", \"Spice Starter Pack\"",
