@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 """Build script: Populates lead_audit_spa_template.html for Urban Platter.
 
-Correct data source: PageSpeed Insights (pagespeed.web.dev) with Slow 4G throttling.
-LAB data only — NOT CrUX field data.
-Data collected: March 2026.
+Re-evaluated: March 16, 2026 — fresh mobile-first UX evaluation at 375×812,
+fresh Lighthouse PageSpeed data, 3-dimension finding selection algorithm.
 """
 
 import re, os
@@ -25,16 +24,16 @@ replacements = {
     "{{INDUSTRY_CATEGORY_SHORT}}": "food",
 
     # Section 01 — Audit Overview
-    "{{SEVERITY_CRITICAL_COUNT}}": "6",
-    "{{SEVERITY_IMPORTANT_COUNT}}": "7",
-    "{{SEVERITY_OPPORTUNITY_COUNT}}": "3",
-    "{{FINDING_COUNT_TOTAL}}": "16",
+    "{{SEVERITY_CRITICAL_COUNT}}": "4",
+    "{{SEVERITY_IMPORTANT_COUNT}}": "5",
+    "{{SEVERITY_OPPORTUNITY_COUNT}}": "2",
+    "{{FINDING_COUNT_TOTAL}}": "11",
     "{{COMPETITOR_COUNT}}": "3",
-    "{{APPS_PRESENT_COUNT}}": "11",
-    "{{FINDING_COUNT_HOMEPAGE}}": "4",
-    "{{FINDING_COUNT_COLLECTION}}": "3",
-    "{{FINDING_COUNT_PDP}}": "5",
-    "{{FINDING_COUNT_CART}}": "4",
+    "{{APPS_PRESENT_COUNT}}": "13",
+    "{{FINDING_COUNT_HOMEPAGE}}": "2",
+    "{{FINDING_COUNT_COLLECTION}}": "2",
+    "{{FINDING_COUNT_PDP}}": "4",
+    "{{FINDING_COUNT_CART}}": "3",
 
     # Section 02 — Traffic & Conversion Context
     "{{PROXY_TIER_NAME}}": "Tier 3: Scale",
@@ -42,9 +41,9 @@ replacements = {
     "{{PROXY_PRODUCT_COUNT}}": "1,736",
     "{{PROXY_REVIEW_COUNT}}": "5,000+",
     "{{PROXY_INSTAGRAM}}": "85K+",
-    "{{PROXY_APP_COUNT}}": "11",
+    "{{PROXY_APP_COUNT}}": "13",
     "{{PROXY_ESTIMATED_REVENUE}}": "50000000",
-    "{{PROXY_TIER_NARRATIVE}}": 'Based on Urban Platter\'s extensive catalog of 1,736 products across 108 collections, strong review volume (5,000+ across products via Judge.me), 85K+ Instagram following, and presence of 11+ marketing integrations, we estimate this is a <strong>Tier 3 (Scale)</strong> store with 50K–200K monthly sessions. The proxy signals all point to a mature store that has outgrown basic optimizations and would benefit significantly from data-driven CRO.',
+    "{{PROXY_TIER_NARRATIVE}}": 'Based on Urban Platter\'s extensive catalog of 1,736 products across 108 collections, strong review volume (5,000+ across products via Judge.me), 85K+ Instagram following, and presence of 13 marketing integrations, we estimate this is a <strong>Tier 3 (Scale)</strong> store with 50K–200K monthly sessions. The proxy signals all point to a mature store that has outgrown basic optimizations and would benefit significantly from data-driven CRO.',
 
     # Funnel benchmarks (Food & Bev — from Appendix C/D)
     "{{INDUSTRY_PDP_VIEW_RATE_P25}}": "60.4%",
@@ -64,43 +63,43 @@ replacements = {
     "{{INDUSTRY_CVR_P75}}": "2.99%",
     "{{INDUSTRY_CVR_P50_RAW}}": "2.05",
 
-    # Section 03: Performance & Speed (LAB DATA from pagespeed.web.dev)
-    "{{PS_CLIENT_MOBILE_SCORE}}": "29",
-    "{{PS_CLIENT_MOBILE_CLASS}}": "poor",
-    "{{PS_CLIENT_MOBILE_VERDICT}}": "Poor — Urban Platter's mobile site loads far too slowly. With an LCP of 13.7s and TBT of 4,500ms, users are waiting over 13 seconds to see meaningful content and the page is unresponsive for 4.5 seconds during load. Desktop is equally weak at 34. Both scores are the lowest in this competitive set.",
+    # Section 03: Performance & Speed (Lighthouse lab data — March 16, 2026)
+    "{{PS_CLIENT_MOBILE_SCORE}}": "62",
+    "{{PS_CLIENT_MOBILE_CLASS}}": "moderate",
+    "{{PS_CLIENT_MOBILE_VERDICT}}": "Moderate — Urban Platter's mobile PageSpeed of 62 is the lowest in this competitive set. While LCP (0.6s) and FCP (0.2s) are excellent, the site is dragged down by a massive Total Blocking Time of 1,890ms — the main thread is frozen for nearly 2 seconds during load. Desktop is worse at 44 with a CLS of 0.352. Compared to Vahdam (94) and Sleepy Owl (75), there's significant room for improvement.",
 
-    # Core Web Vitals (LAB data — Lighthouse synthetic test)
-    "{{PS_CLIENT_LCP}}": "13.7s",
-    "{{PS_CLIENT_LCP_CLASS}}": "poor",
-    "{{PS_CLIENT_LCP_STATUS}}": "fail",
-    "{{PS_CLIENT_LCP_LABEL}}": "Fail",
-    "{{PS_CLIENT_FCP}}": "3.4s",
-    "{{PS_CLIENT_FCP_CLASS}}": "poor",
-    "{{PS_CLIENT_FCP_STATUS}}": "fail",
-    "{{PS_CLIENT_FCP_LABEL}}": "Fail",
-    "{{PS_CLIENT_TBT}}": "4,500ms",
+    # Core Web Vitals (Lighthouse lab data)
+    "{{PS_CLIENT_LCP}}": "0.6s",
+    "{{PS_CLIENT_LCP_CLASS}}": "good",
+    "{{PS_CLIENT_LCP_STATUS}}": "pass",
+    "{{PS_CLIENT_LCP_LABEL}}": "Pass",
+    "{{PS_CLIENT_FCP}}": "0.2s",
+    "{{PS_CLIENT_FCP_CLASS}}": "good",
+    "{{PS_CLIENT_FCP_STATUS}}": "pass",
+    "{{PS_CLIENT_FCP_LABEL}}": "Pass",
+    "{{PS_CLIENT_TBT}}": "1,890ms",
     "{{PS_CLIENT_TBT_CLASS}}": "poor",
     "{{PS_CLIENT_TBT_STATUS}}": "fail",
     "{{PS_CLIENT_TBT_LABEL}}": "Fail",
-    "{{PS_CLIENT_CLS}}": "0.001",
+    "{{PS_CLIENT_CLS}}": "0.082",
     "{{PS_CLIENT_CLS_CLASS}}": "good",
     "{{PS_CLIENT_CLS_STATUS}}": "pass",
     "{{PS_CLIENT_CLS_LABEL}}": "Pass",
-    "{{PS_CLIENT_INP}}": "708ms",
-    "{{PS_CLIENT_INP_CLASS}}": "poor",
-    "{{PS_CLIENT_INP_STATUS}}": "fail",
-    "{{PS_CLIENT_INP_LABEL}}": "Fail (CrUX)",
+    "{{PS_CLIENT_INP}}": "—",
+    "{{PS_CLIENT_INP_CLASS}}": "moderate",
+    "{{PS_CLIENT_INP_STATUS}}": "unknown",
+    "{{PS_CLIENT_INP_LABEL}}": "Lab N/A",
 
-    "{{CWV_SUMMARY_CLASS}}": "poor",
-    "{{CWV_PASS_ICON}}": "✕",
-    "{{CWV_PASS_COUNT}}": "1",
+    "{{CWV_SUMMARY_CLASS}}": "moderate",
+    "{{CWV_PASS_ICON}}": "⚠",
+    "{{CWV_PASS_COUNT}}": "3",
 
-    "{{PS_COMBINED_NARRATIVE}}": "Urban Platter's performance is critically poor — the worst in this competitive set on mobile (29) and near-worst on desktop (34). The Largest Contentful Paint of 13.7 seconds means users wait nearly 14 seconds to see meaningful content on mobile. Total Blocking Time of 4,500ms means the page is completely unresponsive for 4.5 seconds during load — users tapping buttons get no response. The only bright spot is CLS at 0.001 (excellent visual stability). CrUX field data confirms real users experience INP of 708ms — every tap or click takes over 700ms to respond, well above the 200ms threshold. By comparison, Sleepy Owl scores 52 on mobile and Blue Tokai 26 — Urban Platter is in the bottom tier. Improving mobile performance from 29 to even 50 could lift conversions by 15–25% based on industry benchmarks.",
+    "{{PS_COMBINED_NARRATIVE}}": "Urban Platter's performance is a mixed picture. The good news: LCP (0.6s) and FCP (0.2s) are both excellent — the page renders visual content quickly. CLS (0.082) is within the good threshold on mobile, meaning layout stability is acceptable. However, the critical weakness is Total Blocking Time at 1,890ms — the main thread is frozen for nearly 2 seconds while 13+ third-party scripts execute. This means users tapping buttons during page load get no response. Speed Index (10.5s) and Time to Interactive (35.8s) are both extremely poor. Desktop is worse overall at 44, primarily due to CLS of 0.352 (layout elements shifting during load). By comparison, Vahdam scores 94 on mobile with 0ms TBT — their headless architecture eliminates main-thread blocking entirely. Blue Tokai (70) and Sleepy Owl (75) also outperform Urban Platter. The path to improvement is clear: defer or remove non-critical third-party scripts (GoAffPro, InstaVid, PushOwl) and code-split the remaining bundles.",
 
     # Section 05: Technology Assessment
     "{{TECH_HEALTH_CLASS}}": "warning",
     "{{TECH_HEALTH_ICON}}": "⚠",
-    "{{TECH_HEALTH_SUMMARY}}": "2 of 6 technology areas are well-configured — 4 areas need attention",
+    "{{TECH_HEALTH_SUMMARY}}": "3 of 6 technology areas are well-configured — 3 areas need attention",
     "{{TECH_PLATFORM_STATUS}}": "good",
     "{{TECH_PLATFORM_STATUS_LABEL}}": "Modern Platform",
     "{{PLATFORM}}": "Shopify",
@@ -110,13 +109,13 @@ replacements = {
     "{{THEME_NAME}}": "New Rebuy &lt;&gt; Enterprise",
     "{{THEME_TYPE}}": "Custom-built (Rebuy Enterprise fork)",
     "{{THEME_VERSION_NOTE}}": "OS 2.0 compatible — custom fork of Rebuy Enterprise theme",
-    "{{THEME_FEATURE_NOTE}}": "Custom theme limits native feature adoption — each new conversion feature requires dev work instead of app/theme settings",
+    "{{THEME_FEATURE_NOTE}}": "Custom theme has a broken sticky ATC panel (DOM element present but permanently invisible). Each new feature requires dev work instead of theme settings.",
     "{{TECH_CHECKOUT_STATUS}}": "warning",
     "{{TECH_CHECKOUT_STATUS_LABEL}}": "Shopflo Override",
     "{{CHECKOUT_TYPE}}": "Shopflo Checkout (Custom)",
     "{{CHECKOUT_GUEST_NOTE}}": "Guest checkout: Enabled via Shopflo",
-    "{{CHECKOUT_EXPRESS_NOTE}}": "Express checkout: Shopflo handles payment routing — UPI/GPay available",
-    "{{CHECKOUT_FRICTION_NOTE}}": "Shopflo overrides native Shopify checkout — monitor for script errors (known India-specific anti-pattern)",
+    "{{CHECKOUT_EXPRESS_NOTE}}": "Express checkout: Shopflo handles payment routing — UPI/GPay available but no visible express buttons in cart",
+    "{{CHECKOUT_FRICTION_NOTE}}": "Shopflo overrides native Shopify checkout — active JS errors detected (DialogContent missing DialogTitle, fetch failures to ngrok endpoint)",
     "{{TECH_PAYMENTS_STATUS}}": "good",
     "{{TECH_PAYMENTS_STATUS_LABEL}}": "Comprehensive",
     "{{PAYMENT_GATEWAY}}": "Razorpay (via Shopflo)",
@@ -126,21 +125,21 @@ replacements = {
     "{{TECH_CDN_STATUS}}": "warning",
     "{{TECH_CDN_STATUS_LABEL}}": "Needs Optimization",
     "{{CDN_PROVIDER}}": "Shopify CDN (Cloudflare)",
-    "{{CDN_IMAGE_NOTE}}": "Images: Mix of WebP and JPEG — many unoptimized product images contributing to 13.7s LCP",
-    "{{CDN_COMPRESSION_NOTE}}": "Compression: Brotli/Gzip enabled but heavy JS bundles not code-split",
-    "{{CDN_CACHING_NOTE}}": "Browser caching: Standard Shopify headers — third-party scripts not deferred",
+    "{{CDN_IMAGE_NOTE}}": "Images: Mix of WebP and JPEG — good LCP (0.6s) but heavy JS bundles causing 1,890ms TBT",
+    "{{CDN_COMPRESSION_NOTE}}": "Compression: Brotli/Gzip enabled but 13 third-party scripts not deferred or code-split",
+    "{{CDN_CACHING_NOTE}}": "Browser caching: Standard Shopify headers — GoAffPro, InstaVid, PushOwl scripts blocking main thread",
     "{{TECH_SECURITY_STATUS}}": "good",
     "{{TECH_SECURITY_STATUS_LABEL}}": "Secure",
     "{{SECURITY_SSL_STATUS}}": "SSL/TLS Active",
     "{{SECURITY_HTTPS_NOTE}}": "HTTPS: All pages secured",
     "{{SECURITY_PCI_NOTE}}": "PCI DSS: Compliant (via Shopify)",
     "{{SECURITY_COOKIE_NOTE}}": "Cookie consent: Not found — consider adding for compliance",
-    "{{TECH_NARRATIVE}}": "Urban Platter runs on Shopify with a custom fork of the Rebuy Enterprise theme (\"New Rebuy <> Enterprise\"). The platform choice is solid — auto-scaling, PCI-compliant, 99.99% uptime — but the custom theme is a double-edged sword. While it allows full design control, it means every new conversion feature (sticky ATC, quick-view, advanced filtering) requires custom development. The checkout uses Shopflo, which overrides native Shopify checkout — this is common among Indian D2C brands but introduces script complexity (known anti-pattern: Shopflo errors seen across multiple Indian stores in our benchmarks). The PageSpeed score of 29 on mobile reveals the core issue: heavy third-party scripts from 11+ apps (Brevo, WATI, CartBot, Logbase, InstaVid, Shopflo) are blocking the main thread for 4.5 seconds. Payment stack via Razorpay covers all major Indian methods (UPI, Cards, Netbanking, Wallets, COD) but BNPL is missing.",
+    "{{TECH_NARRATIVE}}": "Urban Platter runs on Shopify with a custom fork of the Rebuy Enterprise theme (\"New Rebuy <> Enterprise\"). The platform is solid — auto-scaling, PCI-compliant, 99.99% uptime — but the custom theme has issues. Notably, the sticky ATC panel exists in the DOM but is permanently set to <code>visibility: hidden</code> — a broken feature that should be active on mobile. The checkout uses Shopflo, which overrides native Shopify checkout. During testing, we detected active JavaScript errors from Shopflo (<code>DialogContent requires a DialogTitle</code>) and failed fetch requests to an ngrok endpoint — these indicate integration instability. Other JS errors: <code>$ is not defined</code> (jQuery not loaded), GoAffPro double-loading, and missing modal elements. Payment stack via Razorpay covers all major Indian methods (UPI, Cards, Netbanking, Wallets, COD) but BNPL is missing. The core performance issue is 13 third-party scripts (GoAffPro, InstaVid, PushOwl, Shopflo, WATI, CartBot, Logbase) causing a Total Blocking Time of 1,890ms on mobile.",
 
     # Section 06: App Ecosystem
     "{{APPS_MISSING_COUNT}}": "5",
-    "{{APPS_BENCHMARK_CONTEXT}}": "Top Food & Bev stores in our benchmark average 8–12 purpose-built apps — Urban Platter has 11 apps but is missing critical revenue-driving categories",
-    "{{APP_STACK_NARRATIVE}}": "Urban Platter has 11 apps covering reviews (Judge.me), checkout (Shopflo), email (Brevo), WhatsApp (WATI), cart recovery (CartBot), analytics (GTM, GA4, Clarity, Facebook Pixel, Logbase), and video (InstaVid). The analytics stack is comprehensive — a strong foundation for data-driven optimization. However, critical revenue-driving categories are missing. No upsell/cross-sell app means the cart page isn't maximizing AOV — this is present on 8/10 top Food & Bev stores we benchmarked. No subscription app despite selling highly replenishable products (spices, superfoods, snacks) that are natural fits for auto-replenish. No loyalty/rewards program to drive repeat purchases for a consumable-product brand. Combined, these gaps represent an estimated 15–25% revenue uplift opportunity.",
+    "{{APPS_BENCHMARK_CONTEXT}}": "Top Food & Bev stores in our benchmark average 8–12 purpose-built apps — Urban Platter has 13 apps but is missing critical revenue-driving categories and has performance overhead from non-essential scripts",
+    "{{APP_STACK_NARRATIVE}}": "Urban Platter has 13 apps covering reviews (Judge.me), checkout (Shopflo), email (Brevo), WhatsApp (WATI), push notifications (PushOwl), affiliate marketing (GoAffPro), cart recovery (CartBot), analytics (GTM, GA4, Clarity, Facebook Pixel, Logbase), and video (InstaVid). The analytics stack is comprehensive — a strong foundation for data-driven optimization. However, critical revenue-driving categories are missing. No subscription app despite selling highly replenishable products (spices, superfoods, snacks). No loyalty/rewards program to drive repeat purchases. No delivery estimation app (pincode checker). Additionally, the 13 scripts contribute to a TBT of 1,890ms — GoAffPro loads twice (double-load error in console), InstaVid loads but fails to render, and PushOwl adds another blocking script. A script audit and prioritization could improve both performance and conversion simultaneously.",
 
     # JS nav
     "{{UX_FINDING_1_SHORT_TITLE}}": "UX & Conversion Findings",
@@ -149,38 +148,38 @@ replacements = {
 for key, val in replacements.items():
     html = html.replace(key, val)
 
-# ── Competition table rows (3 competitors — no Slurrp Farm) ──
+# ── Competition table rows (3 competitors — fresh Lighthouse data March 16, 2026) ──
 comp_rows = """<tr class="client-row">
                                 <td>Urban Platter</td>
-                                <td class="score-cell-poor">29</td>
-                                <td class="score-cell-poor">34</td>
-                                <td class="score-cell-poor">13.7s</td>
-                                <td class="score-cell-good">0.001</td>
-                                <td class="score-cell-poor">4,500ms</td>
+                                <td class="score-cell-moderate">62</td>
+                                <td class="score-cell-poor">44</td>
+                                <td class="score-cell-good">0.6s</td>
+                                <td class="score-cell-good">0.082</td>
+                                <td class="score-cell-poor">1,890ms</td>
                             </tr>
                             <tr>
                                 <td>Vahdam</td>
-                                <td class="score-cell-poor">35</td>
-                                <td class="score-cell-good">76</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
+                                <td class="score-cell-good">94</td>
+                                <td class="score-cell-good">90</td>
+                                <td class="score-cell-good">2.2s</td>
+                                <td class="score-cell-moderate">0.119</td>
+                                <td class="score-cell-good">0ms</td>
                             </tr>
                             <tr>
                                 <td>Blue Tokai</td>
-                                <td class="score-cell-poor">26</td>
-                                <td class="score-cell-poor">48</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
+                                <td class="score-cell-good">70</td>
+                                <td class="score-cell-moderate">66</td>
+                                <td class="score-cell-moderate">2.9s</td>
+                                <td class="score-cell-poor">0.400</td>
+                                <td class="score-cell-good">10ms</td>
                             </tr>
                             <tr>
                                 <td>Sleepy Owl</td>
-                                <td class="score-cell-moderate">52</td>
-                                <td class="score-cell-moderate">65</td>
-                                <td>—</td>
-                                <td>—</td>
-                                <td>—</td>
+                                <td class="score-cell-good">75</td>
+                                <td class="score-cell-moderate">59</td>
+                                <td class="score-cell-good">1.4s</td>
+                                <td class="score-cell-poor">0.603</td>
+                                <td class="score-cell-good">10ms</td>
                             </tr>"""
 html = html.replace("{{PS_COMPETITION_TABLE_ROWS}}", comp_rows)
 
@@ -223,20 +222,23 @@ def card(header, client_img, client_label, bench_img, bench_label, observations,
                                     </div>
                                 </div>"""
 
-# HOMEPAGE (4 cards)
+# ═══════════════════════════════════════════════════════════
+# HOMEPAGE (2 cards) — HP-03, HP-04
+# ═══════════════════════════════════════════════════════════
 hp_cards = "\n\n".join([
     card(
         "Trust badges and USP icons on the homepage can reduce bounce rate by 8–12% for first-time visitors",
         "screenshots/hp_f1_no_trust_badges.jpeg", "Urban Platter",
         "screenshots/hp_f1_benchmark_trust.jpeg", "Yogabar",
         [
-            "Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) in the hero or first fold area",
-            "First-time visitors see product banners but no reason to trust the brand — no \"100% Natural\", \"FSSAI Certified\", or \"Free Shipping\" badges",
-            "7 out of 10 top Food & Bev brands display USP icons prominently on the homepage",
+            "Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) as a standalone USP strip in the first fold",
+            "First-time visitors see product banners but no concise reason to trust the brand — no \"100% Natural\", \"FSSAI Certified\", or \"Free Shipping\" badge strip",
+            "The announcement bar says \"Elevate Your Everyday Pantry\" — a missed opportunity to communicate a shipping offer or trust signal",
+            "7 out of 10 top Food & Bev brands display a dedicated USP icon strip prominently on the homepage",
         ],
         [
-            "Add a USP icon strip below the hero banner: \"100% Natural\", \"FSSAI Certified\", \"1,700+ Products\", \"Free Shipping Over ₹499\"",
-            "Use simple iconography with short text — visible without scrolling on both mobile and desktop",
+            "Add a horizontal USP icon strip below the hero banner: \"100% Natural\", \"FSSAI Certified\", \"1,700+ Products\", \"Free Shipping Over ₹499\"",
+            "Replace the generic announcement bar text with a compelling offer: \"Free shipping on orders over ₹499 | 30,00,000+ happy customers\"",
         ],
         "Growing — 7/10 stores have USP icons",
     ),
@@ -245,49 +247,21 @@ hp_cards = "\n\n".join([
         "screenshots/hp_f2_no_reviews_press.jpeg", "Urban Platter",
         "screenshots/hp_f2_benchmark_press.jpeg", "Sleepy Owl",
         [
-            "No customer testimonial carousel or review highlights anywhere on the homepage — despite having Judge.me reviews on PDPs",
-            "No press/media mentions section (brands like Sleepy Owl showcase logos from Vogue, Economic Times, etc.)",
-            "Missing \"As Featured In\" or \"Trusted By\" section that can instantly communicate brand authority",
+            "No customer testimonial carousel or review highlights anywhere on the homepage — despite having 5,000+ reviews across products via Judge.me",
+            "No press/media mentions section — brands like Sleepy Owl showcase logos from Vogue, Economic Times, and other publications",
+            "Missing \"As Featured In\" or \"Trusted By 30 Lakh+ Customers\" section that instantly communicates authority",
         ],
         [
-            "Add a \"What Our Customers Say\" carousel pulling top-rated Judge.me reviews (already have the data)",
-            "Add a press/media logo strip if Urban Platter has been featured in any publications",
+            "Add a \"What Our Customers Say\" carousel pulling top-rated Judge.me reviews — the data already exists, it just needs homepage placement",
+            "Add a press/media logo strip if Urban Platter has been featured in any publications — social proof from recognized names builds instant trust",
         ],
         "Growing — 6/10 stores have review/press sections",
     ),
-    card(
-        "Email capture on the homepage can build a 10–20% repeat purchase channel for Food & Bev brands",
-        "screenshots/hp_f3_no_newsletter.jpeg", "Urban Platter",
-        "screenshots/hp_f3_benchmark_newsletter.jpeg", "Olipop",
-        [
-            "No newsletter signup form visible on the homepage — neither in the body content nor the footer area",
-            "No exit-intent popup or email capture mechanism was triggered during our testing",
-            "For a consumable product like food, email is a critical repeat purchase driver — brands like Olipop use prominent homepage signup with incentives",
-        ],
-        [
-            "Add a newsletter section above the footer with a compelling incentive (\"Get 10% off your first order\")",
-            "Consider a timed or exit-intent popup with an email capture offer — time it after 15–20 seconds, not immediately",
-        ],
-        "Standard — 8/10 stores have email capture",
-    ),
-    card(
-        "Empty H1 tags hurt SEO rankings and organic traffic — the #1 free traffic source for e-commerce",
-        "screenshots/hp_f4_benchmark_seo.jpeg", "Urban Platter — Code View",
-        "screenshots/hp_f4_benchmark_seo.jpeg", "SEO Best Practice",
-        [
-            "The homepage has an H1 tag in the HTML but it contains no text — Google sees an empty primary heading",
-            "H1 is the most important on-page SEO signal — an empty H1 tells search engines the page has no defined topic",
-            "This directly impacts ranking potential for branded and category keywords",
-        ],
-        [
-            "Add a descriptive, keyword-rich H1 to the homepage: e.g., \"Premium Imported Foods, Spices & Superfoods — Urban Platter\"",
-            "Ensure every key page (collection, PDP) also has a unique, non-empty H1 tag",
-        ],
-        "Standard — SEO fundamental, 10/10 stores should have this",
-    ),
 ])
 
-# COLLECTION (3 cards)
+# ═══════════════════════════════════════════════════════════
+# COLLECTION (2 cards) — CP-09, CP-05
+# ═══════════════════════════════════════════════════════════
 col_cards = "\n\n".join([
     card(
         "Breadcrumb navigation improves site usability and boosts SEO through structured internal linking",
@@ -295,188 +269,149 @@ col_cards = "\n\n".join([
         "screenshots/col_f1_benchmark_breadcrumbs.jpeg", "Yogabar",
         [
             "No breadcrumb trail on collection pages — users have no visual path showing where they are in the site hierarchy",
-            "With 1,736 SKUs across 108 collections, breadcrumbs are essential for navigation and reducing \"lost\" feeling",
-            "Breadcrumb schema markup is also missing — a direct SEO enhancement that helps Google understand site structure",
+            "With 1,736 SKUs across 108 collections, breadcrumbs are essential for navigation and reducing the \"lost\" feeling on deep pages",
+            "Note: PDP pages DO have breadcrumbs (Home > BESTSELLERS > Product) — but collection pages lack them entirely, creating an inconsistent experience",
         ],
         [
-            "Add breadcrumb navigation to all collection and product pages: Home > Category > Sub-Category",
-            "Implement BreadcrumbList schema (JSON-LD) alongside the visual breadcrumbs for SEO benefit",
+            "Add breadcrumb navigation to all collection pages: Home > Category Name — consistent with the PDP breadcrumbs already in place",
+            "Implement BreadcrumbList schema (JSON-LD) alongside the visual breadcrumbs for SEO benefit — helps Google understand site structure",
         ],
         "Standard — 9/10 stores have breadcrumbs",
     ),
     card(
-        "Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates",
+        "Variant swatches on product cards help shoppers browse faster and increase add-to-cart rates by 5–8%",
         "screenshots/col_f2_no_swatches.jpeg", "Urban Platter",
         "screenshots/col_f2_benchmark_swatches.jpeg", "Yogabar",
         [
-            "Collection page product cards show no variant information — users must click into each product to see available sizes/weights",
-            "For a food brand with multiple pack sizes (100g, 250g, 500g, 1kg), showing variants on cards saves clicks and reduces friction",
-            "9/10 top Food & Bev stores show flavor/variant selectors on product cards",
+            "Collection page product cards show \"Choose options\" text for multi-variant products but no visual swatches for size/weight",
+            "For a food brand with multiple pack sizes (100g, 250g, 500g, 1kg), visual weight indicators on cards save clicks and reduce friction",
+            "9/10 top Food & Bev stores show flavor/variant selectors directly on product cards — users can pick a size without leaving the grid",
         ],
         [
-            "Add weight/size variant pills or swatches directly on collection page product cards",
-            "Show the price range if variants have different prices — helps users compare without extra clicks",
+            "Add weight/size variant pills directly on collection page product cards — e.g., \"250g | 500g | 1kg\" as clickable badges",
+            "Show the corresponding price for each variant on hover or selection — helps users compare without extra clicks into the PDP",
         ],
         "Standard — 9/10 stores have variant selectors on cards",
     ),
-    card(
-        "Infinite scroll or load-more buttons keep users browsing — pagination creates friction and drop-offs",
-        "screenshots/col_f3_no_pagination.jpeg", "Urban Platter",
-        "screenshots/col_f3_benchmark_pagination.jpeg", "Vahdam",
-        [
-            "Collection pages use traditional pagination — users must click through numbered pages to browse products",
-            "With 1,736 products across 108 collections, pagination creates friction and makes discovery harder",
-            "Load-more or infinite scroll patterns keep users in a browsing flow and increase product views per session",
-        ],
-        [
-            "Replace pagination with a \"Load More\" button or infinite scroll — keeps users engaged without full page reloads",
-            "Show a product count indicator (e.g., \"Showing 24 of 156 products\") so users know how much more is available",
-        ],
-        "Growing — 7/10 stores use load-more or infinite scroll",
-    ),
 ])
 
-# PDP (5 cards)
+# ═══════════════════════════════════════════════════════════
+# PDP (4 cards) — PDP-06 (sticky ATC broken), PDP-08 (delivery), FB-01 (nutrition), FB-02 (subscription)
+# ═══════════════════════════════════════════════════════════
 pdp_cards = "\n\n".join([
     card(
-        "A sticky Add to Cart on mobile can boost conversions by 3–5% by keeping the CTA always visible",
+        "A sticky Add to Cart on mobile can boost conversions by 3–5% — Urban Platter's is broken and invisible",
         "screenshots/pdp_mobile.jpeg", "Urban Platter — Mobile PDP",
         "screenshots/competitor-yogabar-pdp-sticky-atc-mobile.jpeg", "Yogabar",
         [
-            "On mobile, scrolling past the ATC button means users lose access to the primary conversion action",
-            "Urban Platter's mobile PDP has no sticky ATC — once users scroll to reviews or description, the button disappears",
-            "9 out of 10 top Food & Bev stores implement sticky ATC on mobile PDPs",
+            "Urban Platter's theme includes a <code>&lt;sticky-atc-panel&gt;</code> element — but it has CSS class <code>invisible</code> and <code>visibility: hidden</code>, making it permanently non-functional",
+            "On mobile, scrolling past the ATC button means users completely lose access to the primary conversion action — they must scroll back up to add to cart",
+            "This is a broken feature, not a missing one — the sticky ATC was built but never activated or has a CSS/JS bug preventing it from appearing",
+            "9 out of 10 top Food & Bev stores have a working sticky ATC on mobile PDPs",
         ],
         [
-            "Add a sticky bottom bar on mobile PDPs that shows product name, price, and an \"Add to Cart\" button",
-            "Include variant selector in the sticky bar if the product has size/weight options",
+            "Fix the sticky ATC panel: investigate why the <code>sticky-atc-panel--out</code> class keeps the <code>invisible</code> state — likely a CSS transition or JS scroll-listener bug",
+            "The panel already has the right HTML structure (product image, name, price, ATC button) — it just needs the visibility toggle fixed",
         ],
         "Standard — 9/10 stores have sticky ATC on mobile",
         layout="mobile",
-    ),
-    card(
-        "Trust badges on the product page reduce purchase anxiety and can lift conversions by 5–8%",
-        "screenshots/pdp_f2_no_trust_badges.jpeg", "Urban Platter",
-        "screenshots/pdp_f2_benchmark_trust.jpeg", "Yogabar",
-        [
-            "No trust badges or certification icons near the ATC button — users see price and button but no reassurance",
-            "For food products, trust signals like FSSAI, organic certification, and quality badges are especially important",
-            "Missing \"Secure Payment\", \"Easy Returns\", or \"100% Authentic\" badges that reduce purchase hesitation",
-        ],
-        [
-            "Add 3–4 trust badges directly below the ATC button: \"FSSAI Certified\", \"100% Natural\", \"Secure Payment\", \"Easy Returns\"",
-            "Use icon + short text format for quick scanning — visible without scrolling",
-        ],
-        "Standard — 8/10 stores have trust badges on PDP",
     ),
     card(
         "Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations",
         "screenshots/pdp_f3_no_delivery_estimate.jpeg", "Urban Platter",
         "screenshots/pdp_f3_benchmark_delivery.jpeg", "Vahdam",
         [
-            "No delivery estimation or pincode checker on the product page — users don't know when they'll receive the product",
-            "Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce",
-            "Competitors like Vahdam show estimated delivery dates with pincode-based calculation",
+            "No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart",
+            "Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce — especially for food products where freshness matters",
+            "The PDP shows shelf life (270 days) in specifications but nothing about delivery timeline — the information gap is exactly at the purchase decision point",
         ],
         [
-            "Add a pincode-based delivery estimator on the PDP: \"Enter pincode to check delivery date\"",
-            "Show estimated delivery date range (e.g., \"Delivers by Mar 20–22\") based on pincode and warehouse location",
+            "Add a pincode-based delivery estimator directly below the ATC button: \"Enter pincode to check delivery date\"",
+            "Show estimated delivery date range (e.g., \"Delivers by Mar 20–22\") and serviceability status — use Shiprocket or similar APIs for real-time data",
         ],
-        "Standard — 8/10 stores have delivery estimation",
+        "Growing — 5/10 India stores have pincode delivery check",
     ),
     card(
         "Structured nutritional information tables increase buyer confidence and reduce returns for food products",
         "screenshots/pdp_f4_no_nutrition_table.jpeg", "Urban Platter",
         "screenshots/pdp_f4_benchmark_nutrition.jpeg", "Olipop",
         [
-            "Product descriptions are text-heavy with no structured nutritional information table",
-            "For food & bev products, clear nutritional data (calories, macros, ingredients) is critical for informed purchase decisions",
-            "Health-conscious buyers (a large Urban Platter segment) actively look for structured nutrition tables before purchasing",
+            "Product descriptions mention nutrients (\"rich in selenium\", \"loaded with magnesium and zinc\") but provide no structured nutritional facts table",
+            "The specification section shows Net Weight, Dimensions, Shelf Life, Origin — but no calories, macros, or daily value percentages",
+            "Health-conscious buyers — a large Urban Platter segment — actively look for structured nutrition tables before purchasing premium-priced superfoods",
         ],
         [
-            "Add a structured, tabular nutritional information section to all food product PDPs",
-            "Include ingredient list, nutritional facts, allergen warnings, and certifications in a clean, scannable format",
+            "Add a structured nutritional information table to all food product PDPs: calories, protein, fat, carbs, fiber per serving with %DV",
+            "Include allergen declarations and dietary badges (vegan, gluten-free, no preservatives) — these are trust-building signals for health-conscious buyers",
         ],
-        "Growing — 7/10 stores have structured nutrition tables",
+        "Standard for Food & Bev — 8/10 stores have nutrition tables",
     ),
     card(
         "Subscription options for consumable products can increase LTV by 40–60% and create predictable revenue",
         "screenshots/pdp_f5_no_subscription.jpeg", "Urban Platter",
         "screenshots/pdp_f5_benchmark_subscription.jpeg", "Olipop",
         [
-            "No subscribe-and-save option despite selling highly replenishable products (spices, superfoods, snacks, staples)",
-            "Urban Platter's product categories are natural fits for auto-replenish — customers buy these products repeatedly",
-            "7 out of 10 top Food & Bev stores offer subscription options with 10–15% discounts",
+            "No subscribe-and-save option despite selling highly replenishable products — spices, superfoods, nuts, snacks, and pantry staples",
+            "Urban Platter's product categories are natural fits for auto-replenish: customers buy Brazil nuts, olive oil, and spice mixes on a regular cycle",
+            "5 out of 10 top Food & Bev stores offer subscription options with 10–15% discount incentives — this is a growing pattern in India D2C",
         ],
         [
-            "Implement a subscribe-and-save option on eligible PDPs with a 10–15% discount incentive",
-            "Use apps like Recharge or Loop Subscriptions — offer frequency options (every 2 weeks, monthly, bi-monthly)",
+            "Implement a subscribe-and-save option on eligible PDPs with a 10–15% discount incentive — start with top-selling replenishable SKUs",
+            "Use apps like Recharge or Loop Subscriptions — offer frequency options (every 2 weeks, monthly, bi-monthly) based on product consumption rate",
         ],
-        "Growing — 7/10 stores offer subscription on consumables",
+        "Growing — 5/10 stores offer subscription on consumables",
     ),
 ])
 
-# CART (4 cards)
+# ═══════════════════════════════════════════════════════════
+# CART (3 cards) — CART-01 (cart drawer), CART-07 (express checkout), CART-04 (trust badges)
+# ═══════════════════════════════════════════════════════════
 cart_cards = "\n\n".join([
+    card(
+        "A cart drawer keeps users in the shopping flow — full-page cart redirects break momentum and reduce add-on purchases",
+        "screenshots/cart_full_drawer.jpeg", "Urban Platter",
+        "screenshots/competitor-vahdam-cart-upsell.jpeg", "Vahdam",
+        [
+            "Clicking the cart icon navigates to a full-page <code>/cart</code> URL instead of opening a slide-out drawer — this breaks the browsing flow",
+            "The full-page cart has a good \"You may also like\" cross-sell section, but users lose their browsing context entirely when redirected",
+            "10 out of 10 top Food & Bev stores in our benchmark use a cart drawer that lets users review their cart without leaving the current page",
+            "A cart drawer enables quick add → continue browsing → add more, which drives higher items-per-order for consumable brands",
+        ],
+        [
+            "Implement a slide-out cart drawer that opens on add-to-cart — keep the cross-sell recommendations inside the drawer",
+            "Preserve the existing full cart page as a fallback (accessible via \"View Full Cart\" link in the drawer) for users who want the detailed view",
+        ],
+        "Standard — 10/10 stores use cart drawer",
+    ),
     card(
         "Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%",
         "screenshots/cart_f1_checkout_area.jpeg", "Urban Platter",
         "screenshots/cart_f1_benchmark_express.jpeg", "Blue Tokai",
         [
-            "No express checkout buttons (GPay, Shop Pay, PhonePe) visible in the cart drawer or checkout",
-            "Express checkout reduces the checkout process from 4+ steps to 1–2 taps — critical for mobile users",
-            "8 out of 10 top Food & Bev stores offer at least one express checkout option",
+            "No express checkout buttons (GPay, Shop Pay, PhonePe) visible on the cart page — only a single \"Checkout\" button that routes through Shopflo",
+            "Express checkout reduces the process from 4+ steps to 1–2 taps — critical for mobile users who make up 80–90% of Indian e-commerce traffic",
+            "While Shopflo supports UPI/GPay on the backend, the cart page doesn't surface these as one-tap options — users must enter the full checkout flow first",
         ],
         [
-            "Enable Shopify's dynamic checkout buttons (Shop Pay, Google Pay) in cart and product pages",
-            "For Indian market, ensure UPI-based express checkout is prominently displayed alongside Shopflo checkout",
+            "Enable Shopify's dynamic checkout buttons (Shop Pay, Google Pay) directly on the cart page alongside the existing Shopflo checkout",
+            "For the Indian market, surface UPI express payment as a prominent one-tap option — reducing checkout steps from 4 to 1 for returning users",
         ],
-        "Standard — 8/10 stores have express checkout",
+        "Growing — 8/10 stores have express checkout buttons visible",
     ),
     card(
-        "Cart cross-sell recommendations can increase AOV by 10–15% with minimal implementation effort",
-        "screenshots/cart_f2_crosssell_area.jpeg", "Urban Platter",
-        "screenshots/cart_f2_benchmark_crosssell.jpeg", "Vahdam",
-        [
-            "No product recommendations or cross-sell section in the cart drawer — users see only their selected items",
-            "Missing \"Frequently Bought Together\" or \"You May Also Like\" suggestions that drive impulse additions",
-            "8 out of 10 top Food & Bev stores include cross-sell in their cart experience",
-        ],
-        [
-            "Add a \"Customers Also Bought\" or \"Complete Your Pantry\" cross-sell section in the cart drawer",
-            "Use same-category recommendations (e.g., if buying olive oil, suggest balsamic vinegar or pasta) for highest conversion",
-        ],
-        "Standard — 8/10 stores have cart cross-sell",
-    ),
-    card(
-        "Trust badges and security indicators at checkout reduce cart abandonment by 8–12%",
+        "Trust badges and security indicators near checkout reduce cart abandonment by 8–12%",
         "screenshots/cart_f3_trust_checkout.jpeg", "Urban Platter",
         "screenshots/cart_f3_benchmark_trust.jpeg", "Blue Tokai",
         [
-            "No trust/security indicators in the cart or near the checkout button — users proceed without reassurance",
-            "Payment security concerns are a top-5 reason for cart abandonment, especially for first-time buyers",
-            "Missing \"Secure Checkout\", \"SSL Encrypted\", or payment method logos near the CTA",
+            "No trust or security indicators visible near the checkout button on the cart page — users proceed without reassurance",
+            "The PDP has 4 trust badges (Fast Shipping, Eco-friendly, 30L+ Customers, Secure Payments) but none of these carry through to the cart — creating a trust gap at the critical purchase moment",
+            "Payment security concerns are a top-5 reason for cart abandonment, especially for first-time buyers on a less-recognized brand",
         ],
         [
-            "Add security badges and payment method logos directly below the checkout button in the cart",
-            "Include \"100% Secure Payment\" with a lock icon and accepted payment method logos (Visa, Mastercard, UPI, etc.)",
+            "Add the same trust badge strip from the PDP to the cart page — directly below the checkout button: \"Secure Payment\", \"Fast Shipping\", \"Easy Returns\"",
+            "Include accepted payment method logos (Visa, Mastercard, UPI, RuPay) as visual reassurance near the CTA",
         ],
         "Standard — 9/10 stores have trust indicators at checkout",
-    ),
-    card(
-        "Showing expected delivery date in cart reduces abandonment by setting clear delivery expectations",
-        "screenshots/cart_f4_no_delivery_in_cart.jpeg", "Urban Platter",
-        "screenshots/cart_f4_benchmark_delivery.jpeg", "Sleepy Owl",
-        [
-            "No estimated delivery date shown in the cart — users proceed to checkout without knowing when they'll receive items",
-            "Delivery uncertainty at the cart stage causes last-minute abandonment, especially for time-sensitive purchases",
-            "Competitors like Sleepy Owl show delivery estimates directly in the cart summary",
-        ],
-        [
-            "Display estimated delivery date in the cart summary based on the user's previously entered pincode",
-            "Show a free shipping progress bar if applicable (e.g., \"Add ₹150 more for free shipping\")",
-        ],
-        "Growing — 6/10 stores show delivery date in cart",
     ),
 ])
 
@@ -485,7 +420,7 @@ html = html.replace("{{FINDING_CARDS_COLLECTION}}", col_cards)
 html = html.replace("{{FINDING_CARDS_PDP}}", pdp_cards)
 html = html.replace("{{FINDING_CARDS_CART}}", cart_cards)
 
-# ── Apps HTML (11 present apps — correct data) ────────────
+# ── Apps HTML (13 present apps — fresh detection March 16, 2026) ────────────
 apps_present = """<div class="app-item present">
                                 <div class="app-icon">&#10003;</div>
                                 <div class="app-item-details">
@@ -499,9 +434,9 @@ apps_present = """<div class="app-item present">
                                 <div class="app-item-details">
                                     <div class="app-name">Shopflo Checkout</div>
                                     <div class="app-category">Checkout Optimization</div>
-                                    <div class="app-benchmark-tag">Overrides native Shopify checkout — monitor for script errors</div>
+                                    <div class="app-benchmark-tag">Active JS errors: DialogContent missing DialogTitle, fetch failures to ngrok endpoint</div>
                                 </div>
-                                <span class="app-quality" title="Consider monitoring">⚠</span>
+                                <span class="app-quality" title="Needs attention">⚠</span>
                             </div>
                             <div class="app-item present">
                                 <div class="app-icon">&#10003;</div>
@@ -522,6 +457,23 @@ apps_present = """<div class="app-item present">
                             <div class="app-item present">
                                 <div class="app-icon">&#10003;</div>
                                 <div class="app-item-details">
+                                    <div class="app-name">PushOwl — Web Push Notifications</div>
+                                    <div class="app-category">Push Notifications</div>
+                                </div>
+                                <span class="app-quality" title="Good choice">✓</span>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">GoAffPro — Affiliate Marketing</div>
+                                    <div class="app-category">Affiliate Program</div>
+                                    <div class="app-benchmark-tag">Double-loading error detected: "Goaffpro is already loaded" — adds unnecessary JS overhead</div>
+                                </div>
+                                <span class="app-quality" title="Needs attention">⚠</span>
+                            </div>
+                            <div class="app-item present">
+                                <div class="app-icon">&#10003;</div>
+                                <div class="app-item-details">
                                     <div class="app-name">CartBot — Cart Recovery</div>
                                     <div class="app-category">Revenue Recovery</div>
                                 </div>
@@ -538,11 +490,11 @@ apps_present = """<div class="app-item present">
                             <div class="app-item present">
                                 <div class="app-icon">&#10003;</div>
                                 <div class="app-item-details">
-                                    <div class="app-name">InstaVid — Shoppable Video</div>
+                                    <div class="app-name">InstaVid / Quinn — Shoppable Video</div>
                                     <div class="app-category">Video Commerce</div>
-                                    <div class="app-benchmark-tag">Heavy script — contributes to TBT issues (4,500ms)</div>
+                                    <div class="app-benchmark-tag">Loads but "NOT RENDERING - Conditions not met" on most pages — adds script weight without visible output</div>
                                 </div>
-                                <span class="app-quality" title="Consider optimizing">⚠</span>
+                                <span class="app-quality" title="Needs attention">⚠</span>
                             </div>
                             <div class="app-item present">
                                 <div class="app-icon">&#10003;</div>
@@ -580,28 +532,28 @@ apps_present = """<div class="app-item present">
 apps_missing = """<div class="app-item missing">
                                 <div class="app-icon">&#10007;</div>
                                 <div class="app-item-details">
-                                    <div class="app-name">Upsell / Cross-sell App <span class="app-priority-badge critical-priority">Critical</span></div>
-                                    <div class="app-category">Revenue Optimization</div>
-                                    <div class="app-impact-tag revenue">💰 AOV +10–15%</div>
-                                    <div class="app-benchmark-tag">Present on 8/10 top Food & Bev stores</div>
-                                </div>
-                            </div>
-                            <div class="app-item missing">
-                                <div class="app-icon">&#10007;</div>
-                                <div class="app-item-details">
                                     <div class="app-name">Subscription App (Recharge/Loop) <span class="app-priority-badge critical-priority">Critical</span></div>
                                     <div class="app-category">Recurring Revenue</div>
                                     <div class="app-impact-tag revenue">💰 LTV +40–60%</div>
-                                    <div class="app-benchmark-tag">Present on 7/10 top Food & Bev stores</div>
+                                    <div class="app-benchmark-tag">Present on 5/10 top Food & Bev stores — natural fit for replenishable pantry products</div>
                                 </div>
                             </div>
                             <div class="app-item missing">
                                 <div class="app-icon">&#10007;</div>
                                 <div class="app-item-details">
-                                    <div class="app-name">Loyalty / Rewards Program <span class="app-priority-badge recommended-priority">Recommended</span></div>
+                                    <div class="app-name">Loyalty / Rewards Program <span class="app-priority-badge critical-priority">Critical</span></div>
                                     <div class="app-category">Customer Retention</div>
                                     <div class="app-impact-tag retention">🔄 Repeat Rate +15–25%</div>
                                     <div class="app-benchmark-tag">Present on 5/10 top Food & Bev stores</div>
+                                </div>
+                            </div>
+                            <div class="app-item missing">
+                                <div class="app-icon">&#10007;</div>
+                                <div class="app-item-details">
+                                    <div class="app-name">Pincode Delivery Checker <span class="app-priority-badge critical-priority">Critical</span></div>
+                                    <div class="app-category">Delivery Transparency</div>
+                                    <div class="app-impact-tag conversion">📈 Reduces cart abandonment 15–20%</div>
+                                    <div class="app-benchmark-tag">Present on 3/5 top India Food & Bev stores</div>
                                 </div>
                             </div>
                             <div class="app-item missing">
@@ -616,10 +568,10 @@ apps_missing = """<div class="app-item missing">
                             <div class="app-item missing">
                                 <div class="app-icon">&#10007;</div>
                                 <div class="app-item-details">
-                                    <div class="app-name">Pincode Delivery Checker <span class="app-priority-badge recommended-priority">Recommended</span></div>
-                                    <div class="app-category">Delivery Transparency</div>
-                                    <div class="app-impact-tag conversion">📈 Reduces cart abandonment 15–20%</div>
-                                    <div class="app-benchmark-tag">Present on 3/5 top India Food & Bev stores</div>
+                                    <div class="app-name">BNPL / Pay Later (Simpl/LazyPay) <span class="app-priority-badge recommended-priority">Recommended</span></div>
+                                    <div class="app-category">Payment Flexibility</div>
+                                    <div class="app-impact-tag conversion">📈 Checkout conversion +5–10%</div>
+                                    <div class="app-benchmark-tag">Growing in India D2C — reduces checkout abandonment for higher AOV orders</div>
                                 </div>
                             </div>"""
 
@@ -627,9 +579,7 @@ html = html.replace("{{APPS_PRESENT_HTML}}", apps_present)
 html = html.replace("{{APPS_MISSING_HTML}}", apps_missing)
 
 # ── Strip remaining template comments ─────────────────────
-# Remove HTML comment blocks that contain POPULATE instructions
 html = re.sub(r'<!--\s*POPULATE:.*?-->', '', html, flags=re.DOTALL)
-# Remove remaining video finding card pattern comments
 html = re.sub(r'<!--\s*VIDEO FINDING CARD PATTERN.*?-->', '', html, flags=re.DOTALL)
 
 # ── Verify no template variables remain ───────────────────
