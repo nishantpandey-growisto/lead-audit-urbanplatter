@@ -57,7 +57,7 @@
             height: 100vh;
         }
         .hidden { display: none !important; }
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 30px; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 30px; }
         img { max-width: 100%; height: auto; }
         a { color: var(--color-primary); text-decoration: none; }
         a:hover { color: var(--color-primary-dark); }
@@ -865,9 +865,10 @@
             display: flex;
             flex-direction: column;
             gap: 0;
-            width: 120px;
-            min-width: 120px;
+            width: 140px;
+            min-width: 140px;
             padding: 0;
+            margin-right: 28px;
             background: transparent;
             flex-shrink: 0;
             position: sticky;
@@ -1001,6 +1002,73 @@
             font-family: monospace;
             padding: 0 4px 4px;
             word-break: break-all;
+        }
+
+        /* ============================================
+           MULTI-IMAGE CAROUSEL (for user action flows)
+        ============================================ */
+        .finding-gallery {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+            background: #f0f0f0;
+        }
+        .finding-gallery-track {
+            display: flex;
+            transition: transform 0.3s ease;
+        }
+        .finding-gallery-track img {
+            width: 100%;
+            flex-shrink: 0;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.9);
+            border: 1px solid #d1d5db;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: var(--color-text-dark);
+            z-index: 2;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: background 0.2s;
+        }
+        .gallery-nav:hover { background: #fff; }
+        .gallery-nav.prev { left: 6px; }
+        .gallery-nav.next { right: 6px; }
+        .gallery-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            padding: 6px 0 2px;
+        }
+        .gallery-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #d1d5db;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .gallery-dot.active {
+            background: var(--color-primary);
+        }
+        .gallery-step-label {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--color-text-muted);
+            padding: 2px 0 4px;
         }
 
         /* ============================================
@@ -1563,6 +1631,7 @@
                 flex-direction: row;
                 width: 100%;
                 min-width: auto;
+                margin-right: 0;
                 position: static;
                 overflow-x: auto;
                 -webkit-overflow-scrolling: touch;
@@ -1671,7 +1740,7 @@
                     <div class="severity-summary">
                         <div class="severity-pill critical">
                             <span class="severity-dot"></span>
-                            4 Critical
+                            3 Critical
                         </div>
                         <div class="severity-pill important">
                             <span class="severity-dot"></span>
@@ -1687,7 +1756,7 @@
                         <div class="info-card">
                             <h4>What We Analyzed</h4>
                             <ul>
-                                <li><span>UX & Conversion Design</span><span>11 findings</span></li>
+                                <li><span>UX & Conversion Design</span><span>10 findings</span></li>
                                 <li><span>Performance & Speed</span><span>vs 3 competitors</span></li>
                                 <li><span>Technology & App Stack</span><span>Platform + 13 apps</span></li>
                                 <li><span>Industry Benchmarks</span><span>Food & Beverage</span></li>
@@ -1699,7 +1768,7 @@
                                 <li><span>Homepage</span><span>2 findings</span></li>
                                 <li><span>Collection Pages</span><span>2 findings</span></li>
                                 <li><span>Product Pages (PDP)</span><span>4 findings</span></li>
-                                <li><span>Cart & Checkout</span><span>3 findings</span></li>
+                                <li><span>Cart & Checkout</span><span>2 findings</span></li>
                             </ul>
                         </div>
                     </div>
@@ -2008,12 +2077,49 @@
                             <div class="finding-cards">
                                 <div class="finding-card">
                                     <div class="finding-card-header">
+                                        A discount-led announcement bar can lift first-session conversion by 5–8% — Urban Platter's bar wastes this space on a generic tagline
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots desktop-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/hp_announcement_bar.jpeg" alt="Urban Platter">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/bench_hp_announcement_offer.jpeg" alt="Chomps">
+                                                <div class="finding-screenshot-label benchmark-label">Chomps</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>The announcement bar reads "Elevate Your Everyday Pantry" — a brand tagline, not a conversion driver. This is prime real estate seen by every visitor</li>
+                                                    <li>No shipping offer, discount code, or urgency element in the bar — first-time visitors get no immediate incentive to stay and shop</li>
+                                                    <li>8 out of 10 top Food & Bev stores use the announcement bar for a concrete offer: free shipping threshold, first-order discount, or limited-time deal</li>
+                                                    <li>Chomps uses "FREE SHIPPING on orders $50+ | Subscribe & Save 15%" — immediately communicates value and drives higher AOV</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Replace the tagline with a conversion-focused message: "Free Shipping Over ₹499 | Use code WELCOME10 for 10% Off Your First Order"</li>
+                                                    <li>Add a secondary rotating message about delivery speed or trust: "Trusted by 30 Lakh+ Customers | Fresh Delivery in 3–5 Days"</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Standard — 8/10 stores use offer-driven announcement bars</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+<div class="finding-card">
+                                    <div class="finding-card-header">
                                         Trust badges and USP icons on the homepage can reduce bounce rate by 8–12% for first-time visitors
                                     </div>
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/hp_f1_no_trust_badges.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/hp_announcement_bar.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
@@ -2027,53 +2133,16 @@
                                                 <ul>
                                                     <li>Urban Platter's homepage has no visible trust indicators (certifications, quality badges, shipping promises) as a standalone USP strip in the first fold</li>
                                                     <li>First-time visitors see product banners but no concise reason to trust the brand — no "100% Natural", "FSSAI Certified", or "Free Shipping" badge strip</li>
-                                                    <li>The announcement bar says "Elevate Your Everyday Pantry" — a missed opportunity to communicate a shipping offer or trust signal</li>
-                                                    <li>7 out of 10 top Food & Bev brands display a dedicated USP icon strip prominently on the homepage</li>
+                                                    <li>7 out of 10 top Food & Bev brands display a dedicated USP icon strip prominently on the homepage — Yogabar shows "100% Clean", "No Preservatives", "High Protein" with icons</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
                                                 <span class="finding-section-header recommendations-header">Recommendations</span>
                                                 <ul>
                                                     <li>Add a horizontal USP icon strip below the hero banner: "100% Natural", "FSSAI Certified", "1,700+ Products", "Free Shipping Over ₹499"</li>
-                                                    <li>Replace the generic announcement bar text with a compelling offer: "Free shipping on orders over ₹499 | 30,00,000+ happy customers"</li>
+                                                    <li>Use simple icons with short text — scannable in under 2 seconds. Place immediately below the hero carousel for maximum visibility</li>
                                                 </ul>
                                                 <span class="finding-benchmark-tag">Growing — 7/10 stores have USP icons</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-<div class="finding-card">
-                                    <div class="finding-card-header">
-                                        Customer reviews and press mentions on the homepage build credibility and can increase conversion by 10–15%
-                                    </div>
-                                    <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/hp_f2_no_reviews_press.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
-                                            </div>
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/hp_f2_benchmark_press.jpeg" alt="Sleepy Owl">
-                                                <div class="finding-screenshot-label benchmark-label">Sleepy Owl</div>
-                                            </div>
-                                        </div>
-                                        <div class="finding-analysis">
-                                            <div class="finding-observations">
-                                                <span class="finding-section-header observations-header">Observations</span>
-                                                <ul>
-                                                    <li>No customer testimonial carousel or review highlights anywhere on the homepage — despite having 5,000+ reviews across products via Judge.me</li>
-                                                    <li>No press/media mentions section — brands like Sleepy Owl showcase logos from Vogue, Economic Times, and other publications</li>
-                                                    <li>Missing "As Featured In" or "Trusted By 30 Lakh+ Customers" section that instantly communicates authority</li>
-                                                </ul>
-                                            </div>
-                                            <div class="finding-recommendations">
-                                                <span class="finding-section-header recommendations-header">Recommendations</span>
-                                                <ul>
-                                                    <li>Add a "What Our Customers Say" carousel pulling top-rated Judge.me reviews — the data already exists, it just needs homepage placement</li>
-                                                    <li>Add a press/media logo strip if Urban Platter has been featured in any publications — social proof from recognized names builds instant trust</li>
-                                                </ul>
-                                                <span class="finding-benchmark-tag">Growing — 6/10 stores have review/press sections</span>
                                             </div>
                                         </div>
                                     </div>
@@ -2089,35 +2158,36 @@
                             <div class="finding-cards">
                                 <div class="finding-card">
                                     <div class="finding-card-header">
-                                        Breadcrumb navigation improves site usability and boosts SEO through structured internal linking
+                                        Dietary filters help health-conscious shoppers find products 3x faster — Urban Platter's filter drawer has none
                                     </div>
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/col_f1_no_breadcrumbs.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/col_filter_drawer.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/col_f1_benchmark_breadcrumbs.jpeg" alt="Yogabar">
-                                                <div class="finding-screenshot-label benchmark-label">Yogabar</div>
+                                                <img src="screenshots/bench_col_dietary_filters.jpeg" alt="Athletic Brewing">
+                                                <div class="finding-screenshot-label benchmark-label">Athletic Brewing</div>
                                             </div>
                                         </div>
                                         <div class="finding-analysis">
                                             <div class="finding-observations">
                                                 <span class="finding-section-header observations-header">Observations</span>
                                                 <ul>
-                                                    <li>No breadcrumb trail on collection pages — users have no visual path showing where they are in the site hierarchy</li>
-                                                    <li>With 1,736 SKUs across 108 collections, breadcrumbs are essential for navigation and reducing the "lost" feeling on deep pages</li>
-                                                    <li>Note: PDP pages DO have breadcrumbs (Home > BESTSELLERS > Product) — but collection pages lack them entirely, creating an inconsistent experience</li>
+                                                    <li>The filter drawer offers only generic options: Sort by, Price, Product type, Brand, Country, Availability — no dietary or health filters</li>
+                                                    <li>Urban Platter sells superfoods, organic products, vegan items, and gluten-free options — but shoppers can't filter by these attributes</li>
+                                                    <li>Health-conscious buyers — Urban Platter's core segment — actively look for dietary filters (Vegan, Gluten-Free, Organic, No Preservatives, Keto)</li>
+                                                    <li>6 out of 10 top Food & Bev stores offer dietary-specific filters — Athletic Brewing filters by calories, flavor, and dietary attributes</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
                                                 <span class="finding-section-header recommendations-header">Recommendations</span>
                                                 <ul>
-                                                    <li>Add breadcrumb navigation to all collection pages: Home > Category Name — consistent with the PDP breadcrumbs already in place</li>
-                                                    <li>Implement BreadcrumbList schema (JSON-LD) alongside the visual breadcrumbs for SEO benefit — helps Google understand site structure</li>
+                                                    <li>Add dietary attribute filters: Vegan, Gluten-Free, Organic, No Preservatives, Keto-Friendly, Sugar-Free — tag products with Shopify metafields</li>
+                                                    <li>Add a "Diet" or "Dietary Preference" filter group at the top of the filter drawer — this is the #1 filter used by health-conscious Food & Bev shoppers</li>
                                                 </ul>
-                                                <span class="finding-benchmark-tag">Standard — 9/10 stores have breadcrumbs</span>
+                                                <span class="finding-benchmark-tag">Growing — 6/10 stores have dietary filters</span>
                                             </div>
                                         </div>
                                     </div>
@@ -2130,7 +2200,7 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/col_f2_no_swatches.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/col_no_swatches.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
@@ -2144,7 +2214,7 @@
                                                 <ul>
                                                     <li>Collection page product cards show "Choose options" text for multi-variant products but no visual swatches for size/weight</li>
                                                     <li>For a food brand with multiple pack sizes (100g, 250g, 500g, 1kg), visual weight indicators on cards save clicks and reduce friction</li>
-                                                    <li>9/10 top Food & Bev stores show flavor/variant selectors directly on product cards — users can pick a size without leaving the grid</li>
+                                                    <li>9 out of 10 top Food & Bev stores show flavor/variant selectors directly on product cards — users can pick a size without leaving the grid</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
@@ -2204,48 +2274,12 @@
 
 <div class="finding-card">
                                     <div class="finding-card-header">
-                                        Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations
-                                    </div>
-                                    <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f3_no_delivery_estimate.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
-                                            </div>
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f3_benchmark_delivery.jpeg" alt="Vahdam">
-                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
-                                            </div>
-                                        </div>
-                                        <div class="finding-analysis">
-                                            <div class="finding-observations">
-                                                <span class="finding-section-header observations-header">Observations</span>
-                                                <ul>
-                                                    <li>No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart</li>
-                                                    <li>Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce — especially for food products where freshness matters</li>
-                                                    <li>The PDP shows shelf life (270 days) in specifications but nothing about delivery timeline — the information gap is exactly at the purchase decision point</li>
-                                                </ul>
-                                            </div>
-                                            <div class="finding-recommendations">
-                                                <span class="finding-section-header recommendations-header">Recommendations</span>
-                                                <ul>
-                                                    <li>Add a pincode-based delivery estimator directly below the ATC button: "Enter pincode to check delivery date"</li>
-                                                    <li>Show estimated delivery date range (e.g., "Delivers by Mar 20–22") and serviceability status — use Shiprocket or similar APIs for real-time data</li>
-                                                </ul>
-                                                <span class="finding-benchmark-tag">Growing — 5/10 India stores have pincode delivery check</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-<div class="finding-card">
-                                    <div class="finding-card-header">
                                         Structured nutritional information tables increase buyer confidence and reduce returns for food products
                                     </div>
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f4_no_nutrition_table.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/pdp_specs_no_nutrition.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
@@ -2258,8 +2292,9 @@
                                                 <span class="finding-section-header observations-header">Observations</span>
                                                 <ul>
                                                     <li>Product descriptions mention nutrients ("rich in selenium", "loaded with magnesium and zinc") but provide no structured nutritional facts table</li>
-                                                    <li>The specification section shows Net Weight, Dimensions, Shelf Life, Origin — but no calories, macros, or daily value percentages</li>
+                                                    <li>The specification section shows Net Weight, Dimensions, Shelf Life, Origin, SKU, Packaging, Brand, Ingredients — but no calories, macros, or daily value percentages</li>
                                                     <li>Health-conscious buyers — a large Urban Platter segment — actively look for structured nutrition tables before purchasing premium-priced superfoods</li>
+                                                    <li>8 out of 10 top Food & Bev stores display a structured nutrition facts panel directly on the PDP</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
@@ -2281,7 +2316,7 @@
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/pdp_f5_no_subscription.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/pdp_atc_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
@@ -2294,8 +2329,9 @@
                                                 <span class="finding-section-header observations-header">Observations</span>
                                                 <ul>
                                                     <li>No subscribe-and-save option despite selling highly replenishable products — spices, superfoods, nuts, snacks, and pantry staples</li>
+                                                    <li>The ATC area shows only a one-time purchase flow: quantity selector + Add to Cart button — no toggle for "Subscribe & Save" or frequency selector</li>
                                                     <li>Urban Platter's product categories are natural fits for auto-replenish: customers buy Brazil nuts, olive oil, and spice mixes on a regular cycle</li>
-                                                    <li>5 out of 10 top Food & Bev stores offer subscription options with 10–15% discount incentives — this is a growing pattern in India D2C</li>
+                                                    <li>5 out of 10 top Food & Bev stores offer subscription options with 10–15% discount incentives — Olipop shows a prominent Subscribe toggle with 15% savings</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
@@ -2309,6 +2345,43 @@
                                         </div>
                                     </div>
                                 </div>
+
+<div class="finding-card">
+                                    <div class="finding-card-header">
+                                        Delivery date estimation on the PDP reduces cart abandonment by 15–20% by setting clear expectations
+                                    </div>
+                                    <div class="finding-card-body">
+                                        <div class="finding-screenshots desktop-screenshots">
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_atc_area.jpeg" alt="Urban Platter">
+                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
+                                            </div>
+                                            <div class="finding-screenshot">
+                                                <img src="screenshots/pdp_f3_benchmark_delivery.jpeg" alt="Vahdam">
+                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
+                                            </div>
+                                        </div>
+                                        <div class="finding-analysis">
+                                            <div class="finding-observations">
+                                                <span class="finding-section-header observations-header">Observations</span>
+                                                <ul>
+                                                    <li>No delivery estimation or pincode checker anywhere on the product page — users don't know when they'll receive the product before adding to cart</li>
+                                                    <li>Delivery uncertainty is a top-3 reason for cart abandonment in Indian e-commerce — especially for food products where freshness matters</li>
+                                                    <li>The PDP shows shelf life (270 days) in specifications but nothing about delivery timeline — the information gap is exactly at the purchase decision point</li>
+                                                    <li>5 out of 10 India Food & Bev stores have a pincode-based delivery checker — Vahdam shows "Expected delivery" with date range directly below the ATC button</li>
+                                                </ul>
+                                            </div>
+                                            <div class="finding-recommendations">
+                                                <span class="finding-section-header recommendations-header">Recommendations</span>
+                                                <ul>
+                                                    <li>Add a pincode-based delivery estimator directly below the ATC button: "Enter pincode to check delivery date"</li>
+                                                    <li>Show estimated delivery date range (e.g., "Delivers by Mar 20–22") and serviceability status — use Shiprocket or similar APIs for real-time data</li>
+                                                </ul>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 India stores have pincode delivery check</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
                             </div>
                         </div>
@@ -2318,49 +2391,12 @@
                             <div class="finding-cards">
                                 <div class="finding-card">
                                     <div class="finding-card-header">
-                                        A cart drawer keeps users in the shopping flow — full-page cart redirects break momentum and reduce add-on purchases
-                                    </div>
-                                    <div class="finding-card-body">
-                                        <div class="finding-screenshots desktop-screenshots">
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/cart_full_drawer.jpeg" alt="Urban Platter">
-                                                <div class="finding-screenshot-label client-label">Urban Platter</div>
-                                            </div>
-                                            <div class="finding-screenshot">
-                                                <img src="screenshots/competitor-vahdam-cart-upsell.jpeg" alt="Vahdam">
-                                                <div class="finding-screenshot-label benchmark-label">Vahdam</div>
-                                            </div>
-                                        </div>
-                                        <div class="finding-analysis">
-                                            <div class="finding-observations">
-                                                <span class="finding-section-header observations-header">Observations</span>
-                                                <ul>
-                                                    <li>Clicking the cart icon navigates to a full-page <code>/cart</code> URL instead of opening a slide-out drawer — this breaks the browsing flow</li>
-                                                    <li>The full-page cart has a good "You may also like" cross-sell section, but users lose their browsing context entirely when redirected</li>
-                                                    <li>10 out of 10 top Food & Bev stores in our benchmark use a cart drawer that lets users review their cart without leaving the current page</li>
-                                                    <li>A cart drawer enables quick add → continue browsing → add more, which drives higher items-per-order for consumable brands</li>
-                                                </ul>
-                                            </div>
-                                            <div class="finding-recommendations">
-                                                <span class="finding-section-header recommendations-header">Recommendations</span>
-                                                <ul>
-                                                    <li>Implement a slide-out cart drawer that opens on add-to-cart — keep the cross-sell recommendations inside the drawer</li>
-                                                    <li>Preserve the existing full cart page as a fallback (accessible via "View Full Cart" link in the drawer) for users who want the detailed view</li>
-                                                </ul>
-                                                <span class="finding-benchmark-tag">Standard — 10/10 stores use cart drawer</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-<div class="finding-card">
-                                    <div class="finding-card-header">
                                         Express checkout options (GPay, Shop Pay) can reduce checkout friction and lift conversion by 10–15%
                                     </div>
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/cart_f1_checkout_area.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/cart_checkout_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
@@ -2372,9 +2408,10 @@
                                             <div class="finding-observations">
                                                 <span class="finding-section-header observations-header">Observations</span>
                                                 <ul>
-                                                    <li>No express checkout buttons (GPay, Shop Pay, PhonePe) visible on the cart page — only a single "Checkout" button that routes through Shopflo</li>
+                                                    <li>The cart page Order Summary shows only a single "Checkout" button that routes through Shopflo — no express checkout buttons (GPay, Shop Pay, PhonePe) visible</li>
                                                     <li>Express checkout reduces the process from 4+ steps to 1–2 taps — critical for mobile users who make up 80–90% of Indian e-commerce traffic</li>
-                                                    <li>While Shopflo supports UPI/GPay on the backend, the cart page doesn't surface these as one-tap options — users must enter the full checkout flow first</li>
+                                                    <li>While Shopflo supports UPI/GPay on the backend, the cart page doesn't surface these as one-tap express options — users must enter the full checkout flow first</li>
+                                                    <li>8 out of 10 top Food & Bev stores show express payment buttons directly on the cart — Blue Tokai displays Shop Pay + GPay alongside the standard checkout</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
@@ -2391,35 +2428,36 @@
 
 <div class="finding-card">
                                     <div class="finding-card-header">
-                                        Trust badges and security indicators near checkout reduce cart abandonment by 8–12%
+                                        Bundle and combo offers can increase average order value by 10–20% — Urban Platter has cross-sell but no bundles
                                     </div>
                                     <div class="finding-card-body">
                                         <div class="finding-screenshots desktop-screenshots">
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/cart_f3_trust_checkout.jpeg" alt="Urban Platter">
+                                                <img src="screenshots/cart_checkout_area.jpeg" alt="Urban Platter">
                                                 <div class="finding-screenshot-label client-label">Urban Platter</div>
                                             </div>
                                             <div class="finding-screenshot">
-                                                <img src="screenshots/cart_f3_benchmark_trust.jpeg" alt="Blue Tokai">
-                                                <div class="finding-screenshot-label benchmark-label">Blue Tokai</div>
+                                                <img src="screenshots/bench_cart_bundle.jpeg" alt="Chomps">
+                                                <div class="finding-screenshot-label benchmark-label">Chomps</div>
                                             </div>
                                         </div>
                                         <div class="finding-analysis">
                                             <div class="finding-observations">
                                                 <span class="finding-section-header observations-header">Observations</span>
                                                 <ul>
-                                                    <li>No trust or security indicators visible near the checkout button on the cart page — users proceed without reassurance</li>
-                                                    <li>The PDP has 4 trust badges (Fast Shipping, Eco-friendly, 30L+ Customers, Secure Payments) but none of these carry through to the cart — creating a trust gap at the critical purchase moment</li>
-                                                    <li>Payment security concerns are a top-5 reason for cart abandonment, especially for first-time buyers on a less-recognized brand</li>
+                                                    <li>The cart page has a "You may also like" cross-sell section — which is good — but no structured bundle or combo deals</li>
+                                                    <li>For a pantry brand with 1,736 SKUs, bundles are a natural fit: "Baking Essentials Kit", "Healthy Snacking Combo", "Spice Starter Pack"</li>
+                                                    <li>Bundle pricing creates perceived value and encourages multi-category purchases — especially effective for first-time buyers exploring the range</li>
+                                                    <li>Chomps offers curated variety packs and subscribe-and-save bundles directly on the cart — encouraging larger basket sizes</li>
                                                 </ul>
                                             </div>
                                             <div class="finding-recommendations">
                                                 <span class="finding-section-header recommendations-header">Recommendations</span>
                                                 <ul>
-                                                    <li>Add the same trust badge strip from the PDP to the cart page — directly below the checkout button: "Secure Payment", "Fast Shipping", "Easy Returns"</li>
-                                                    <li>Include accepted payment method logos (Visa, Mastercard, UPI, RuPay) as visual reassurance near the CTA</li>
+                                                    <li>Create 5–10 curated bundles for popular use cases: "Baking Kit", "Protein Snack Box", "Italian Cooking Essentials" — with 10–15% bundle discount</li>
+                                                    <li>Surface bundle suggestions contextually in cart: if a user has olive oil, suggest the "Mediterranean Cooking Kit" that includes it plus complementary items</li>
                                                 </ul>
-                                                <span class="finding-benchmark-tag">Standard — 9/10 stores have trust indicators at checkout</span>
+                                                <span class="finding-benchmark-tag">Growing — 5/10 stores offer bundle/combo deals</span>
                                             </div>
                                         </div>
                                     </div>
@@ -3052,6 +3090,47 @@
                         container.classList.add('playing');
                     }
                 }
+            });
+        })();
+
+        // ── MULTI-IMAGE GALLERY: Navigation for user action flows ──────
+        (function() {
+            document.querySelectorAll('.finding-gallery').forEach(function(gallery) {
+                var track = gallery.querySelector('.finding-gallery-track');
+                var imgs = track.querySelectorAll('img');
+                var dots = gallery.querySelectorAll('.gallery-dot');
+                var prevBtn = gallery.querySelector('.gallery-nav.prev');
+                var nextBtn = gallery.querySelector('.gallery-nav.next');
+                var stepLabel = gallery.querySelector('.gallery-step-label');
+                var current = 0;
+                var total = imgs.length;
+
+                function goTo(idx) {
+                    if (idx < 0 || idx >= total) return;
+                    current = idx;
+                    track.style.transform = 'translateX(-' + (current * 100) + '%)';
+                    dots.forEach(function(d, i) {
+                        d.classList.toggle('active', i === current);
+                    });
+                    if (stepLabel) {
+                        var labels = stepLabel.getAttribute('data-steps');
+                        if (labels) {
+                            var steps = labels.split('|');
+                            stepLabel.textContent = steps[current] || ('Step ' + (current + 1) + ' of ' + total);
+                        } else {
+                            stepLabel.textContent = 'Step ' + (current + 1) + ' of ' + total;
+                        }
+                    }
+                    if (prevBtn) prevBtn.style.display = current === 0 ? 'none' : 'flex';
+                    if (nextBtn) nextBtn.style.display = current === total - 1 ? 'none' : 'flex';
+                }
+
+                if (prevBtn) prevBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(current - 1); });
+                if (nextBtn) nextBtn.addEventListener('click', function(e) { e.stopPropagation(); goTo(current + 1); });
+                dots.forEach(function(dot, i) {
+                    dot.addEventListener('click', function(e) { e.stopPropagation(); goTo(i); });
+                });
+                goTo(0);
             });
         })();
     </script>
